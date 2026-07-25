@@ -1,0 +1,33 @@
+name: Node
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  node-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24.18.0
+      - name: Verify package contract
+        run: |
+          test "$(node --version)" = "v24.18.0"
+          node -e '
+            const manifest = require("./package.json");
+            if (
+              manifest.name !== "@shimpz/frontend" ||
+              manifest.version !== "0.1.0" ||
+              manifest.license !== "Apache-2.0" ||
+              manifest.private !== false ||
+              manifest.engines.node !== "24.x" ||
+              manifest.packageManager !== "pnpm@11.9.0"
+            ) process.exit(1);
+          '
