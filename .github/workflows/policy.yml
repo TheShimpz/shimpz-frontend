@@ -1,0 +1,22 @@
+name: Repository policy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - name: Verify repository policy
+        run: |
+          test -s AGENTS.md
+          test -s CONTRIBUTING.md
+          test -s SECURITY.md
+          grep -Fxq '* @roxygens' .github/CODEOWNERS
