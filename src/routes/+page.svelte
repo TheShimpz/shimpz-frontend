@@ -1,3 +1,9 @@
+<script lang="ts">
+  import { Button } from "$lib";
+
+  let clicks = $state(0);
+</script>
+
 <svelte:head>
   <title>Shimpz Frontend</title>
   <meta
@@ -18,6 +24,15 @@
       <div class="magenta">Magenta</div>
       <div class="yellow">Yellow</div>
       <div class="green">Green</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="primitives-title">
+    <h2 id="primitives-title">Primitives</h2>
+    <div class="primitives">
+      <Button onclick={() => (clicks += 1)}>Interactive button</Button>
+      <output aria-live="polite">{clicks} activations</output>
+      <Button disabled>Disabled button</Button>
     </div>
   </section>
 </main>
@@ -99,6 +114,24 @@
     padding: 1rem;
     background: var(--shimpz-color-surface);
     border-top: 0.35rem solid currentColor;
+  }
+
+  .primitives {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: var(--shimpz-color-surface);
+    border: 1px solid var(--shimpz-color-border);
+  }
+
+  output {
+    min-width: 8rem;
+    color: var(--shimpz-color-text-muted);
+    font-family: var(--shimpz-font-mono);
+    font-size: 0.8rem;
   }
 
   .cyan {
