@@ -7,6 +7,7 @@
     hint?: string;
     error?: string;
     value?: string;
+    variant?: "text" | "code";
   };
 
   let {
@@ -15,6 +16,7 @@
     hint,
     error,
     value = $bindable(""),
+    variant = "text",
     class: className,
     "aria-describedby": externalDescription,
     ...attributes
@@ -27,7 +29,7 @@
   );
 </script>
 
-<div class={className}>
+<div class={["shimpz-field", `shimpz-field--${variant}`, className]}>
   <label for={id}>{label}</label>
   <input
     {id}
@@ -65,6 +67,15 @@
     background: var(--shimpz-color-surface-raised);
     border: 1px solid var(--shimpz-color-border);
     border-radius: 0;
+    transition:
+      border-color var(--shimpz-duration-fast) var(--shimpz-ease),
+      box-shadow var(--shimpz-duration-fast) var(--shimpz-ease);
+  }
+
+  .shimpz-field--code input {
+    font-family: var(--shimpz-font-mono);
+    font-size: 0.92rem;
+    letter-spacing: 0.025em;
   }
 
   input:hover:not(:disabled) {
@@ -75,6 +86,7 @@
     border-color: var(--shimpz-color-cyan);
     outline: 2px solid color-mix(in srgb, var(--shimpz-color-cyan) 35%, transparent);
     outline-offset: 1px;
+    box-shadow: var(--shimpz-focus-ring);
   }
 
   input[aria-invalid="true"] {
@@ -98,5 +110,15 @@
 
   .error {
     color: var(--shimpz-color-danger);
+  }
+
+  @media (forced-colors: active) {
+    input,
+    input:focus,
+    input[aria-invalid="true"] {
+      border-color: FieldText;
+      outline-color: Highlight;
+      box-shadow: none;
+    }
   }
 </style>

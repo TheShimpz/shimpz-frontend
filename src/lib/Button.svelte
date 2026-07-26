@@ -1,46 +1,114 @@
 <script lang="ts">
   import type { HTMLButtonAttributes } from "svelte/elements";
 
-  let { children, class: className, ...attributes }: HTMLButtonAttributes = $props();
+  type Props = HTMLButtonAttributes & {
+    variant?: "primary" | "secondary" | "danger";
+    size?: "default" | "compact";
+  };
+
+  let {
+    children,
+    variant = "primary",
+    size = "default",
+    class: className,
+    ...attributes
+  }: Props = $props();
 </script>
 
-<button class={className} {...attributes}>
+<button
+  class={["shimpz-button", `shimpz-button--${variant}`, `shimpz-button--${size}`, className]}
+  {...attributes}
+>
   <span>{@render children?.()}</span>
 </button>
 
 <style>
   button {
-    min-height: 2.75rem;
-    padding: 0.7rem 1rem;
-    color: var(--shimpz-color-bg);
+    --button-color: var(--shimpz-color-bg);
+    --button-bg: var(--shimpz-color-cyan);
+    --button-border: var(--shimpz-color-cyan);
+    --button-hover-color: var(--shimpz-color-bg);
+    --button-hover-bg: var(--shimpz-color-text);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.875rem;
+    padding: 0.75rem 1.125rem;
+    color: var(--button-color);
     font: 700 0.8rem/1 var(--shimpz-font-mono);
     letter-spacing: 0.08em;
+    text-decoration: none;
     text-transform: uppercase;
-    background: var(--shimpz-color-cyan);
-    border: 1px solid var(--shimpz-color-cyan);
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
     border-radius: 0;
-    clip-path: polygon(0 0, calc(100% - var(--shimpz-cut)) 0, 100% var(--shimpz-cut), 100% 100%, 0 100%);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--shimpz-cut)) 0,
+      100% var(--shimpz-cut),
+      100% 100%,
+      0 100%
+    );
     cursor: pointer;
+    transition:
+      color var(--shimpz-duration-fast) var(--shimpz-ease),
+      background var(--shimpz-duration-fast) var(--shimpz-ease),
+      border-color var(--shimpz-duration-fast) var(--shimpz-ease),
+      box-shadow var(--shimpz-duration-fast) var(--shimpz-ease);
+  }
+
+  .shimpz-button--secondary {
+    --button-color: var(--shimpz-color-cyan);
+    --button-bg: var(--shimpz-color-surface-raised);
+    --button-hover-color: var(--shimpz-color-bg);
+  }
+
+  .shimpz-button--danger {
+    --button-color: var(--shimpz-color-bg);
+    --button-bg: var(--shimpz-color-danger);
+    --button-border: var(--shimpz-color-danger);
+    --button-hover-bg: var(--shimpz-color-text);
+  }
+
+  .shimpz-button--compact {
+    min-height: 2.25rem;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.7rem;
   }
 
   button:hover:not(:disabled) {
-    background: var(--shimpz-color-text);
-    border-color: var(--shimpz-color-text);
+    color: var(--button-hover-color);
+    background: var(--button-hover-bg);
+    border-color: var(--button-hover-bg);
+    box-shadow: var(--shimpz-glow-cyan);
   }
 
   button:focus-visible {
     outline: 2px solid var(--shimpz-color-yellow);
     outline-offset: 3px;
+    box-shadow: var(--shimpz-focus-ring);
   }
 
   button:disabled {
     cursor: not-allowed;
-    opacity: 0.45;
+    filter: grayscale(0.55);
+    opacity: 0.5;
   }
 
   span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (forced-colors: active) {
+    button {
+      color: ButtonText;
+      background: ButtonFace;
+      border-color: ButtonText;
+      clip-path: none;
+      forced-color-adjust: auto;
+    }
   }
 </style>
