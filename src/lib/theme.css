@@ -1,0 +1,105 @@
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "@fontsource/ibm-plex-mono/700.css";
+@import "./tokens.css";
+
+:where(.shimpz-theme) {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  color: var(--shimpz-color-text);
+  font-family: var(--shimpz-font-sans);
+  background: var(--shimpz-color-bg);
+}
+
+:where(.shimpz-theme) *,
+:where(.shimpz-theme) *::before,
+:where(.shimpz-theme) *::after {
+  box-sizing: border-box;
+}
+
+.shimpz-wrap {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image:
+    linear-gradient(var(--shimpz-color-border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--shimpz-color-border-subtle) 1px, transparent 1px);
+  background-size: var(--shimpz-grid-size) var(--shimpz-grid-size);
+}
+
+.shimpz-wrap::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgb(255 255 255 / 2.5%) 4px
+  );
+}
+
+.shimpz-panel {
+  color: var(--shimpz-color-text);
+  background: var(--shimpz-color-surface);
+  border: 1px solid var(--shimpz-color-border);
+  border-radius: 0;
+  box-shadow: var(--shimpz-glow-cyan);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--shimpz-cut-lg)) 0,
+    100% var(--shimpz-cut-lg),
+    100% 100%,
+    var(--shimpz-cut-sm) 100%,
+    0 calc(100% - var(--shimpz-cut-sm))
+  );
+}
+
+.shimpz-kicker {
+  margin: 0;
+  color: var(--shimpz-color-cyan);
+  font: 700 0.75rem/1.4 var(--shimpz-font-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.shimpz-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.shimpz-theme) *,
+  :where(.shimpz-theme) *::before,
+  :where(.shimpz-theme) *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .shimpz-panel {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  .shimpz-wrap::before {
+    display: none;
+  }
+}
