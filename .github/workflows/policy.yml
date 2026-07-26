@@ -20,3 +20,7 @@ jobs:
           test -s CONTRIBUTING.md
           test -s SECURITY.md
           grep -Fxq '* @roxygens' .github/CODEOWNERS
+          test -s .github/workflows/release.yml
+          grep -Fq 'id-token: write' .github/workflows/release.yml
+          grep -Fq 'environment: release' .github/workflows/release.yml
+          grep -Fq 'npm stage publish --access public' .github/workflows/release.yml

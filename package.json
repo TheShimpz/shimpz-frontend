@@ -4,6 +4,14 @@
   "description": "Public Shimpz design tokens and Svelte presentation primitives",
   "license": "Apache-2.0",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheShimpz/shimpz-frontend.git"
+  },
+  "homepage": "https://github.com/TheShimpz/shimpz-frontend#readme",
+  "bugs": {
+    "url": "https://github.com/TheShimpz/shimpz-frontend/issues"
+  },
   "type": "module",
   "files": [
     "dist"

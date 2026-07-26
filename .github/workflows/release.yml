@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24.18.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Match the release tag to the package version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          node -e '
+            const manifest = require("./package.json");
+            if (process.env.RELEASE_TAG !== `v${manifest.version}`) process.exit(1);
+          '
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Check and build
+        run: |
+          corepack pnpm check
+          corepack pnpm build
+      - name: Install Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+      - name: Test the built showcase
+        run: |
+          processors="$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)"
+          workers="$(( processors / 2 ))"
+          test "${workers}" -ge 1 || workers=1
+          corepack pnpm exec playwright test --workers="${workers}"
+      - name: Stage the public package with npm provenance
+        run: npm stage publish --access public
