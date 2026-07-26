@@ -41,7 +41,8 @@
     "build:package": "svelte-package",
     "build:showcase": "vite build",
     "preview": "vite preview",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:package": "node tests/package-consumer.mjs"
   },
   "engines": {
     "node": "24.x"

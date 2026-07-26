@@ -37,6 +37,8 @@ jobs:
         run: corepack pnpm check
       - name: Build package and showcase
         run: corepack pnpm build
+      - name: Test the packed package in a consumer
+        run: corepack pnpm test:package
       - name: Install Chromium
         run: corepack pnpm exec playwright install --with-deps chromium
       - name: Test built showcase
