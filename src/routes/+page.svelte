@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Button } from "$lib";
+  import { Button, TextField } from "$lib";
 
   let clicks = $state(0);
+  let assistantId = $state("");
 </script>
 
 <svelte:head>
@@ -33,6 +34,20 @@
       <Button onclick={() => (clicks += 1)}>Interactive button</Button>
       <output aria-live="polite">{clicks} activations</output>
       <Button disabled>Disabled button</Button>
+      <TextField
+        id="assistant-id"
+        label="Assistant ID"
+        hint="Lowercase words separated by hyphens."
+        placeholder="hello-world"
+        bind:value={assistantId}
+      />
+      <output aria-live="polite">ID: {assistantId || "not set"}</output>
+      <TextField
+        id="invalid-id"
+        label="Invalid example"
+        value="Not valid"
+        error="Use lowercase ASCII characters."
+      />
     </div>
   </section>
 </main>
@@ -117,9 +132,9 @@
   }
 
   .primitives {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    align-items: start;
     gap: 1.25rem;
     margin-top: 1rem;
     padding: 1.5rem;
