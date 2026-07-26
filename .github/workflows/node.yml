@@ -24,7 +24,7 @@ jobs:
             const manifest = require("./package.json");
             if (
               manifest.name !== "@shimpz/frontend" ||
-              manifest.version !== "0.1.0" ||
+              !/^\d+\.\d+\.\d+$/.test(manifest.version) ||
               manifest.license !== "Apache-2.0" ||
               manifest.private !== false ||
               manifest.engines.node !== "24.x" ||
