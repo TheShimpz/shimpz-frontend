@@ -31,3 +31,17 @@ jobs:
               manifest.packageManager !== "pnpm@11.9.0"
             ) process.exit(1);
           '
+      - name: Install frozen dependencies
+        run: corepack pnpm install --frozen-lockfile
+      - name: Check Svelte
+        run: corepack pnpm check
+      - name: Build package and showcase
+        run: corepack pnpm build
+      - name: Install Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+      - name: Test built showcase
+        run: |
+          processors="$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)"
+          workers="$(( processors / 2 ))"
+          test "${workers}" -ge 1 || workers=1
+          corepack pnpm exec playwright test --workers="${workers}"

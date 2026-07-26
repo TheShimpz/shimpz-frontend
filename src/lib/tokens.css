@@ -1,0 +1,18 @@
+:root,
+.shimpz-theme {
+  color-scheme: dark;
+  --shimpz-color-bg: #000000;
+  --shimpz-color-surface: #060606;
+  --shimpz-color-surface-raised: #0b0b0b;
+  --shimpz-color-border: #2b2b2b;
+  --shimpz-color-text: #f4f4f5;
+  --shimpz-color-text-muted: #a1a1aa;
+  --shimpz-color-cyan: #00f0ff;
+  --shimpz-color-magenta: #ff2a6d;
+  --shimpz-color-yellow: #fcee0a;
+  --shimpz-color-green: #05ffa1;
+  --shimpz-color-danger: #ff607d;
+  --shimpz-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --shimpz-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --shimpz-cut: 10px;
+}
