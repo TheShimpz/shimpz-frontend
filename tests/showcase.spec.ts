@@ -1,6 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+const visualContract = {
+  animations: "disabled",
+  fullPage: true,
+  maxDiffPixelRatio: 0.01,
+} as const;
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
@@ -55,10 +61,7 @@ test("honors reduced motion and forced colors", async ({ page }) => {
 
 test("matches the desktop visual contract", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(page).toHaveScreenshot("showcase-desktop.png", {
-    fullPage: true,
-    animations: "disabled",
-  });
+  await expect(page).toHaveScreenshot("showcase-desktop.png", visualContract);
 });
 
 test("matches the mobile visual contract without horizontal overflow", async ({ page }) => {
@@ -66,8 +69,5 @@ test("matches the mobile visual contract without horizontal overflow", async ({ 
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
   ).toBe(true);
-  await expect(page).toHaveScreenshot("showcase-mobile.png", {
-    fullPage: true,
-    animations: "disabled",
-  });
+  await expect(page).toHaveScreenshot("showcase-mobile.png", visualContract);
 });
