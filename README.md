@@ -1,17 +1,56 @@
 # @shimpz/frontend
 
-The public Shimpz design system for Svelte applications.
+The public Shimpz design system for Svelte 5 applications.
 
-This package will provide design tokens, brand assets, and presentation or
-accessibility primitives without coupling consumers to Shimpz business logic.
+It provides design tokens, canonical brand assets, and accessible presentation
+primitives without coupling consumers to Shimpz authentication, APIs, or
+business rules.
+
+## Install
+
+```sh
+pnpm add @shimpz/frontend
+```
+
+Import the complete theme once at the application boundary:
+
+```ts
+import "@shimpz/frontend/theme.css";
+```
+
+Then use the presentation primitives from the package root:
+
+```svelte
+<script lang="ts">
+  import { Button, Notice, ShimpzBrand, TextField } from "@shimpz/frontend";
+
+  let assistantId = "hello-world";
+</script>
+
+<ShimpzBrand product="Developers" />
+<TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
+<Button>Publish</Button>
+<Notice variant="success" title="Ready">Assistant validated.</Notice>
+```
+
+Lower-level consumers can import only the token contract:
+
+```css
+@import "@shimpz/frontend/tokens.css";
+```
+
+The canonical thinking asset is exported at
+`@shimpz/frontend/assets/shimpz-thinking.svg`.
+
+## Package boundary
+
+The package intentionally contains no credentials, network clients,
+authentication state, or product-specific business logic. Consumers own those
+concerns and compose them around these presentation primitives.
 
 ## Release trust
 
-The first public package version must be published interactively with account
-2FA because npm only accepts a trusted-publisher configuration for a package
-that already exists.
-
-After that bootstrap, configure the package's npm trusted publisher with:
+The npm trusted publisher is scoped to:
 
 - GitHub organization: `TheShimpz`
 - repository: `shimpz-frontend`
@@ -19,6 +58,7 @@ After that bootstrap, configure the package's npm trusted publisher with:
 - environment: `release`
 - permission: staged publishing only
 
-Then disallow token publishing in the npm package settings. Publishing a GitHub
-release stages the matching package version with OIDC and provenance; a
-maintainer reviews and approves that stage with npm 2FA.
+Publishing a matching GitHub release stages the package with short-lived OIDC
+credentials and npm provenance. A maintainer must inspect and approve that
+stage with npm 2FA before the version becomes public. Long-lived npm publishing
+tokens are not part of the release path.
