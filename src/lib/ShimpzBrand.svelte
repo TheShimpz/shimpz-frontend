@@ -35,7 +35,11 @@
     {@render content()}
   </a>
 {:else}
-  <div class={["shimpz-brand", `shimpz-brand--${variant}`, className]} aria-label={label}>
+  <div
+    class={["shimpz-brand", `shimpz-brand--${variant}`, className]}
+    role="img"
+    aria-label={label}
+  >
     {@render content()}
   </div>
 {/if}
@@ -83,12 +87,12 @@
   }
 
   .shimpz-brand--hero img {
-    width: clamp(4.5rem, 10vw, 7rem);
-    height: clamp(4.5rem, 10vw, 7rem);
+    width: clamp(4.5rem, 10vw, 6rem);
+    height: clamp(4.5rem, 10vw, 6rem);
   }
 
   .shimpz-brand--hero .wordmark {
-    font-size: clamp(1.75rem, 5vw, 3.75rem);
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
     letter-spacing: 0.13em;
   }
 
