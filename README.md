@@ -12,6 +12,21 @@ business rules.
 pnpm add @shimpz/frontend
 ```
 
+Private applications may consume a reviewed GitHub commit directly, without
+waiting for an npm release. Pin the complete commit SHA so the build remains
+reproducible:
+
+```json
+{
+  "dependencies": {
+    "@shimpz/frontend": "https://codeload.github.com/TheShimpz/shimpz-frontend/tar.gz/FULL_COMMIT_SHA"
+  }
+}
+```
+
+The repository exports its Svelte sources directly. The consuming application
+compiles them in its own build; no separate package build is required.
+
 Import the complete theme once at the application boundary:
 
 ```ts
