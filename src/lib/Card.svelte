@@ -59,6 +59,7 @@
   p { margin: 0; color: var(--shimpz-color-text-muted); font-size: 0.82rem; line-height: 1.5; }
   .action { flex: 0 0 auto; }
   .content { min-width: 0; padding: 0 var(--shimpz-card-padding) var(--shimpz-card-padding); }
+  section > .content:first-child { padding-block-start: var(--shimpz-card-padding); }
   section > footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--shimpz-space-2); padding: var(--shimpz-space-3) var(--shimpz-card-padding); border-block-start: 1px solid var(--shimpz-color-border-subtle); }
   .shimpz-card--none > header { padding: 0; }
   .shimpz-card--none .content { padding: 0; }

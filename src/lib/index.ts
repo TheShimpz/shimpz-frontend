@@ -26,6 +26,7 @@ export { default as TextAreaField } from "./TextAreaField.svelte";
 export { default as TextField } from "./TextField.svelte";
 export { default as TextLink } from "./TextLink.svelte";
 export { default as Toolbar } from "./Toolbar.svelte";
+export { default as Toast } from "./Toast.svelte";
 export { default as WorkspaceShell } from "./WorkspaceShell.svelte";
 
 export const themeClass = "shimpz-theme";
