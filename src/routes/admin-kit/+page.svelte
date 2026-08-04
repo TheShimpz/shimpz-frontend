@@ -82,6 +82,7 @@
 </Drawer>
 
 <style>
+  #chat :global(.shimpz-embed) { min-height: 32rem; background: var(--shimpz-color-bg); }
   .sidebar-content { display: grid; gap: 1.25rem; padding: 1rem; }
   nav { display: grid; gap: 0.4rem; }
   .topbar { display: flex; min-height: 3.75rem; align-items: center; justify-content: flex-end; gap: 0.5rem; padding-inline: 1rem; }

@@ -67,6 +67,9 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Close drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
+  const embed = page.getByTitle("Embedded Store preview");
+  await expect(embed).toHaveCSS("border-top-width", "0px");
+  await expect(embed).toHaveCSS("min-height", "512px");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });

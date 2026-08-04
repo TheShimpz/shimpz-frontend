@@ -5,5 +5,5 @@
 </script>
 <iframe bind:this={element} class={["shimpz-embed", className]} {title} {...attributes}></iframe>
 <style>
-  iframe { display: block; width: 100%; min-height: 32rem; background: var(--shimpz-color-bg); border: 1px solid var(--shimpz-color-border); }
+  iframe { display: block; width: 100%; border: 0; background: transparent; }
 </style>
