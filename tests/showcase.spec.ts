@@ -50,6 +50,27 @@ test("has no detectable accessibility violations", async ({ page }) => {
   expect(results.violations).toEqual([]);
 });
 
+test("renders and operates the reusable Admin component kit", async ({ page }) => {
+  await page.goto("/admin-kit/");
+  await expect(page).toHaveTitle("Admin kit — Shimpz Frontend");
+  await expect(page.getByRole("heading", { name: "One sealed interface" })).toBeVisible();
+  await page.getByRole("checkbox", { name: "Enable Assistant" }).check();
+  await expect(page.getByRole("checkbox", { name: "Enable Assistant" })).toBeChecked();
+  await expect(page.getByText("Admin prepares the request")).toBeHidden();
+  await page.getByText("Execution stages 3", { exact: true }).click();
+  await expect(page.getByText("Admin prepares the request")).toBeVisible();
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  await expect(page.getByRole("dialog", { name: "Confirm operation" })).toBeVisible();
+  await page.getByRole("button", { name: "Close" }).click();
+  await page.getByRole("button", { name: "Open drawer" }).click();
+  await expect(page.getByRole("complementary", { name: "System drawer" })).toBeVisible();
+  await page.getByRole("button", { name: "Close drawer" }).click();
+  await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
+  await expect(page.locator('input[type="file"]')).toHaveCount(1);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test("honors reduced motion and forced colors", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
   await page.reload();

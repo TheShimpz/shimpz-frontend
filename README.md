@@ -37,15 +37,17 @@ Then use the presentation primitives from the package root:
 
 ```svelte
 <script lang="ts">
-  import { Button, Notice, ShimpzBrand, TextField } from "@shimpz/frontend";
+  import { Button, Notice, Panel, ShimpzBrand, TextField } from "@shimpz/frontend";
 
   let assistantId = "hello-world";
 </script>
 
 <ShimpzBrand product="Developers" />
-<TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
-<Button>Publish</Button>
-<Notice variant="success" title="Ready">Assistant validated.</Notice>
+<Panel>
+  <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
+  <Button>Publish</Button>
+  <Notice variant="success" title="Ready">Assistant validated.</Notice>
+</Panel>
 ```
 
 Lower-level consumers can import only the token contract:
@@ -53,6 +55,11 @@ Lower-level consumers can import only the token contract:
 ```css
 @import "@shimpz/frontend/tokens.css";
 ```
+
+The package includes workspace shells, navigation, panels, actions, links,
+fields, status, modal, drawer, disclosure, embedded-frame, and Assistant-icon
+primitives. The showcase at `/admin-kit` is the rendered interaction and
+accessibility contract for the complete application surface.
 
 The canonical thinking asset is exported at
 `@shimpz/frontend/assets/shimpz-thinking.svg`.

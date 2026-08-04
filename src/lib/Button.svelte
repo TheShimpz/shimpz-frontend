@@ -2,8 +2,8 @@
   import type { HTMLButtonAttributes } from "svelte/elements";
 
   type Props = HTMLButtonAttributes & {
-    variant?: "primary" | "secondary" | "danger";
-    size?: "default" | "compact";
+    variant?: "primary" | "secondary" | "ghost" | "danger";
+    size?: "default" | "compact" | "icon";
   };
 
   let {
@@ -71,10 +71,25 @@
     --button-hover-bg: var(--shimpz-color-text);
   }
 
+  .shimpz-button--ghost {
+    --button-color: var(--shimpz-color-text-muted);
+    --button-bg: transparent;
+    --button-border: var(--shimpz-color-border);
+    --button-hover-color: var(--shimpz-color-cyan);
+    --button-hover-bg: var(--shimpz-color-surface-raised);
+  }
+
   .shimpz-button--compact {
     min-height: 2.25rem;
     padding: 0.55rem 0.75rem;
     font-size: 0.7rem;
+  }
+
+  .shimpz-button--icon {
+    width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    clip-path: none;
   }
 
   button:hover:not(:disabled) {
