@@ -10,5 +10,5 @@
   aside { position: fixed; z-index: 70; inset-block: 0; width: min(92vw, 30rem); overflow: auto; padding: var(--shimpz-space-5); color: var(--shimpz-color-text); background: var(--shimpz-color-surface); box-shadow: -2rem 0 5rem rgb(0 0 0 / 70%); }
   .shimpz-drawer--right { inset-inline-end: 0; border-inline-start: 1px solid var(--shimpz-color-border); }
   .shimpz-drawer--left { inset-inline-start: 0; border-inline-end: 1px solid var(--shimpz-color-border); box-shadow: 2rem 0 5rem rgb(0 0 0 / 70%); }
-  aside[hidden] { display: none; }
+  aside[hidden] { display: none !important; }
 </style>
