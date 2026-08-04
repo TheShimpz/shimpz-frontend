@@ -40,7 +40,7 @@
       ),
       var(--shimpz-color-surface-raised);
     border: 1px solid var(--shimpz-color-border);
-    border-left: 3px solid var(--notice-color);
+    border-inline-start: 3px solid var(--notice-color);
   }
 
   .shimpz-notice--success {

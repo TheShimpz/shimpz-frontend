@@ -30,8 +30,8 @@
     "./package.json": "./package.json"
   },
   "sideEffects": [
-    "./dist/tokens.css",
-    "./dist/theme.css"
+    "./src/lib/tokens.css",
+    "./src/lib/theme.css"
   ],
   "scripts": {
     "dev": "vite dev",
