@@ -7,10 +7,11 @@
     hint?: string;
     error?: string;
     value?: string;
+    element?: HTMLTextAreaElement;
     visuallyHiddenLabel?: boolean;
   };
 
-  let { id, label, hint, error, value = $bindable(""), visuallyHiddenLabel = false, class: className, ...attributes }: Props = $props();
+  let { id, label, hint, error, value = $bindable(""), element = $bindable(), visuallyHiddenLabel = false, class: className, ...attributes }: Props = $props();
   const hintId = $derived(hint ? `${id}-hint` : undefined);
   const errorId = $derived(error ? `${id}-error` : undefined);
   const describedBy = $derived([hintId, errorId].filter(Boolean).join(" ") || undefined);
@@ -18,7 +19,7 @@
 
 <div class={["shimpz-field", className]}>
   <label for={id} class:visually-hidden={visuallyHiddenLabel}>{label}</label>
-  <textarea {id} bind:value aria-describedby={describedBy} aria-invalid={error ? "true" : undefined} {...attributes}></textarea>
+  <textarea bind:this={element} {id} bind:value aria-describedby={describedBy} aria-invalid={error ? "true" : undefined} {...attributes}></textarea>
   {#if hint}<p id={hintId} class="hint">{hint}</p>{/if}
   {#if error}<p id={errorId} class="error">{error}</p>{/if}
 </div>
