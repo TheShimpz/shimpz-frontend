@@ -3,21 +3,27 @@
     ActionLink,
     AssistantIcon,
     Button,
+    Card,
     CheckboxField,
     ChoiceItem,
     DialogFrame,
     Disclosure,
     Drawer,
+    DropdownMenu,
+    EmptyState,
     EmbedFrame,
     FileInput,
     Modal,
+    Message,
     NavItem,
     PageIntro,
-    Panel,
+    ScrollArea,
+    Separator,
     ShimpzBrand,
     StatusBadge,
     TextAreaField,
     TextField,
+    Toolbar,
     WorkspaceShell,
   } from "$lib";
 
@@ -28,6 +34,7 @@
   let enabled = $state(false);
   let teamName = $state("Marketing");
   let message = $state("List the zones with active DNS records.");
+  let locale = $state("en");
 </script>
 
 <svelte:head><title>Admin kit — Shimpz Frontend</title></svelte:head>
@@ -49,22 +56,42 @@
   <div class="content">
     <PageIntro kicker="Admin kit // presentation" title="One sealed interface" lead="Reusable cyberpunk primitives without product authority." />
     <section id="overview" class="grid" aria-label="Admin primitives">
-      <Panel>
-        <h2>Controls</h2>
+      <Card title="Controls" description="Compact fields and explicit actions.">
         <TextField id="team-name" label="Team name" bind:value={teamName} />
         <TextAreaField id="message" label="Message" bind:value={message} />
         <CheckboxField id="enabled" label="Enable Assistant" bind:checked={enabled} />
-        <div class="actions"><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><ActionLink href="#chat">Go to Chat</ActionLink></div>
-      </Panel>
-      <Panel tone="accent">
-        <h2>Assistant</h2>
+        <Toolbar><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
+      </Card>
+      <Card tone="accent" title="Assistant" description="Status, identity and execution details.">
+        {#snippet action()}<StatusBadge tone="info">Running</StatusBadge>{/snippet}
         <div class="assistant"><AssistantIcon assistant="cloudflare" size={52} /><div><strong>Shimpz Cloudflare</strong><StatusBadge tone="info">Running</StatusBadge></div></div>
+        <Separator />
         <Disclosure>
           {#snippet summary()}Execution stages <span class="count">3</span>{/snippet}
           <ol><li>Admin prepares the request</li><li>Team gathers context</li><li>Assistant executes the Power</li></ol>
         </Disclosure>
-      </Panel>
+      </Card>
     </section>
+    <section class="grid" aria-label="Menu and message primitives">
+      <Card title="Menu" description="Keyboard-navigable selection with current state.">
+        <DropdownMenu
+          items={[{ value: "en", label: "English" }, { value: "pt", label: "Português" }]}
+          value={locale}
+          ariaLabel="Current language"
+          triggerLabel={locale === "en" ? "English" : "Português"}
+          onSelect={(value) => (locale = value)}
+        />
+      </Card>
+      <Card title="Conversation" description="Role-specific message hierarchy.">
+        <ScrollArea maxHeight="10rem">
+          <div class="messages">
+            <Message variant="user" author="You">List active DNS records.</Message>
+            <Message author="Marketing">I found three active records.</Message>
+          </div>
+        </ScrollArea>
+      </Card>
+    </section>
+    <EmptyState compact title="No pending operations" description="New activity will appear here when a Team starts work." />
     <section id="chat" aria-label="Embedded surface"><EmbedFrame title="Embedded Store preview" srcdoc="<!doctype html><html><body style='background:#000;color:#f4f4f5;font-family:monospace'>Store surface</body></html>" /></section>
     <FileInput bind:element={fileInput} aria-label="Attach files" />
   </div>
@@ -120,11 +147,11 @@
   .topbar { display: flex; min-height: 3.75rem; align-items: center; justify-content: flex-end; gap: 0.5rem; padding-inline: 1rem; }
   .content { display: grid; gap: 1.5rem; padding: clamp(1rem, 2.5vw, 2rem); }
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
-  .grid :global(.shimpz-panel) { display: grid; align-content: start; gap: 0.75rem; }
+  .grid :global(.shimpz-card .content) { display: grid; align-content: start; gap: 0.75rem; }
   h2 { margin: 0; font: 700 0.9rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
+  .messages { display: grid; gap: 0.75rem; }
   .team-list { display: grid; gap: 0.25rem; }
   ol { display: grid; gap: 0.4rem; margin: 0; padding-inline-start: 1.25rem; color: var(--shimpz-color-text-muted); font-size: 0.85rem; }
   .count { color: var(--shimpz-color-cyan); }

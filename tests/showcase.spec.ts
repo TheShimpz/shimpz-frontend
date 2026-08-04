@@ -85,6 +85,11 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeVisible();
   await page.getByRole("button", { name: "Close drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
+  await page.getByRole("button", { name: "Current language" }).click();
+  await page.getByRole("menuitemradio", { name: "Português" }).click();
+  await expect(page.getByRole("button", { name: "Current language" })).toContainText("Português");
+  await expect(page.getByText("No pending operations")).toBeVisible();
+  await expect(page.getByLabel("You")).toContainText("List active DNS records.");
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
   const embed = page.getByTitle("Embedded Store preview");
   await expect(embed).toHaveCSS("border-top-width", "0px");

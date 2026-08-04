@@ -30,6 +30,8 @@
   --shimpz-space-8: 2rem;
   --shimpz-space-10: 2.5rem;
   --shimpz-space-12: 3rem;
+  --shimpz-space-14: 3.5rem;
+  --shimpz-space-16: 4rem;
   --shimpz-control-height: 2.5rem;
   --shimpz-control-height-compact: 2.125rem;
   --shimpz-control-height-large: 2.75rem;
@@ -38,6 +40,10 @@
   --shimpz-dialog-lg: 44rem;
   --shimpz-dialog-xl: 64rem;
   --shimpz-content-width: 72rem;
+  --shimpz-content-width-narrow: 42rem;
+  --shimpz-sidebar-width: 16.5rem;
+  --shimpz-card-padding: 1.25rem;
+  --shimpz-page-padding: clamp(1rem, 2.5vw, 2rem);
   --shimpz-duration-fast: 120ms;
   --shimpz-duration: 180ms;
   --shimpz-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
