@@ -4,6 +4,8 @@
     AssistantIcon,
     Button,
     CheckboxField,
+    ChoiceItem,
+    DialogFrame,
     Disclosure,
     Drawer,
     EmbedFrame,
@@ -68,11 +70,21 @@
 </WorkspaceShell>
 
 <Modal bind:element={modal} labelledBy="kit-dialog-title">
-  <Panel tone="accent">
-    <h2 id="kit-dialog-title">Confirm operation</h2>
-    <p>The component owns presentation only.</p>
-    <Button variant="secondary" onclick={() => modal?.close()}>Close</Button>
-  </Panel>
+  <DialogFrame
+    kicker="Destination // Team"
+    title="Choose a Team"
+    titleId="kit-dialog-title"
+    lead="The selection stays within this presentation contract."
+  >
+    <div class="team-list">
+      <ChoiceItem title="Marketing" description="marketing" meta="Current" selected />
+      <ChoiceItem title="Operations" description="operations" />
+    </div>
+    {#snippet footer()}
+      <Button variant="secondary" onclick={() => modal?.close()}>Close</Button>
+      <Button onclick={() => modal?.close()}>Confirm</Button>
+    {/snippet}
+  </DialogFrame>
 </Modal>
 
 <Drawer open={drawerOpen} labelledBy="kit-drawer-title">
@@ -93,6 +105,7 @@
   .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
+  .team-list { display: grid; gap: 0.25rem; }
   ol { display: grid; gap: 0.4rem; margin: 0; padding-inline-start: 1.25rem; color: var(--shimpz-color-text-muted); font-size: 0.85rem; }
   .count { color: var(--shimpz-color-cyan); }
   @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }

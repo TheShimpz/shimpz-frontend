@@ -60,7 +60,24 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByText("Execution stages 3", { exact: true }).click();
   await expect(page.getByText("Admin prepares the request")).toBeVisible();
   await page.getByRole("button", { name: "Open dialog" }).click();
-  await expect(page.getByRole("dialog", { name: "Confirm operation" })).toBeVisible();
+  const dialog = page.getByRole("dialog", { name: "Choose a Team" });
+  await expect(dialog).toBeVisible();
+  const dialogBox = await dialog.boundingBox();
+  if (!dialogBox) throw new Error("Dialog has no rendered bounds");
+  expect(dialogBox.width).toBeLessThanOrEqual(512);
+  const currentChoice = dialog.getByRole("button", { name: /Marketing marketing Current/ });
+  const [markerBox, copyBox, metaBox] = await Promise.all([
+    currentChoice.locator(".marker").boundingBox(),
+    currentChoice.locator(".copy").boundingBox(),
+    currentChoice.locator(".meta").boundingBox(),
+  ]);
+  if (!markerBox || !copyBox || !metaBox) throw new Error("Choice item has no rendered bounds");
+  expect(copyBox.x - (markerBox.x + markerBox.width)).toBeGreaterThanOrEqual(10);
+  expect(metaBox.x).toBeGreaterThan(copyBox.x + copyBox.width);
+  await expect(dialog).toHaveScreenshot("admin-kit-dialog.png", {
+    animations: "disabled",
+    maxDiffPixels: 100,
+  });
   await page.getByRole("button", { name: "Close" }).click();
   await page.getByRole("button", { name: "Open drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeVisible();

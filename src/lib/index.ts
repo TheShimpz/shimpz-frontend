@@ -2,6 +2,8 @@ export { default as ActionLink } from "./ActionLink.svelte";
 export { default as AssistantIcon } from "./AssistantIcon.svelte";
 export { default as Button } from "./Button.svelte";
 export { default as CheckboxField } from "./CheckboxField.svelte";
+export { default as ChoiceItem } from "./ChoiceItem.svelte";
+export { default as DialogFrame } from "./DialogFrame.svelte";
 export { default as Disclosure } from "./Disclosure.svelte";
 export { default as Drawer } from "./Drawer.svelte";
 export { default as EmbedFrame } from "./EmbedFrame.svelte";
