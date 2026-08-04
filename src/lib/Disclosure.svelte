@@ -4,9 +4,9 @@
   let { summary, children, open = $bindable(false), class: className }: Props = $props();
 </script>
 
-<details class={["shimpz-disclosure", className]} bind:open>
-  <summary>{@render summary()}</summary>
-  <div class="content">{@render children()}</div>
+<details data-slot="disclosure" class={["shimpz-disclosure", className]} bind:open>
+  <summary data-slot="disclosure-trigger">{@render summary()}</summary>
+  <div data-slot="disclosure-content" class="content">{@render children()}</div>
 </details>
 
 <style>

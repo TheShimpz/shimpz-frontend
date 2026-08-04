@@ -283,7 +283,7 @@
     margin-top: 1.25rem;
   }
 
-  .component-grid :global(.shimpz-card > .content) {
+  .component-grid :global(.shimpz-card > [data-slot="card-content"]) {
     display: grid;
     gap: 1.5rem;
   }
@@ -298,7 +298,7 @@
     gap: 1rem;
   }
 
-  :global(.brand-strip > .content) {
+  :global(.brand-strip > [data-slot="card-content"]) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -366,7 +366,7 @@
       grid-column: auto;
     }
 
-    :global(.brand-strip > .content) {
+    :global(.brand-strip > [data-slot="card-content"]) {
       align-items: flex-start;
       flex-direction: column;
     }

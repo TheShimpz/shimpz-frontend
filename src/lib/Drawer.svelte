@@ -4,7 +4,7 @@
   let { children, open = false, labelledBy, side = "right", class: className, ...attributes }: Props = $props();
 </script>
 
-<aside class={["shimpz-drawer", `shimpz-drawer--${side}`, className]} aria-labelledby={labelledBy} hidden={!open} {...attributes}>{@render children?.()}</aside>
+<aside data-slot="drawer" class={["shimpz-drawer", `shimpz-drawer--${side}`, className]} aria-labelledby={labelledBy} hidden={!open} {...attributes}>{@render children?.()}</aside>
 
 <style>
   aside { position: fixed; z-index: 70; inset-block: 0; width: min(92vw, 27rem); overflow: auto; padding: var(--shimpz-space-5); color: var(--shimpz-color-text); background: var(--shimpz-color-surface); box-shadow: -1.5rem 0 4rem rgb(0 0 0 / 68%); }

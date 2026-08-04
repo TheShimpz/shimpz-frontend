@@ -60,6 +60,8 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(page.getByText("Admin prepares the request")).toBeHidden();
   await page.getByText("Execution stages 3", { exact: true }).click();
   await expect(page.getByText("Admin prepares the request")).toBeVisible();
+  await expect(page.locator('[data-slot="disclosure-trigger"]')).toHaveCount(1);
+  await expect(page.locator('[data-slot="disclosure-content"]')).toHaveCount(1);
   await page.getByRole("button", { name: "Open dialog" }).click();
   const dialog = page.getByRole("dialog", { name: "Choose a Team" });
   await expect(dialog).toBeVisible();
@@ -84,6 +86,7 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Close" }).click();
   await page.getByRole("button", { name: "Open drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeVisible();
+  await expect(page.getByRole("complementary", { name: "System drawer" })).toHaveAttribute("data-slot", "drawer");
   await page.getByRole("button", { name: "Close drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
   await page.getByRole("button", { name: "Current language" }).click();

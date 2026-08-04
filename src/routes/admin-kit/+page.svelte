@@ -148,7 +148,7 @@
   .topbar { display: flex; min-height: 3.75rem; align-items: center; justify-content: flex-end; gap: 0.5rem; padding-inline: 1rem; }
   .content { display: grid; gap: 1.5rem; padding: clamp(1rem, 2.5vw, 2rem); }
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
-  .grid :global(.shimpz-card .content) { display: grid; align-content: start; gap: 0.75rem; }
+  .grid :global(.shimpz-card [data-slot="card-content"]) { display: grid; align-content: start; gap: 0.75rem; }
   h2 { margin: 0; font: 700 0.9rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
