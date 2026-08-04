@@ -83,6 +83,7 @@ mount(App, { target: document.getElementById("app") });
 
   let assistantId = "hello-world";
   let publishButton;
+  let storeFrame;
 </script>
 
 <main>
@@ -91,6 +92,7 @@ mount(App, { target: document.getElementById("app") });
   <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
   <Button bind:element={publishButton}>Publish</Button>
   <Notice variant="success" title="Ready">Package exports resolve.</Notice>
+  <EmbedFrame bind:element={storeFrame} title="Store" srcdoc="<!doctype html><html><body>Store</body></html>" />
 </main>
 `,
   );
