@@ -92,7 +92,7 @@
       </Card>
     </section>
     <EmptyState compact title="No pending operations" description="New activity will appear here when a Team starts work." />
-    <section id="chat" aria-label="Embedded surface"><EmbedFrame title="Embedded Store preview" srcdoc="<!doctype html><html><body style='background:#000;color:#f4f4f5;font-family:monospace'>Store surface</body></html>" /></section>
+    <Card id="chat" class="embed-card" padding="none" aria-label="Embedded surface"><EmbedFrame title="Embedded Store preview" srcdoc="<!doctype html><html><body style='background:#000;color:#f4f4f5;font-family:monospace'>Store surface</body></html>" /></Card>
     <FileInput bind:element={fileInput} aria-label="Attach files" />
   </div>
 </WorkspaceShell>
@@ -141,7 +141,8 @@
 </Drawer>
 
 <style>
-  #chat :global(.shimpz-embed) { min-height: 32rem; background: var(--shimpz-color-bg); }
+  :global(.embed-card [data-slot="card-content"]) { padding: 0; }
+  :global(.embed-card .shimpz-embed) { min-height: 32rem; background: var(--shimpz-color-bg); }
   .sidebar-content { display: grid; gap: 1.25rem; padding: 1rem; }
   nav { display: grid; gap: 0.4rem; }
   .topbar { display: flex; min-height: 3.75rem; align-items: center; justify-content: flex-end; gap: 0.5rem; padding-inline: 1rem; }

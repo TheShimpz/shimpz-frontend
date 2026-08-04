@@ -94,6 +94,7 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   const embed = page.getByTitle("Embedded Store preview");
   await expect(embed).toHaveCSS("border-top-width", "0px");
   await expect(embed).toHaveCSS("min-height", "512px");
+  await expect(page.locator('.embed-card [data-slot="card-content"]')).toHaveCSS("padding-top", "0px");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });

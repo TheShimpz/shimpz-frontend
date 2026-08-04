@@ -5,6 +5,7 @@
   type Props = HTMLAttributes<HTMLElement> & {
     title?: string;
     description?: string;
+    descriptionId?: string;
     header?: Snippet;
     action?: Snippet;
     footer?: Snippet;
@@ -16,6 +17,7 @@
     children,
     title,
     description,
+    descriptionId,
     header,
     action,
     footer,
@@ -26,19 +28,19 @@
   }: Props = $props();
 </script>
 
-<section class={["shimpz-card", `shimpz-card--${tone}`, `shimpz-card--${padding}`, className]} {...attributes}>
+<section data-slot="card" class={["shimpz-card", `shimpz-card--${tone}`, `shimpz-card--${padding}`, className]} {...attributes}>
   {#if title || description || header || action}
-    <header>
-      <div class="heading">
+    <header data-slot="card-header">
+      <div data-slot="card-heading" class="heading">
         {#if header}{@render header()}{/if}
-        {#if title}<h2>{title}</h2>{/if}
-        {#if description}<p>{description}</p>{/if}
+        {#if title}<h2 data-slot="card-title">{title}</h2>{/if}
+        {#if description}<p data-slot="card-description" id={descriptionId}>{description}</p>{/if}
       </div>
-      {#if action}<div class="action">{@render action()}</div>{/if}
+      {#if action}<div data-slot="card-action" class="action">{@render action()}</div>{/if}
     </header>
   {/if}
-  <div class="content">{@render children?.()}</div>
-  {#if footer}<footer>{@render footer()}</footer>{/if}
+  <div data-slot="card-content" class="content">{@render children?.()}</div>
+  {#if footer}<footer data-slot="card-footer">{@render footer()}</footer>{/if}
 </section>
 
 <style>
@@ -59,7 +61,7 @@
   p { margin: 0; color: var(--shimpz-color-text-muted); font-size: 0.82rem; line-height: 1.5; }
   .action { flex: 0 0 auto; }
   .content { min-width: 0; padding: 0 var(--shimpz-card-padding) var(--shimpz-card-padding); }
-  section > .content:first-child { padding-block-start: var(--shimpz-card-padding); }
+  section:not(.shimpz-card--none) > .content:first-child { padding-block-start: var(--shimpz-card-padding); }
   section > footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--shimpz-space-2); padding: var(--shimpz-space-3) var(--shimpz-card-padding); border-block-start: 1px solid var(--shimpz-color-border-subtle); }
   .shimpz-card--none > header { padding: 0; }
   .shimpz-card--none .content { padding: 0; }
