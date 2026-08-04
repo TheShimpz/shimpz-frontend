@@ -4,18 +4,21 @@
   type Props = HTMLButtonAttributes & {
     variant?: "primary" | "secondary" | "ghost" | "danger";
     size?: "default" | "compact" | "icon";
+    element?: HTMLButtonElement;
   };
 
   let {
     children,
     variant = "primary",
     size = "default",
+    element = $bindable(),
     class: className,
     ...attributes
   }: Props = $props();
 </script>
 
 <button
+  bind:this={element}
   class={["shimpz-button", `shimpz-button--${variant}`, `shimpz-button--${size}`, className]}
   {...attributes}
 >

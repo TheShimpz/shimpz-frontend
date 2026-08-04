@@ -82,13 +82,14 @@ mount(App, { target: document.getElementById("app") });
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
+  let publishButton;
 </script>
 
 <main>
   <ShimpzBrand product="Consumer" />
   <img src={logoUrl} alt="Shimpz thinking" />
   <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
-  <Button>Publish</Button>
+  <Button bind:element={publishButton}>Publish</Button>
   <Notice variant="success" title="Ready">Package exports resolve.</Notice>
 </main>
 `,
