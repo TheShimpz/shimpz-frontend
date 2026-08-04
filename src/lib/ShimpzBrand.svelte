@@ -50,7 +50,7 @@
     grid-template-columns: auto auto;
     align-items: center;
     justify-content: start;
-    gap: 0.45rem 0.65rem;
+    gap: 0.35rem 0.55rem;
     color: var(--shimpz-color-text);
     font-family: var(--shimpz-font-mono);
     text-decoration: none;
@@ -58,16 +58,16 @@
 
   img {
     grid-row: 1 / span 2;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: contain;
   }
 
   .wordmark {
     align-self: end;
-    font-size: 1rem;
+    font-size: 0.92rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     line-height: 1;
     text-transform: uppercase;
   }
@@ -75,7 +75,7 @@
   .product {
     align-self: start;
     color: var(--shimpz-color-cyan);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     line-height: 1;
@@ -105,8 +105,8 @@
   }
 
   .shimpz-brand--symbol img {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   a:focus-visible {

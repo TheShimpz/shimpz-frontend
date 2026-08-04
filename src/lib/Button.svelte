@@ -36,11 +36,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.875rem;
-    padding: 0.75rem 1.125rem;
+    min-height: var(--shimpz-control-height);
+    padding: 0.6rem 0.9rem;
     color: var(--button-color);
-    font: 700 0.8rem/1 var(--shimpz-font-mono);
-    letter-spacing: 0.08em;
+    font: 700 0.72rem/1 var(--shimpz-font-mono);
+    letter-spacing: 0.07em;
     text-decoration: none;
     text-transform: uppercase;
     background: var(--button-bg);
@@ -83,14 +83,14 @@
   }
 
   .shimpz-button--compact {
-    min-height: 2.25rem;
-    padding: 0.55rem 0.75rem;
-    font-size: 0.7rem;
+    min-height: var(--shimpz-control-height-compact);
+    padding: 0.45rem 0.65rem;
+    font-size: 0.66rem;
   }
 
   .shimpz-button--icon {
-    width: 2.75rem;
-    min-height: 2.75rem;
+    width: var(--shimpz-control-height);
+    min-height: var(--shimpz-control-height);
     padding: 0;
     clip-path: none;
   }
@@ -127,6 +127,16 @@
       border-color: ButtonText;
       clip-path: none;
       forced-color-adjust: auto;
+    }
+  }
+
+  @media (pointer: coarse) {
+    button {
+      min-height: 2.75rem;
+    }
+
+    .shimpz-button--icon {
+      width: 2.75rem;
     }
   }
 </style>

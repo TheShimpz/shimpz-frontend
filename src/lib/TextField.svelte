@@ -49,19 +49,19 @@
 <style>
   div {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   label {
     color: var(--shimpz-color-text);
-    font: 700 0.75rem/1.2 var(--shimpz-font-mono);
-    letter-spacing: 0.08em;
+    font: 600 0.7rem/1.2 var(--shimpz-font-mono);
+    letter-spacing: 0.07em;
     text-transform: uppercase;
   }
 
   input {
-    min-height: 2.75rem;
-    padding: 0.65rem 0.75rem;
+    min-height: var(--shimpz-control-height);
+    padding: 0.55rem 0.7rem;
     color: var(--shimpz-color-text);
     font: 400 1rem/1.25 var(--shimpz-font-sans);
     background: var(--shimpz-color-surface-raised);
@@ -119,6 +119,12 @@
       border-color: FieldText;
       outline-color: Highlight;
       box-shadow: none;
+    }
+  }
+
+  @media (pointer: coarse) {
+    input {
+      min-height: 2.75rem;
     }
   }
 </style>

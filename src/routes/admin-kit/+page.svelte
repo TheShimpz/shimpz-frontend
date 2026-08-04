@@ -82,17 +82,17 @@
 </Drawer>
 
 <style>
-  .sidebar-content { display: grid; gap: 2rem; padding: 1.5rem; }
-  nav { display: grid; gap: 0.6rem; }
-  .topbar { display: flex; min-height: 4.25rem; align-items: center; justify-content: flex-end; gap: 0.75rem; padding-inline: 1.25rem; }
-  .content { display: grid; gap: 2rem; padding: clamp(1.25rem, 4vw, 3rem); }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-  .grid :global(.shimpz-panel) { display: grid; align-content: start; gap: 1rem; }
-  h2 { margin: 0; font-family: var(--shimpz-font-mono); }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .assistant { display: flex; align-items: center; gap: 1rem; }
+  .sidebar-content { display: grid; gap: 1.25rem; padding: 1rem; }
+  nav { display: grid; gap: 0.4rem; }
+  .topbar { display: flex; min-height: 3.75rem; align-items: center; justify-content: flex-end; gap: 0.5rem; padding-inline: 1rem; }
+  .content { display: grid; gap: 1.5rem; padding: clamp(1rem, 2.5vw, 2rem); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .grid :global(.shimpz-panel) { display: grid; align-content: start; gap: 0.75rem; }
+  h2 { margin: 0; font: 700 0.9rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
-  ol { display: grid; gap: 0.5rem; margin: 0; padding-inline-start: 1.4rem; color: var(--shimpz-color-text-muted); }
+  ol { display: grid; gap: 0.4rem; margin: 0; padding-inline-start: 1.25rem; color: var(--shimpz-color-text-muted); font-size: 0.85rem; }
   .count { color: var(--shimpz-color-cyan); }
   @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
 </style>

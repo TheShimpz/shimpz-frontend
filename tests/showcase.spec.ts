@@ -92,3 +92,18 @@ test("matches the mobile visual contract without horizontal overflow", async ({ 
   ).toBe(true);
   await expect(page).toHaveScreenshot("showcase-mobile.png", visualContract);
 });
+
+test("matches the desktop Admin kit visual contract", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/admin-kit/");
+  await expect(page).toHaveScreenshot("admin-kit-desktop.png", visualContract);
+});
+
+test("matches the mobile Admin kit visual contract without horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/admin-kit/");
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
+  ).toBe(true);
+  await expect(page).toHaveScreenshot("admin-kit-mobile.png", visualContract);
+});

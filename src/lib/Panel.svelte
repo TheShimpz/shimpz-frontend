@@ -11,6 +11,6 @@
   .shimpz-panel--default { box-shadow: var(--shimpz-glow-cyan); }
   .shimpz-panel--accent { border-color: color-mix(in srgb, var(--shimpz-color-cyan) 60%, var(--shimpz-color-border)); box-shadow: var(--shimpz-glow-cyan); }
   .shimpz-panel--danger { border-color: var(--shimpz-color-danger); box-shadow: var(--shimpz-glow-danger); }
-  .shimpz-panel--default { padding: var(--shimpz-space-5); } .shimpz-panel--compact { padding: var(--shimpz-space-4); } .shimpz-panel--none { padding: 0; }
+  .shimpz-panel--default { padding: var(--shimpz-space-5); } .shimpz-panel--compact { padding: var(--shimpz-space-3); } .shimpz-panel--none { padding: 0; }
   @media (forced-colors: active) { .shimpz-panel { border-color: CanvasText; box-shadow: none; clip-path: none; } }
 </style>

@@ -25,10 +25,10 @@
 </div>
 
 <style>
-  div { display: grid; gap: 0.5rem; }
-  label { color: var(--shimpz-color-text); font: 700 0.75rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  div { display: grid; gap: 0.4rem; }
+  label { color: var(--shimpz-color-text); font: 600 0.7rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.07em; text-transform: uppercase; }
   .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); }
-  textarea { width: 100%; min-height: 6rem; resize: vertical; padding: 0.75rem; color: var(--shimpz-color-text); font: 400 1rem/1.5 var(--shimpz-font-sans); background: var(--shimpz-color-surface-raised); border: 1px solid var(--shimpz-color-border); border-radius: 0; }
+  textarea { width: 100%; min-height: 5.5rem; resize: vertical; padding: 0.65rem 0.7rem; color: var(--shimpz-color-text); font: 400 1rem/1.5 var(--shimpz-font-sans); background: var(--shimpz-color-surface-raised); border: 1px solid var(--shimpz-color-border); border-radius: 0; }
   textarea:focus { border-color: var(--shimpz-color-cyan); outline: 2px solid color-mix(in srgb, var(--shimpz-color-cyan) 35%, transparent); outline-offset: 1px; box-shadow: var(--shimpz-focus-ring); }
   textarea[aria-invalid="true"] { border-color: var(--shimpz-color-danger); }
   textarea:disabled { cursor: not-allowed; opacity: 0.45; }

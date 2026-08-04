@@ -30,7 +30,7 @@
 
     display: grid;
     gap: var(--shimpz-space-2);
-    padding: var(--shimpz-space-4);
+    padding: var(--shimpz-space-3);
     color: var(--shimpz-color-text-muted);
     background:
       linear-gradient(
@@ -40,7 +40,7 @@
       ),
       var(--shimpz-color-surface-raised);
     border: 1px solid var(--shimpz-color-border);
-    border-inline-start: 3px solid var(--notice-color);
+    border-inline-start: 2px solid var(--notice-color);
   }
 
   .shimpz-notice--success {
@@ -60,13 +60,13 @@
   .title {
     margin: 0;
     color: var(--notice-color);
-    font: 700 0.75rem/1.3 var(--shimpz-font-mono);
-    letter-spacing: 0.08em;
+    font: 700 0.7rem/1.3 var(--shimpz-font-mono);
+    letter-spacing: 0.07em;
     text-transform: uppercase;
   }
 
   .content {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.55;
   }
 

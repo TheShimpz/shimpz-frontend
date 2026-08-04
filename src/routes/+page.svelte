@@ -136,7 +136,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 5.5rem;
+    min-height: 4.5rem;
     border-bottom: 1px solid var(--shimpz-color-border-subtle);
   }
 
@@ -159,15 +159,15 @@
   }
 
   main {
-    padding-block: clamp(3rem, 8vw, 7rem);
+    padding-block: clamp(2.5rem, 6vw, 5rem);
   }
 
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
     align-items: center;
-    gap: clamp(2rem, 7vw, 7rem);
-    min-height: min(44rem, calc(100vh - 8rem));
+    gap: clamp(2rem, 6vw, 5rem);
+    min-height: min(38rem, calc(100vh - 6rem));
     margin-top: 0;
   }
 
@@ -180,9 +180,9 @@
   h1 {
     max-width: 11ch;
     margin: 1rem 0 1.5rem;
-    font-size: clamp(3.25rem, 9vw, 7.5rem);
-    letter-spacing: -0.075em;
-    line-height: 0.9;
+    font-size: clamp(2.75rem, 7vw, 6rem);
+    letter-spacing: -0.065em;
+    line-height: 0.92;
     text-transform: uppercase;
   }
 
@@ -195,15 +195,15 @@
     max-width: 40rem;
     margin: 0;
     color: var(--shimpz-color-text-muted);
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.65;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    line-height: 1.6;
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   output {
@@ -216,8 +216,8 @@
   .hero-brand {
     display: grid;
     place-items: center;
-    min-height: 24rem;
-    padding: 2rem;
+    min-height: 20rem;
+    padding: 1.5rem;
     text-align: center;
     background:
       radial-gradient(circle at 50% 40%, rgb(0 240 255 / 9%), transparent 48%),
@@ -234,7 +234,7 @@
   }
 
   section {
-    margin-top: clamp(5rem, 10vw, 9rem);
+    margin-top: clamp(4rem, 8vw, 7rem);
   }
 
   .section-heading {
@@ -257,7 +257,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     background: var(--shimpz-color-border);
     border: 1px solid var(--shimpz-color-border);
   }
@@ -266,7 +266,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 10rem;
+    min-height: 8rem;
     padding: 1rem;
     font: 700 0.72rem/1 var(--shimpz-font-mono);
     letter-spacing: 0.08em;
@@ -284,7 +284,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
   }
 
   article {
@@ -363,7 +363,7 @@
     }
 
     .hero-brand {
-      min-height: 20rem;
+      min-height: 17rem;
     }
 
     .swatches {
@@ -390,7 +390,7 @@
 
   @media (max-width: 520px) {
     header {
-      min-height: 4.75rem;
+      min-height: 4.25rem;
     }
 
     .signal {
@@ -398,7 +398,7 @@
     }
 
     h1 {
-      font-size: clamp(3rem, 17vw, 5rem);
+      font-size: clamp(2.75rem, 14vw, 4rem);
     }
 
     .section-heading,
