@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 const visualContract = {
   animations: "disabled",
   fullPage: true,
-  maxDiffPixelRatio: 0.01,
+  maxDiffPixels: 100,
 } as const;
 
 test.beforeEach(async ({ page }) => {
