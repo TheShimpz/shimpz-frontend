@@ -11,6 +11,7 @@
     children,
     variant = "primary",
     size = "default",
+    type = "button",
     element = $bindable(),
     class: className,
     ...attributes
@@ -19,6 +20,7 @@
 
 <button
   bind:this={element}
+  {type}
   class={["shimpz-button", `shimpz-button--${variant}`, `shimpz-button--${size}`, className]}
   {...attributes}
 >

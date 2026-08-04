@@ -24,6 +24,7 @@
   bind:this={element}
   class={["shimpz-choice-item", selected && "is-selected", className]}
   type="button"
+  aria-pressed={selected}
   {...attributes}
 >
   <span class="marker" aria-hidden="true"></span>

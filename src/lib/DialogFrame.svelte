@@ -87,6 +87,7 @@
     gap: var(--shimpz-space-3);
     padding: 0 var(--shimpz-space-5) var(--shimpz-space-5);
     overflow: auto;
+    overscroll-behavior: contain;
   }
 
   footer {
@@ -102,10 +103,13 @@
   }
 
   @media (max-width: 520px) {
-    .shimpz-dialog-frame { max-height: calc(100dvh - 1rem); }
     header { padding: var(--shimpz-space-4) var(--shimpz-space-4) var(--shimpz-space-3); }
     .body { padding: 0 var(--shimpz-space-4) var(--shimpz-space-4); }
     footer { padding: var(--shimpz-space-3) var(--shimpz-space-4) var(--shimpz-space-4); }
+  }
+
+  @media (max-width: 420px) {
+    .shimpz-dialog-frame { max-height: calc(100dvh - 1rem); }
   }
 
   @media (max-width: 380px) {

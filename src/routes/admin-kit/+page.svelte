@@ -22,6 +22,7 @@
   } from "$lib";
 
   let modal = $state<HTMLDialogElement>();
+  let tallModal = $state<HTMLDialogElement>();
   let fileInput = $state<HTMLInputElement>();
   let drawerOpen = $state(false);
   let enabled = $state(false);
@@ -53,7 +54,7 @@
         <TextField id="team-name" label="Team name" bind:value={teamName} />
         <TextAreaField id="message" label="Message" bind:value={message} />
         <CheckboxField id="enabled" label="Enable Assistant" bind:checked={enabled} />
-        <div class="actions"><Button onclick={() => modal?.showModal()}>Open dialog</Button><ActionLink href="#chat">Go to Chat</ActionLink></div>
+        <div class="actions"><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><ActionLink href="#chat">Go to Chat</ActionLink></div>
       </Panel>
       <Panel tone="accent">
         <h2>Assistant</h2>
@@ -83,6 +84,25 @@
     {#snippet footer()}
       <Button variant="secondary" onclick={() => modal?.close()}>Close</Button>
       <Button onclick={() => modal?.close()}>Confirm</Button>
+    {/snippet}
+  </DialogFrame>
+</Modal>
+
+<Modal bind:element={tallModal} labelledBy="tall-dialog-title">
+  <DialogFrame
+    kicker="Stress test // Scroll"
+    title="Review a long Team list"
+    titleId="tall-dialog-title"
+    lead="Only the content region scrolls; actions remain available."
+  >
+    <div class="team-list">
+      {#each Array.from({ length: 14 }, (_, index) => index + 1) as index}
+        <ChoiceItem title={`Team ${index}`} description={`team_${index}`} selected={index === 1} />
+      {/each}
+    </div>
+    {#snippet footer()}
+      <Button variant="secondary" onclick={() => tallModal?.close()}>Cancel</Button>
+      <Button onclick={() => tallModal?.close()}>Continue</Button>
     {/snippet}
   </DialogFrame>
 </Modal>

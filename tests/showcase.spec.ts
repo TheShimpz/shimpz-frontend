@@ -74,6 +74,8 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   if (!markerBox || !copyBox || !metaBox) throw new Error("Choice item has no rendered bounds");
   expect(copyBox.x - (markerBox.x + markerBox.width)).toBeGreaterThanOrEqual(10);
   expect(metaBox.x).toBeGreaterThan(copyBox.x + copyBox.width);
+  const dialogAxe = await new AxeBuilder({ page }).include("dialog[open]").analyze();
+  expect(dialogAxe.violations).toEqual([]);
   await expect(dialog).toHaveScreenshot("admin-kit-dialog.png", {
     animations: "disabled",
     maxDiffPixels: 100,
@@ -89,6 +91,38 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(embed).toHaveCSS("min-height", "512px");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+});
+
+test("keeps long dialog actions visible while only its body scrolls", async ({ page }) => {
+  await page.setViewportSize({ width: 470, height: 600 });
+  await page.goto("/admin-kit/");
+  await page.getByRole("button", { name: "Open tall dialog" }).click();
+  const dialog = page.getByRole("dialog", { name: "Review a long Team list" });
+  const body = dialog.locator(".body");
+  const footer = dialog.locator("footer");
+  const [scroll, footerBox] = await Promise.all([
+    body.evaluate((element) => ({ client: element.clientHeight, scroll: element.scrollHeight })),
+    footer.boundingBox(),
+  ]);
+  if (!footerBox) throw new Error("Dialog footer has no rendered bounds");
+  expect(scroll.scroll).toBeGreaterThan(scroll.client);
+  expect(footerBox.y).toBeGreaterThanOrEqual(0);
+  expect(footerBox.y + footerBox.height).toBeLessThanOrEqual(600);
+});
+
+test("stacks narrow dialog actions at full width in safe visual order", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto("/admin-kit/");
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  const dialog = page.getByRole("dialog", { name: "Choose a Team" });
+  const [closeBox, confirmBox] = await Promise.all([
+    dialog.getByRole("button", { name: "Close" }).boundingBox(),
+    dialog.getByRole("button", { name: "Confirm" }).boundingBox(),
+  ]);
+  if (!closeBox || !confirmBox) throw new Error("Dialog actions have no rendered bounds");
+  expect(Math.abs(closeBox.width - confirmBox.width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(closeBox.x - confirmBox.x)).toBeLessThanOrEqual(1);
+  expect(confirmBox.y).toBeLessThan(closeBox.y);
 });
 
 test("honors reduced motion and forced colors", async ({ page }) => {
