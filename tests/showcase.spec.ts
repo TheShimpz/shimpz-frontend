@@ -54,6 +54,7 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.goto("/admin-kit/");
   await expect(page).toHaveTitle("Admin kit — Shimpz Frontend");
   await expect(page.getByRole("heading", { name: "One sealed interface" })).toBeVisible();
+  await expect(page.getByRole("menu")).toBeHidden();
   await page.getByRole("checkbox", { name: "Enable Assistant" }).check();
   await expect(page.getByRole("checkbox", { name: "Enable Assistant" })).toBeChecked();
   await expect(page.getByText("Admin prepares the request")).toBeHidden();
@@ -86,11 +87,19 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Close drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
   await page.getByRole("button", { name: "Current language" }).click();
+  await page.keyboard.press("Home");
+  await expect(page.getByRole("menuitemradio", { name: "English" })).toBeFocused();
+  await page.keyboard.press("ArrowUp");
+  await expect(page.getByRole("menuitemradio", { name: "Português" })).toBeFocused();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByRole("menuitemradio", { name: "English" })).toBeFocused();
+  await page.keyboard.press("End");
   await page.getByRole("menuitemradio", { name: "Português" }).click();
   await expect(page.getByRole("button", { name: "Current language" })).toContainText("Português");
   await expect(page.getByText("No pending operations")).toBeVisible();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
+  await expect(page.getByRole("toolbar")).toHaveCount(0);
   const embed = page.getByTitle("Embedded Store preview");
   await expect(embed).toHaveCSS("border-top-width", "0px");
   await expect(embed).toHaveCSS("min-height", "512px");

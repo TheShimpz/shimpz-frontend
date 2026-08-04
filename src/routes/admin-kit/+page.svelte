@@ -75,7 +75,7 @@
     <section class="grid" aria-label="Menu and message primitives">
       <Card title="Menu" description="Keyboard-navigable selection with current state.">
         <DropdownMenu
-          items={[{ value: "en", label: "English" }, { value: "pt", label: "Português" }]}
+          items={[{ value: "unavailable", label: "Unavailable locale", disabled: true }, { value: "en", label: "English" }, { value: "pt", label: "Português" }]}
           value={locale}
           ariaLabel="Current language"
           triggerLabel={locale === "en" ? "English" : "Português"}
