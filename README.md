@@ -37,17 +37,17 @@ Then use the presentation primitives from the package root:
 
 ```svelte
 <script lang="ts">
-  import { Button, Notice, Panel, ShimpzBrand, TextField } from "@shimpz/frontend";
+  import { Button, Card, Notice, ShimpzBrand, TextField } from "@shimpz/frontend";
 
   let assistantId = "hello-world";
 </script>
 
 <ShimpzBrand product="Developers" />
-<Panel>
+<Card title="Assistant publication">
   <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
   <Button>Publish</Button>
   <Notice variant="success" title="Ready">Assistant validated.</Notice>
-</Panel>
+</Card>
 ```
 
 Lower-level consumers can import only the token contract:
@@ -56,10 +56,12 @@ Lower-level consumers can import only the token contract:
 @import "@shimpz/frontend/tokens.css";
 ```
 
-The package includes workspace shells, navigation, panels, actions, links,
-fields, status, modal, drawer, disclosure, embedded-frame, and Assistant-icon
-primitives. The showcase at `/admin-kit` is the rendered interaction and
-accessibility contract for the complete application surface.
+The package follows shadcn's compositional component anatomy for workspace
+shells, navigation, cards, actions, links, fields, status, modal, drawer,
+disclosure, embedded-frame, and Assistant-icon primitives. Cyberpunk tokens
+change the visual language without changing those interaction contracts. The
+showcase at `/admin-kit` is the rendered interaction and accessibility contract
+for the complete application surface.
 
 The canonical thinking asset is exported at
 `@shimpz/frontend/assets/shimpz-thinking.svg`.

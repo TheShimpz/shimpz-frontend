@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Notice, ShimpzBrand, TextField } from "$lib";
+  import { Button, Card, Notice, ShimpzBrand, TextField } from "$lib";
 
   let clicks = $state(0);
   let assistantId = $state("hello-world");
@@ -34,10 +34,10 @@
         </div>
         <output aria-live="polite">{clicks} transmissions acknowledged</output>
       </div>
-      <div class="hero-brand shimpz-panel">
+      <Card class="hero-brand">
         <ShimpzBrand variant="hero" product="Frontend" />
         <p>Canonical assets. Closed variants. Local fonts.</p>
-      </div>
+      </Card>
     </section>
 
     <section aria-labelledby="colors-title">
@@ -59,8 +59,7 @@
         <h2 id="primitives-title">Primitives</h2>
       </div>
       <div class="component-grid">
-        <article class="shimpz-panel">
-          <h3>Actions</h3>
+        <Card title="Actions">
           <div class="stack">
             <Button>Primary action</Button>
             <Button variant="secondary">Secondary action</Button>
@@ -68,9 +67,8 @@
             <Button size="compact">Compact action</Button>
             <Button disabled>Unavailable</Button>
           </div>
-        </article>
-        <article class="shimpz-panel">
-          <h3>Inputs</h3>
+        </Card>
+        <Card title="Inputs">
           <div class="stack">
             <TextField
               id="assistant-id"
@@ -92,20 +90,19 @@
               error="Use lowercase ASCII characters."
             />
           </div>
-        </article>
-        <article class="notices shimpz-panel">
-          <h3>System notices</h3>
+        </Card>
+        <Card class="notices" title="System notices">
           <div class="stack">
             <Notice title="Connected">The authorization channel is ready.</Notice>
             <Notice variant="success" title="Published">Artifact evidence is complete.</Notice>
             <Notice variant="warning" title="Review pending">Manual approval is still required.</Notice>
             <Notice variant="error" title="Access denied">The session no longer matches.</Notice>
           </div>
-        </article>
+        </Card>
       </div>
     </section>
 
-    <section class="brand-strip shimpz-panel" aria-labelledby="brand-title">
+    <Card class="brand-strip" aria-labelledby="brand-title">
       <div>
         <p class="shimpz-kicker">03 // Identity</p>
         <h2 id="brand-title">One mark, every surface.</h2>
@@ -115,7 +112,7 @@
         <ShimpzBrand product="Developers" />
         <ShimpzBrand product="Docs" />
       </div>
-    </section>
+    </Card>
   </main>
 
   <footer>
@@ -172,8 +169,7 @@
   }
 
   h1,
-  h2,
-  h3 {
+  h2 {
     font-family: var(--shimpz-font-mono);
   }
 
@@ -213,7 +209,7 @@
     font: 400 0.72rem/1.4 var(--shimpz-font-mono);
   }
 
-  .hero-brand {
+  :global(.hero-brand) {
     display: grid;
     place-items: center;
     min-height: 20rem;
@@ -224,7 +220,7 @@
       var(--shimpz-color-surface);
   }
 
-  .hero-brand p {
+  :global(.hero-brand p) {
     max-width: 15rem;
     margin: 1.5rem 0 0;
     color: var(--shimpz-color-text-dim);
@@ -287,19 +283,12 @@
     margin-top: 1.25rem;
   }
 
-  article {
-    padding: clamp(1.25rem, 3vw, 2rem);
+  .component-grid :global(.shimpz-card > .content) {
+    display: grid;
+    gap: 1.5rem;
   }
 
-  article h3 {
-    margin: 0 0 1.5rem;
-    color: var(--shimpz-color-text);
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .notices {
+  :global(.notices) {
     grid-column: 1 / -1;
   }
 
@@ -309,15 +298,14 @@
     gap: 1rem;
   }
 
-  .brand-strip {
+  :global(.brand-strip > .content) {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    padding: clamp(1.5rem, 4vw, 3rem);
   }
 
-  .brand-strip h2 {
+  :global(.brand-strip h2) {
     margin-top: 0.5rem;
   }
 
@@ -362,7 +350,7 @@
       min-height: auto;
     }
 
-    .hero-brand {
+    :global(.hero-brand) {
       min-height: 17rem;
     }
 
@@ -374,11 +362,11 @@
       grid-template-columns: 1fr;
     }
 
-    .notices {
+    :global(.notices) {
       grid-column: auto;
     }
 
-    .brand-strip {
+    :global(.brand-strip > .content) {
       align-items: flex-start;
       flex-direction: column;
     }

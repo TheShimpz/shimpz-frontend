@@ -27,22 +27,6 @@
   background: var(--shimpz-color-bg);
 }
 
-.shimpz-panel {
-  color: var(--shimpz-color-text);
-  background: var(--shimpz-color-surface);
-  border: 1px solid var(--shimpz-color-border);
-  border-radius: 0;
-  box-shadow: var(--shimpz-glow-cyan);
-  clip-path: polygon(
-    0 0,
-    calc(100% - var(--shimpz-cut-lg)) 0,
-    100% var(--shimpz-cut-lg),
-    100% 100%,
-    var(--shimpz-cut-sm) 100%,
-    0 calc(100% - var(--shimpz-cut-sm))
-  );
-}
-
 .shimpz-kicker {
   margin: 0;
   color: var(--shimpz-color-cyan);
@@ -73,13 +57,4 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
-}
-
-@media (forced-colors: active) {
-  .shimpz-panel {
-    border: 1px solid CanvasText;
-    box-shadow: none;
-    clip-path: none;
-  }
-
 }

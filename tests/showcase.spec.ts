@@ -136,7 +136,7 @@ test("honors reduced motion and forced colors", async ({ page }) => {
 
   const button = page.getByRole("button", { name: "Transmit signal" });
   await expect(button).toHaveCSS("transition-duration", "1e-05s");
-  await expect(page.locator(".shimpz-panel").first()).toHaveCSS("clip-path", "none");
+  await expect(page.locator(".shimpz-card").first()).toHaveCSS("clip-path", "none");
 });
 
 test("matches the desktop visual contract", async ({ page }) => {
