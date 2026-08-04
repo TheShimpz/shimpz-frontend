@@ -7,6 +7,7 @@
     items: Item[];
     value?: string;
     ariaLabel: string;
+    menuLabel?: string;
     triggerLabel: string;
     triggerIcon?: Snippet;
     compact?: boolean;
@@ -15,7 +16,7 @@
     class?: string;
   };
 
-  let { items, value, ariaLabel, triggerLabel, triggerIcon, compact = false, wide = false, onSelect, class: className }: Props = $props();
+  let { items, value, ariaLabel, menuLabel, triggerLabel, triggerIcon, compact = false, wide = false, onSelect, class: className }: Props = $props();
   let open = $state(false);
   let root = $state<HTMLDivElement>();
   let trigger = $state<HTMLButtonElement>();
@@ -79,7 +80,7 @@
     {#if !compact}<span class="trigger-label">{triggerLabel}</span>{/if}
     <span class="chevron" aria-hidden="true">⌄</span>
   </Button>
-    <div bind:this={menu} class="content" role="menu" popover="auto" ontoggle={(event) => (open = event.newState === "open")}>
+    <div bind:this={menu} class="content" role="menu" aria-label={menuLabel} popover="auto" ontoggle={(event) => (open = event.newState === "open")}>
       {#each items as item, index (item.value)}
         <Button
           bind:element={menuItems[index]}
