@@ -116,6 +116,8 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
   await expect(page.getByLabel("You")).toHaveAttribute("data-slot", "message");
   await expect(page.getByLabel("You").locator('[data-slot="message-content"]')).toBeVisible();
+  await expect(page.locator(".shimpz-scroll-area")).toHaveAttribute("tabindex", "0");
+  await expect(page.locator(".shimpz-scroll-area")).not.toHaveAttribute("role");
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
   await expect(page.getByRole("toolbar")).toHaveCount(0);
   const embed = page.getByTitle("Embedded Store preview");
