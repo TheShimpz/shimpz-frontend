@@ -71,6 +71,13 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.goto("/admin-kit/");
   await expect(page).toHaveTitle("Admin kit — Shimpz Frontend");
   await expect(page.getByRole("heading", { name: "One sealed interface" })).toBeVisible();
+  const intro = page.locator(".shimpz-page-intro");
+  const [introActionBox, introHeadingBox] = await Promise.all([
+    intro.getByRole("button", { name: "Change destination Team" }).boundingBox(),
+    intro.getByRole("heading", { name: "One sealed interface" }).boundingBox(),
+  ]);
+  if (!introActionBox || !introHeadingBox) throw new Error("Page intro has no rendered utility or heading");
+  expect(introActionBox.x).toBeLessThan(introHeadingBox.x);
   await expect(page.getByRole("menu")).toBeHidden();
   await page.getByRole("checkbox", { name: "Enable Assistant" }).check();
   await expect(page.getByRole("checkbox", { name: "Enable Assistant" })).toBeChecked();
@@ -282,6 +289,13 @@ test("matches the desktop Admin kit visual contract", async ({ page }) => {
 test("matches the mobile Admin kit visual contract without horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/admin-kit/");
+  const intro = page.locator(".shimpz-page-intro");
+  const [introActionBox, introHeadingBox] = await Promise.all([
+    intro.getByRole("button", { name: "Change destination Team" }).boundingBox(),
+    intro.getByRole("heading", { name: "One sealed interface" }).boundingBox(),
+  ]);
+  if (!introActionBox || !introHeadingBox) throw new Error("Mobile page intro has no rendered utility or heading");
+  expect(introActionBox.y).toBeLessThan(introHeadingBox.y);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
   ).toBe(true);

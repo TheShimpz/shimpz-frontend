@@ -1,10 +1,18 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  type Props = { kicker?: string; title: string; lead?: string; titleId?: string; actions?: Snippet; class?: string };
-  let { kicker, title, lead, titleId, actions, class: className }: Props = $props();
+  type Props = {
+    kicker?: string;
+    title: string;
+    lead?: string;
+    titleId?: string;
+    actions?: Snippet;
+    actionsPosition?: "start" | "end";
+    class?: string;
+  };
+  let { kicker, title, lead, titleId, actions, actionsPosition = "end", class: className }: Props = $props();
 </script>
 
-<header class={["shimpz-page-intro", className]}>
+<header class={["shimpz-page-intro", `actions-${actionsPosition}`, className]}>
   <div>
     {#if kicker}<p class="kicker">{kicker}</p>{/if}
     <h1 id={titleId}>{title}</h1>
@@ -19,5 +27,7 @@
   h1 { margin: 0; color: var(--shimpz-color-text); font: 700 clamp(1.65rem, 4vw, 3rem)/1.02 var(--shimpz-font-mono); letter-spacing: -0.045em; }
   .lead { max-width: 54rem; margin: var(--shimpz-space-2) 0 0; color: var(--shimpz-color-text-muted); font-size: 0.95rem; line-height: 1.55; }
   .actions { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: var(--shimpz-space-2); }
+  header.actions-start > div:first-child { order: 2; text-align: end; }
+  header.actions-start .actions { order: 1; }
   @media (max-width: 680px) { header { align-items: stretch; flex-direction: column; } }
 </style>

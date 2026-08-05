@@ -61,7 +61,19 @@
   {/snippet}
 
   <div class="content">
-    <PageIntro kicker="Admin kit // presentation" title="One sealed interface" lead="Reusable cyberpunk primitives without product authority." />
+    <PageIntro
+      kicker="Admin kit // presentation"
+      title="One sealed interface"
+      lead="Reusable cyberpunk primitives without product authority."
+      actionsPosition="start"
+    >
+      {#snippet actions()}
+        <TextAction aria-label="Change destination Team">
+          {#snippet icon()}<span>◇</span>{/snippet}
+          Marketing · Change Team
+        </TextAction>
+      {/snippet}
+    </PageIntro>
     <section id="overview" class="grid" aria-label="Admin primitives">
       <Card title="Controls" description="Compact fields and explicit actions.">
         <TextField id="team-name" label="Team name" bind:value={teamName} />
