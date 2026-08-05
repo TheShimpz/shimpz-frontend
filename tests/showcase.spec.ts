@@ -100,6 +100,14 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("menuitemradio", { name: "Português" }).click();
   await expect(page.getByRole("button", { name: "Current language" })).toContainText("Português");
   await expect(page.getByText("No pending operations")).toBeVisible();
+  await expect(page.locator(".skeleton-demo .shimpz-skeleton")).toHaveCount(3);
+  await page.getByRole("button", { name: "Show toast" }).click();
+  const toast = page.getByRole("status");
+  await expect(toast).toContainText("Presentation contract synchronized.");
+  await expect(toast).toHaveCSS("position", "fixed");
+  expect(Number(await toast.evaluate((element) => getComputedStyle(element).zIndex))).toBeGreaterThan(70);
+  await page.getByRole("button", { name: "Dismiss notification" }).click();
+  await expect(toast).toBeHidden();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
   await expect(page.getByRole("toolbar")).toHaveCount(0);

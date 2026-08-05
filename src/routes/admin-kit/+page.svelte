@@ -20,9 +20,11 @@
     ScrollArea,
     Separator,
     ShimpzBrand,
+    Skeleton,
     StatusBadge,
     TextAreaField,
     TextField,
+    Toast,
     Toolbar,
     WorkspaceShell,
   } from "$lib";
@@ -35,9 +37,12 @@
   let teamName = $state("Marketing");
   let message = $state("List the zones with active DNS records.");
   let locale = $state("en");
+  let toastVisible = $state(false);
 </script>
 
 <svelte:head><title>Admin kit — Shimpz Frontend</title></svelte:head>
+
+{#if toastVisible}<Toast label="System" closeLabel="Dismiss notification" onClose={() => (toastVisible = false)}>Presentation contract synchronized.</Toast>{/if}
 
 <WorkspaceShell skipLabel="Skip to Admin kit">
   {#snippet sidebar()}
@@ -60,7 +65,7 @@
         <TextField id="team-name" label="Team name" bind:value={teamName} />
         <TextAreaField id="message" label="Message" bind:value={message} />
         <CheckboxField id="enabled" label="Enable Assistant" bind:checked={enabled} />
-        <Toolbar><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
+        <Toolbar><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><Button variant="ghost" onclick={() => (toastVisible = true)}>Show toast</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
       </Card>
       <Card tone="accent" title="Assistant" description="Status, identity and execution details.">
         {#snippet action()}<StatusBadge tone="info">Running</StatusBadge>{/snippet}
@@ -92,6 +97,9 @@
       </Card>
     </section>
     <EmptyState compact title="No pending operations" description="New activity will appear here when a Team starts work." />
+    <Card title="Loading state" description="Reserved geometry prevents layout shifts while content arrives.">
+      <div class="skeleton-demo"><Skeleton height="0.75rem" width="42%" /><Skeleton height="2.5rem" /><Skeleton height="2.5rem" /></div>
+    </Card>
     <Card id="chat" class="embed-card" padding="none" aria-label="Embedded surface"><EmbedFrame title="Embedded Store preview" srcdoc="<!doctype html><html><body style='background:#000;color:#f4f4f5;font-family:monospace'>Store surface</body></html>" /></Card>
     <FileInput bind:element={fileInput} aria-label="Attach files" />
   </div>
@@ -153,6 +161,7 @@
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
   .messages { display: grid; gap: 0.75rem; }
+  .skeleton-demo { display: grid; gap: 0.65rem; }
   .team-list { display: grid; gap: 0.25rem; }
   ol { display: grid; gap: 0.4rem; margin: 0; padding-inline-start: 1.25rem; color: var(--shimpz-color-text-muted); font-size: 0.85rem; }
   .count { color: var(--shimpz-color-cyan); }

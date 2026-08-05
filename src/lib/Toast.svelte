@@ -27,7 +27,7 @@
   <Button class="toast-close" variant="ghost" size="icon" onclick={onClose} aria-label={closeLabel}>×</Button>
 </section>
 <style>
-  section { --toast-color: var(--shimpz-color-cyan); position: relative; z-index: 5; display: grid; min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border-block-end: 1px solid var(--shimpz-color-border); isolation: isolate; }
+  section { --toast-color: var(--shimpz-color-cyan); position: fixed; z-index: 90; inset-block-start: 0; inset-inline: 0; display: grid; min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border-block-end: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 55%); isolation: isolate; }
   .shimpz-toast--success { --toast-color: var(--shimpz-color-green); }
   .shimpz-toast--error { --toast-color: var(--shimpz-color-danger); }
   .progress { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--toast-color) 10%, transparent)); transform: scaleX(0); transform-origin: left; animation: progress var(--toast-duration) linear forwards; }
