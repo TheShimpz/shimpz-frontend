@@ -143,6 +143,24 @@ test("stacks narrow dialog actions at full width in safe visual order", async ({
   expect(confirmBox.y).toBeLessThan(closeBox.y);
 });
 
+test("keeps fixed workspace headers visible while main content scrolls", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await page.goto("/admin-kit/");
+  await page.locator('[data-slot="workspace-shell"]').evaluate((element) => element.classList.add("is-fixed"));
+  const header = page.locator('[data-slot="workspace-header"]');
+  const main = page.locator('[data-slot="workspace-main"]');
+  const [headerBox, mainBox, mainScroll] = await Promise.all([
+    header.boundingBox(),
+    main.boundingBox(),
+    main.evaluate((element) => ({ clientHeight: element.clientHeight, scrollHeight: element.scrollHeight })),
+  ]);
+  if (!headerBox || !mainBox) throw new Error("Fixed workspace regions have no rendered bounds");
+  expect(headerBox.y).toBe(0);
+  expect(mainBox.y).toBe(headerBox.height);
+  expect(mainBox.y + mainBox.height).toBeLessThanOrEqual(720);
+  expect(mainScroll.scrollHeight).toBeGreaterThan(mainScroll.clientHeight);
+});
+
 test("honors reduced motion and forced colors", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
   await page.reload();

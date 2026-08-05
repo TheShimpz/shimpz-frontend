@@ -26,11 +26,11 @@
   }: Props = $props();
 </script>
 <a class="skip" href={`#${mainId}`}>{skipLabel}</a>
-<div class={["shimpz-workspace-shell", !sidebar && "without-sidebar", fixed && "is-fixed", className]}>
-  {#if sidebar}<aside>{@render sidebar()}</aside>{/if}
-  <div class="stage">
-    {#if header}<header>{@render header()}</header>{/if}
-    <main id={mainId} tabindex="-1" class={[`content-${content}`, `padding-${padding}`, `scroll-${scroll}`]}><div class="viewport">{@render children()}</div></main>
+<div data-slot="workspace-shell" class={["shimpz-workspace-shell", !sidebar && "without-sidebar", fixed && "is-fixed", className]}>
+  {#if sidebar}<aside data-slot="workspace-sidebar">{@render sidebar()}</aside>{/if}
+  <div data-slot="workspace-stage" class="stage">
+    {#if header}<header data-slot="workspace-header">{@render header()}</header>{/if}
+    <main data-slot="workspace-main" id={mainId} tabindex="-1" class={[`content-${content}`, `padding-${padding}`, `scroll-${scroll}`]}><div data-slot="workspace-viewport" class="viewport">{@render children()}</div></main>
   </div>
 </div>
 <style>
@@ -40,8 +40,11 @@
   .without-sidebar { grid-template-columns: minmax(0, 1fr); }
   .is-fixed { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
   aside { position: sticky; top: 0; height: 100vh; overflow: auto; background: var(--shimpz-color-surface); border-inline-end: 1px solid var(--shimpz-color-border); }
-  .stage { min-width: 0; min-height: 0; } header { position: sticky; z-index: 20; top: 0; min-height: 3.75rem; background: rgb(0 0 0 / 94%); border-block-end: 1px solid var(--shimpz-color-border); backdrop-filter: blur(10px); }
+  .stage { display: grid; min-width: 0; min-height: 0; grid-template-rows: auto minmax(0, 1fr); }
+  .is-fixed .stage { height: 100%; overflow: hidden; }
+  header { position: sticky; z-index: 20; top: 0; min-height: 3.75rem; background: rgb(0 0 0 / 94%); border-block-end: 1px solid var(--shimpz-color-border); backdrop-filter: blur(10px); }
   main { min-width: 0; min-height: 100vh; min-height: 100dvh; overflow: auto; }
+  .is-fixed main { min-height: 0; }
   main.padding-default { padding: var(--shimpz-page-padding); }
   main.padding-none { padding: 0; }
   main.scroll-hidden { overflow: hidden; }
