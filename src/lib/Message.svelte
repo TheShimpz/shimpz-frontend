@@ -4,10 +4,10 @@
   type Props = HTMLAttributes<HTMLElement> & { variant?: "user" | "assistant" | "system"; author?: string; meta?: Snippet; actions?: Snippet };
   let { children, variant = "assistant", author, meta, actions, class: className, ...attributes }: Props = $props();
 </script>
-<article class={["shimpz-message", `shimpz-message--${variant}`, className]} aria-label={author} {...attributes}>
-  {#if author || meta}<header>{#if author}<strong>{author}</strong>{/if}{#if meta}<div>{@render meta()}</div>{/if}</header>{/if}
-  <div class="content">{@render children?.()}</div>
-  {#if actions}<footer>{@render actions()}</footer>{/if}
+<article data-slot="message" class={["shimpz-message", `shimpz-message--${variant}`, className]} aria-label={author} {...attributes}>
+  {#if author || meta}<header data-slot="message-header">{#if author}<strong>{author}</strong>{/if}{#if meta}<div>{@render meta()}</div>{/if}</header>{/if}
+  <div data-slot="message-content" class="content">{@render children?.()}</div>
+  {#if actions}<footer data-slot="message-actions">{@render actions()}</footer>{/if}
 </article>
 <style>
   article { display: grid; width: fit-content; max-width: min(48rem, 92%); min-width: 0; gap: var(--shimpz-space-2); color: var(--shimpz-color-text); }

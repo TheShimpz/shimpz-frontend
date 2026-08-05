@@ -109,6 +109,8 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Dismiss notification" }).click();
   await expect(toast).toBeHidden();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
+  await expect(page.getByLabel("You")).toHaveAttribute("data-slot", "message");
+  await expect(page.getByLabel("You").locator('[data-slot="message-content"]')).toBeVisible();
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
   await expect(page.getByRole("toolbar")).toHaveCount(0);
   const embed = page.getByTitle("Embedded Store preview");
