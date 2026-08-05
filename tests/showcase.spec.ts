@@ -116,7 +116,7 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   if (!toastBox) throw new Error("Toast has no rendered bounds");
   expect(toastBox.width).toBeLessThanOrEqual(448);
   expect(viewport.width - toastBox.x - toastBox.width).toBeGreaterThanOrEqual(15);
-  expect(viewport.height - toastBox.y - toastBox.height).toBeGreaterThanOrEqual(79);
+  expect(viewport.height - toastBox.y - toastBox.height).toBeGreaterThanOrEqual(15);
   await page.getByRole("button", { name: "Dismiss notification" }).click();
   await expect(toast).toBeHidden();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");

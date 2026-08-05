@@ -42,7 +42,7 @@
 
 <svelte:head><title>Admin kit — Shimpz Frontend</title></svelte:head>
 
-{#if toastVisible}<Toast label="System" offset="5rem" closeLabel="Dismiss notification" onClose={() => (toastVisible = false)}>Presentation contract synchronized.</Toast>{/if}
+{#if toastVisible}<Toast label="System" closeLabel="Dismiss notification" onClose={() => (toastVisible = false)}>Presentation contract synchronized.</Toast>{/if}
 
 <WorkspaceShell skipLabel="Skip to Admin kit">
   {#snippet sidebar()}
