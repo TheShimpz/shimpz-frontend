@@ -27,7 +27,7 @@
   <Button class="toast-close" variant="ghost" size="icon" onclick={onClose} aria-label={closeLabel}>×</Button>
 </section>
 <style>
-  section { --toast-color: var(--shimpz-color-cyan); position: fixed; z-index: 90; inset-block-end: var(--shimpz-space-4); inset-inline-end: var(--shimpz-space-4); display: grid; box-sizing: border-box; width: min(28rem, calc(100vw - 2rem)); min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 55%); clip-path: var(--shimpz-clip-sm); isolation: isolate; }
+  section { --toast-color: var(--shimpz-color-cyan); position: fixed; z-index: 90; inset-block-end: var(--shimpz-space-4); inset-inline-end: var(--shimpz-space-4); display: grid; box-sizing: border-box; width: min(28rem, calc(100vw - 2rem)); min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 55%); clip-path: polygon(0 0, calc(100% - var(--shimpz-cut-sm)) 0, 100% var(--shimpz-cut-sm), 100% 100%, 0 100%); isolation: isolate; }
   .shimpz-toast--success { --toast-color: var(--shimpz-color-green); }
   .shimpz-toast--error { --toast-color: var(--shimpz-color-danger); }
   .progress { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--toast-color) 10%, transparent)); transform: scaleX(0); transform-origin: left; animation: progress var(--toast-duration) linear forwards; }
