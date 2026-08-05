@@ -69,7 +69,11 @@
     >
       {#snippet actions()}
         <TextAction aria-label="Change destination Team">
-          {#snippet icon()}<span>◇</span>{/snippet}
+          {#snippet icon()}
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="m8 1 7 7-7 7-7-7z" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          {/snippet}
           Marketing · Change Team
         </TextAction>
       {/snippet}
