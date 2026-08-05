@@ -171,6 +171,24 @@ test("keeps fixed workspace headers visible while main content scrolls", async (
   expect(mainScroll.scrollHeight).toBeGreaterThan(mainScroll.clientHeight);
 });
 
+test("constrains a fixed workspace that has no header", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await page.goto("/admin-kit/");
+  const shell = page.locator('[data-slot="workspace-shell"]');
+  const stage = page.locator('[data-slot="workspace-stage"]');
+  await shell.evaluate((element) => element.classList.add("is-fixed"));
+  await stage.evaluate((element) => {
+    element.classList.add("without-header");
+    element.querySelector('[data-slot="workspace-header"]')?.remove();
+  });
+  const main = page.locator('[data-slot="workspace-main"]');
+  const box = await main.boundingBox();
+  if (!box) throw new Error("Headerless fixed workspace has no rendered main bounds");
+  expect(box.y).toBe(0);
+  expect(box.height).toBe(720);
+  expect(await main.evaluate((element) => element.scrollHeight)).toBeGreaterThan(720);
+});
+
 test("honors reduced motion and forced colors", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
   await page.reload();
