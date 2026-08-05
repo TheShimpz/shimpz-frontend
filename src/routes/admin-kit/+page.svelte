@@ -39,6 +39,7 @@
   let message = $state("List the zones with active DNS records.");
   let locale = $state("en");
   let toastVisible = $state(false);
+  const assistantPreviewIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='16' fill='%23f48120'/%3E%3C/svg%3E";
 </script>
 
 <svelte:head><title>Admin kit — Shimpz Frontend</title></svelte:head>
@@ -70,7 +71,7 @@
       </Card>
       <Card tone="accent" title="Assistant" description="Status, identity and execution details.">
         {#snippet action()}<StatusBadge tone="info">Running</StatusBadge>{/snippet}
-        <div class="assistant"><AssistantIcon assistant="cloudflare" size={52} /><div><strong>Shimpz Cloudflare</strong><StatusBadge tone="info">Running</StatusBadge></div></div>
+        <div class="assistant"><AssistantIcon assistant="cloudflare" src={assistantPreviewIcon} size={52} /><div><strong>Shimpz Cloudflare</strong><StatusBadge tone="info">Running</StatusBadge></div></div>
         <Separator />
         <Disclosure>
           {#snippet summary()}Execution stages <span class="count">3</span>{/snippet}
@@ -89,7 +90,7 @@
           </TextAction>
         </div>
         <ChoiceItem title="Shimpz Cloudflare" selected aria-label="Shimpz Cloudflare">
-          {#snippet leading()}<AssistantIcon assistant="cloudflare" size={34} />{/snippet}
+          {#snippet leading()}<AssistantIcon assistant="cloudflare" src={assistantPreviewIcon} size={34} />{/snippet}
           {#snippet trailing()}<span aria-hidden="true">✓</span>{/snippet}
         </ChoiceItem>
       </Card>

@@ -136,6 +136,12 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
 
 test("renders Assistant selection as text actions and pressed choices", async ({ page }) => {
   await page.goto("/admin-kit/");
+  const assistantIcon = page.locator(".shimpz-assistant-icon.has-image").first();
+  await expect(assistantIcon).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(assistantIcon).toHaveCSS("background-image", "none");
+  await expect(assistantIcon).toHaveCSS("clip-path", "none");
+  await expect(assistantIcon.locator("img")).toHaveCSS("object-fit", "contain");
+  expect(await assistantIcon.evaluate((element) => getComputedStyle(element, "::after").content)).toBe("none");
   const selectAll = page.getByRole("button", { name: "Select all Assistants", exact: true });
   await expect(selectAll).toBeVisible();
   await expect(selectAll).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
