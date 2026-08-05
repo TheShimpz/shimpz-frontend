@@ -111,6 +111,11 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(toast).toContainText("Presentation contract synchronized.");
   await expect(toast).toHaveCSS("position", "fixed");
   expect(Number(await toast.evaluate((element) => getComputedStyle(element).zIndex))).toBeGreaterThan(70);
+  const [toastBox, viewport] = await Promise.all([toast.boundingBox(), page.evaluate(() => ({ width: innerWidth, height: innerHeight }))]);
+  if (!toastBox) throw new Error("Toast has no rendered bounds");
+  expect(toastBox.width).toBeLessThanOrEqual(448);
+  expect(viewport.width - toastBox.x - toastBox.width).toBeGreaterThanOrEqual(15);
+  expect(viewport.height - toastBox.y - toastBox.height).toBeGreaterThanOrEqual(15);
   await page.getByRole("button", { name: "Dismiss notification" }).click();
   await expect(toast).toBeHidden();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
