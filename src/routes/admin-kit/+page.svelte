@@ -22,6 +22,7 @@
     ShimpzBrand,
     Skeleton,
     StatusBadge,
+    TextAction,
     TextAreaField,
     TextField,
     Toast,
@@ -75,6 +76,22 @@
           {#snippet summary()}Execution stages <span class="count">3</span>{/snippet}
           <ol><li>Admin prepares the request</li><li>Team gathers context</li><li>Assistant executes the Power</li></ol>
         </Disclosure>
+      </Card>
+      <Card title="Assistant selection" description="Pressed rows expose selection without a duplicate checkbox.">
+        <div class="bulk-actions">
+          <TextAction aria-label="Select all Assistants">
+            {#snippet icon()}<span>＋</span>{/snippet}
+            Select all
+          </TextAction>
+          <TextAction aria-label="Unselect all Assistants">
+            {#snippet icon()}<span>−</span>{/snippet}
+            Unselect all
+          </TextAction>
+        </div>
+        <ChoiceItem title="Shimpz Cloudflare" selected aria-label="Shimpz Cloudflare">
+          {#snippet leading()}<AssistantIcon assistant="cloudflare" size={34} />{/snippet}
+          {#snippet trailing()}<span aria-hidden="true">✓</span>{/snippet}
+        </ChoiceItem>
       </Card>
     </section>
     <section class="grid" aria-label="Menu and message primitives">
@@ -160,6 +177,7 @@
   h2 { margin: 0; font: 700 0.9rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
+  .bulk-actions { display: flex; flex-wrap: wrap; gap: var(--shimpz-space-4); }
   .messages { display: grid; gap: 0.75rem; }
   .skeleton-demo { display: grid; gap: 0.65rem; }
   .team-list { display: grid; gap: 0.25rem; }

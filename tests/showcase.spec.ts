@@ -134,6 +134,27 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   expect(results.violations).toEqual([]);
 });
 
+test("renders Assistant selection as text actions and pressed choices", async ({ page }) => {
+  await page.goto("/admin-kit/");
+  const selectAll = page.getByRole("button", { name: "Select all Assistants", exact: true });
+  await expect(selectAll).toBeVisible();
+  await expect(selectAll).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(selectAll).toHaveCSS("border-top-width", "0px");
+
+  const choice = page.getByRole("button", { name: "Shimpz Cloudflare" });
+  await expect(choice).toHaveAttribute("aria-pressed", "true");
+  await expect(choice.getByRole("checkbox")).toHaveCount(0);
+  await expect(choice.locator('[data-slot="choice-leading"]')).toBeVisible();
+  await expect(choice.locator('[data-slot="choice-trailing"]')).toContainText("✓");
+
+  const [iconBox, labelBox] = await Promise.all([
+    selectAll.locator('[data-slot="text-action-icon"]').boundingBox(),
+    selectAll.locator('[data-slot="text-action-label"]').boundingBox(),
+  ]);
+  if (!iconBox || !labelBox) throw new Error("Text action has no rendered icon or label bounds");
+  expect(labelBox.x).toBeGreaterThan(iconBox.x + iconBox.width);
+});
+
 test("keeps long dialog actions visible while only its body scrolls", async ({ page }) => {
   await page.setViewportSize({ width: 470, height: 600 });
   await page.goto("/admin-kit/");

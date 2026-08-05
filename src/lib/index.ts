@@ -22,6 +22,7 @@ export { default as Separator } from "./Separator.svelte";
 export { default as Skeleton } from "./Skeleton.svelte";
 export { default as StatusBadge } from "./StatusBadge.svelte";
 export { default as TextAreaField } from "./TextAreaField.svelte";
+export { default as TextAction } from "./TextAction.svelte";
 export { default as TextField } from "./TextField.svelte";
 export { default as TextLink } from "./TextLink.svelte";
 export { default as Toolbar } from "./Toolbar.svelte";

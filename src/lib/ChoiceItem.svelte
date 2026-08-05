@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import type { HTMLButtonAttributes } from "svelte/elements";
 
   type Props = HTMLButtonAttributes & {
@@ -6,6 +7,8 @@
     description?: string;
     meta?: string;
     selected?: boolean;
+    leading?: Snippet;
+    trailing?: Snippet;
     element?: HTMLButtonElement;
   };
 
@@ -14,6 +17,8 @@
     description,
     meta,
     selected = false,
+    leading,
+    trailing,
     element = $bindable(),
     class: className,
     ...attributes
@@ -27,12 +32,20 @@
   aria-pressed={selected}
   {...attributes}
 >
-  <span class="marker" aria-hidden="true"></span>
+  {#if leading}
+    <span class="leading" data-slot="choice-leading">{@render leading()}</span>
+  {:else}
+    <span class="marker" aria-hidden="true"></span>
+  {/if}
   <span class="copy">
     <strong>{title}</strong>
     {#if description}<small>{description}</small>{/if}
   </span>
-  {#if meta}<span class="meta">{meta}</span>{/if}
+  {#if trailing}
+    <span class="trailing" data-slot="choice-trailing">{@render trailing()}</span>
+  {:else if meta}
+    <span class="meta">{meta}</span>
+  {/if}
 </button>
 
 <style>
@@ -68,6 +81,19 @@
     height: 0.5rem;
     border: 1px solid var(--shimpz-color-cyan);
     transform: rotate(45deg);
+  }
+
+  .leading,
+  .trailing {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trailing {
+    margin-inline-start: auto;
+    color: var(--shimpz-color-green);
   }
 
   .is-selected .marker {
