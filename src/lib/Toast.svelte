@@ -5,12 +5,13 @@
     tone?: "info" | "success" | "error";
     label?: string;
     durationMs?: number;
+    offset?: string;
     paused?: boolean;
     closeLabel: string;
     onClose: () => void;
     element?: HTMLElement;
   };
-  let { children, tone = "info", label, durationMs = 5000, paused = false, closeLabel, onClose, element = $bindable(), class: className, ...attributes }: Props = $props();
+  let { children, tone = "info", label, durationMs = 5000, offset, paused = false, closeLabel, onClose, element = $bindable(), class: className, ...attributes }: Props = $props();
 </script>
 <section
   bind:this={element}
@@ -19,7 +20,7 @@
   role={tone === "error" ? "alert" : "status"}
   aria-live={tone === "error" ? "assertive" : "polite"}
   aria-atomic="true"
-  style={`--toast-duration:${durationMs}ms`}
+  style={`--toast-duration:${durationMs}ms${offset ? `;--toast-offset:${offset}` : ""}`}
   {...attributes}
 >
   <span data-slot="toast-progress" class="progress" aria-hidden="true"></span>
@@ -27,7 +28,7 @@
   <Button class="toast-close" variant="ghost" size="icon" onclick={onClose} aria-label={closeLabel}>×</Button>
 </section>
 <style>
-  section { --toast-color: var(--shimpz-color-cyan); position: fixed; z-index: 90; inset-block-end: var(--shimpz-space-4); inset-inline-end: var(--shimpz-space-4); display: grid; box-sizing: border-box; width: min(28rem, calc(100vw - 2rem)); min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 55%); clip-path: polygon(0 0, calc(100% - var(--shimpz-cut-sm)) 0, 100% var(--shimpz-cut-sm), 100% 100%, 0 100%); isolation: isolate; }
+  section { --toast-color: var(--shimpz-color-cyan); position: fixed; z-index: 90; inset-block-end: var(--toast-offset, var(--shimpz-space-4)); inset-inline-end: var(--shimpz-space-4); display: grid; box-sizing: border-box; width: min(28rem, calc(100vw - 2rem)); min-height: 3.25rem; place-items: center; overflow: hidden; padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 55%); clip-path: polygon(0 0, calc(100% - var(--shimpz-cut-sm)) 0, 100% var(--shimpz-cut-sm), 100% 100%, 0 100%); isolation: isolate; }
   .shimpz-toast--success { --toast-color: var(--shimpz-color-green); }
   .shimpz-toast--error { --toast-color: var(--shimpz-color-danger); }
   .progress { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--toast-color) 10%, transparent)); transform: scaleX(0); transform-origin: left; animation: progress var(--toast-duration) linear forwards; }
@@ -38,5 +39,5 @@
   section :global(.toast-close) { position: absolute; top: 50%; inset-inline-end: var(--shimpz-space-4); width: 2rem; min-height: 2rem; transform: translateY(-50%); }
   @keyframes progress { to { transform: scaleX(1); } }
   @media (prefers-reduced-motion: reduce) { .progress { animation-name: none; transform: none; } }
-  @media (max-width: 620px) { section { inset-block-end: var(--shimpz-space-2); inset-inline-end: var(--shimpz-space-2); width: calc(100vw - 1rem); padding-inline: 2.8rem; } .copy { align-items: center; flex-direction: column; gap: var(--shimpz-space-1); } section :global(.toast-close) { inset-inline-end: var(--shimpz-space-2); } }
+  @media (max-width: 620px) { section { inset-block-end: var(--toast-offset, var(--shimpz-space-2)); inset-inline-end: var(--shimpz-space-2); width: calc(100vw - 1rem); padding-inline: 2.8rem; } .copy { align-items: center; flex-direction: column; gap: var(--shimpz-space-1); } section :global(.toast-close) { inset-inline-end: var(--shimpz-space-2); } }
 </style>
