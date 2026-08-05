@@ -90,6 +90,7 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Close drawer" }).click();
   await expect(page.getByRole("complementary", { name: "System drawer" })).toBeHidden();
   await page.getByRole("button", { name: "Current language" }).click();
+  await expect(page.getByRole("menuitemradio", { name: "Unavailable locale" })).toBeDisabled();
   await page.keyboard.press("Home");
   await expect(page.getByRole("menuitemradio", { name: "English" })).toBeFocused();
   await page.keyboard.press("ArrowUp");
@@ -99,6 +100,10 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.keyboard.press("End");
   await page.getByRole("menuitemradio", { name: "Português" }).click();
   await expect(page.getByRole("button", { name: "Current language" })).toContainText("Português");
+  await page.getByRole("button", { name: "Current language" }).click();
+  await expect(page.getByRole("menu")).toBeVisible();
+  await page.getByRole("heading", { name: "One sealed interface" }).click();
+  await expect(page.getByRole("menu")).toBeHidden();
   await expect(page.getByText("No pending operations")).toBeVisible();
   await expect(page.locator(".skeleton-demo .shimpz-skeleton")).toHaveCount(3);
   await page.getByRole("button", { name: "Show toast" }).click();

@@ -71,6 +71,9 @@
     });
   }
   function choose(item: Item) { if (item.disabled) return; onSelect(item.value); close(true); }
+  function outsidePointerdown(event: PointerEvent) {
+    if (open && event.target instanceof Node && !root?.contains(event.target)) close();
+  }
   function keydown(event: KeyboardEvent) {
     if (!open) return;
     if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
@@ -88,6 +91,7 @@
 </script>
 
 <svelte:window onkeydown={keydown} onresize={placeMenu} onscrollcapture={() => { if (open) placeMenu(); }} />
+<svelte:document onpointerdown={outsidePointerdown} />
 
 <div bind:this={root} class={["shimpz-dropdown", wide && "is-wide", className]}>
   <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" onclick={toggle} aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
