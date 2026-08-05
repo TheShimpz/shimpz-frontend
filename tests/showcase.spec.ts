@@ -28,6 +28,23 @@ test("renders and operates the built design-system showcase", async ({ page }) =
     "true",
   );
   await expect(page.getByText("Use lowercase ASCII characters.")).toBeVisible();
+
+  const notices = page.locator('[data-slot="notice"]');
+  await expect(notices).toHaveCount(4);
+  for (const notice of await notices.all()) {
+    expect(await notice.evaluate((element) => (
+      Math.abs(element.getBoundingClientRect().width - element.parentElement!.getBoundingClientRect().width) < 1
+    ))).toBe(true);
+    await expect(notice).toHaveCSS("border-top-width", "0px");
+    await expect(notice).toHaveCSS("border-right-width", "0px");
+    await expect(notice).toHaveCSS("border-bottom-width", "0px");
+    await expect(notice).toHaveCSS("border-left-width", "3px");
+    const iconBox = await notice.locator('[data-slot="notice-icon"]').boundingBox();
+    const bodyBox = await notice.locator('[data-slot="notice-body"]').boundingBox();
+    if (!iconBox || !bodyBox) throw new Error("Notice has no rendered icon or body");
+    expect(iconBox.width).toBeGreaterThanOrEqual(24);
+    expect(bodyBox.x).toBeGreaterThan(iconBox.x + iconBox.width);
+  }
 });
 
 test("loads local fonts and exposes keyboard focus", async ({ page }) => {
