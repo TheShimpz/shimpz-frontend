@@ -50,6 +50,7 @@
   main.padding-none { padding: 0; }
   main.scroll-hidden { overflow: hidden; }
   .viewport { width: 100%; min-width: 0; min-height: 100%; }
+  .is-fixed .viewport { height: 100%; }
   .content-contained .viewport { width: min(100%, var(--shimpz-content-width)); margin-inline: auto; }
   @media (max-width: 820px) { .shimpz-workspace-shell { grid-template-columns: 1fr; } aside { position: relative; height: auto; border-inline-end: 0; border-block-end: 1px solid var(--shimpz-color-border); } }
 </style>

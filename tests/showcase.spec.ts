@@ -182,10 +182,15 @@ test("constrains a fixed workspace that has no header", async ({ page }) => {
     element.querySelector('[data-slot="workspace-header"]')?.remove();
   });
   const main = page.locator('[data-slot="workspace-main"]');
+  await main.evaluate((element) => {
+    element.classList.remove("padding-default");
+    element.classList.add("padding-none");
+  });
   const box = await main.boundingBox();
   if (!box) throw new Error("Headerless fixed workspace has no rendered main bounds");
   expect(box.y).toBe(0);
   expect(box.height).toBe(720);
+  expect(await page.locator('[data-slot="workspace-viewport"]').evaluate((element) => element.clientHeight)).toBe(720);
   expect(await main.evaluate((element) => element.scrollHeight)).toBeGreaterThan(720);
 });
 
