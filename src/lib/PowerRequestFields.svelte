@@ -178,13 +178,13 @@
 </div>
 
 <style>
-  .power-request-fields,
-  fieldset {
-    display: grid;
-    gap: var(--shimpz-space-2);
+  .power-request-fields {
+    display: contents;
   }
 
   fieldset {
+    display: grid;
+    gap: var(--shimpz-space-2);
     margin: 0;
     border: 0;
     padding: 0;
