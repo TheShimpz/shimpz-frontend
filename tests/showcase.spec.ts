@@ -44,6 +44,9 @@ test("renders and operates the built design-system showcase", async ({ page }) =
     if (!iconBox || !bodyBox) throw new Error("Notice has no rendered icon or body");
     expect(iconBox.width).toBeGreaterThanOrEqual(24);
     expect(bodyBox.x).toBeGreaterThan(iconBox.x + iconBox.width);
+    expect(Math.abs(
+      (iconBox.y + iconBox.height / 2) - (bodyBox.y + bodyBox.height / 2),
+    )).toBeLessThan(1);
   }
 });
 

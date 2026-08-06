@@ -49,7 +49,7 @@
     width: 100%;
     box-sizing: border-box;
     grid-template-columns: auto minmax(0, 1fr);
-    align-items: start;
+    align-items: center;
     gap: var(--shimpz-space-3);
     padding: var(--shimpz-space-3);
     color: var(--shimpz-color-text-muted);
@@ -82,7 +82,6 @@
     width: 1.65rem;
     height: 1.65rem;
     flex: 0 0 auto;
-    margin-block-start: 0.05rem;
     color: var(--notice-color);
     fill: currentColor;
   }
