@@ -17,7 +17,9 @@
     Message,
     NavItem,
     PageIntro,
+    RadioField,
     ScrollArea,
+    SelectField,
     Separator,
     ShimpzBrand,
     Skeleton,
@@ -38,6 +40,8 @@
   let teamName = $state("Marketing");
   let message = $state("List the zones with active DNS records.");
   let locale = $state("en");
+  let destination = $state("");
+  let executionMode = $state("safe");
   let toastVisible = $state(false);
   const assistantPreviewIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='16' fill='%23f48120'/%3E%3C/svg%3E";
 </script>
@@ -82,6 +86,18 @@
       <Card title="Controls" description="Compact fields and explicit actions.">
         <TextField id="team-name" label="Team name" bind:value={teamName} />
         <TextAreaField id="message" label="Message" bind:value={message} />
+        <SelectField
+          id="destination"
+          label="Destination"
+          placeholder="Choose a Team"
+          options={[{ value: "marketing", label: "Marketing" }, { value: "operations", label: "Operations" }]}
+          bind:value={destination}
+        />
+        <fieldset>
+          <legend>Execution mode</legend>
+          <RadioField id="mode-safe" name="execution-mode" optionValue="safe" label="Safe" description="Review each change." bind:value={executionMode} />
+          <RadioField id="mode-fast" name="execution-mode" optionValue="fast" label="Fast" description="Apply the reviewed batch." bind:value={executionMode} />
+        </fieldset>
         <CheckboxField id="enabled" label="Enable Assistant" bind:checked={enabled} />
         <Toolbar><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><Button variant="ghost" onclick={() => (toastVisible = true)}>Show toast</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
       </Card>
@@ -197,6 +213,8 @@
   .bulk-actions { display: flex; flex-wrap: wrap; gap: var(--shimpz-space-4); }
   .messages { display: grid; gap: 0.75rem; }
   .skeleton-demo { display: grid; gap: 0.65rem; }
+  fieldset { display: grid; gap: 0.25rem; margin: 0; border: 0; padding: 0; }
+  legend { margin-bottom: 0.4rem; padding: 0; color: var(--shimpz-color-text); font: 600 0.7rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.07em; text-transform: uppercase; }
   .team-list { display: grid; gap: 0.25rem; }
   ol { display: grid; gap: 0.4rem; margin: 0; padding-inline-start: 1.25rem; color: var(--shimpz-color-text-muted); font-size: 0.85rem; }
   .count { color: var(--shimpz-color-cyan); }

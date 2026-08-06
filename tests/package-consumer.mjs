@@ -78,10 +78,12 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, RadioField, SelectField, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
+  let destination = "marketing";
+  let mode = "safe";
   let publishButton;
   let storeFrame;
   let messageField;
@@ -91,6 +93,8 @@ mount(App, { target: document.getElementById("app") });
   <ShimpzBrand product="Consumer" />
   <img src={logoUrl} alt="Shimpz thinking" />
   <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
+  <SelectField id="destination" label="Destination" options={[{ value: "marketing", label: "Marketing" }]} bind:value={destination} />
+  <RadioField id="mode-safe" name="mode" optionValue="safe" label="Safe" bind:value={mode} />
   <Button bind:element={publishButton}>Publish</Button>
   <Notice variant="success" title="Ready">Package exports resolve.</Notice>
   <EmbedFrame bind:element={storeFrame} title="Store" srcdoc="<!doctype html><html><body>Store</body></html>" />

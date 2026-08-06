@@ -84,6 +84,10 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await expect(page.getByRole("menu")).toBeHidden();
   await page.getByRole("checkbox", { name: "Enable Assistant" }).check();
   await expect(page.getByRole("checkbox", { name: "Enable Assistant" })).toBeChecked();
+  await page.getByRole("combobox", { name: "Destination" }).selectOption("marketing");
+  await expect(page.getByRole("combobox", { name: "Destination" })).toHaveValue("marketing");
+  await page.getByRole("radio", { name: "Fast" }).check();
+  await expect(page.getByRole("radio", { name: "Fast" })).toBeChecked();
   await expect(page.getByText("Admin prepares the request")).toBeHidden();
   await page.getByText("Execution stages 3", { exact: true }).click();
   await expect(page.getByText("Admin prepares the request")).toBeVisible();
