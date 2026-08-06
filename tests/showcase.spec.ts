@@ -224,6 +224,45 @@ test("keeps PromptDialog open state synchronized with native cancellation", asyn
   await expect(dialog).toBeVisible();
 });
 
+test("renders and validates every reusable Power request field", async ({ page }) => {
+  await page.goto("/power-requests/");
+  const kind = page.getByRole("combobox", { name: "Request kind" });
+  const output = page.locator("output");
+
+  await page.getByRole("textbox", { name: /Reviewed value/ }).fill("reviewed");
+  await expect(output).toContainText('Valid · "reviewed"');
+
+  await kind.selectOption("input:textarea");
+  await page.getByRole("textbox", { name: /Reviewed value/ }).fill("longer context");
+  await expect(output).toContainText('Valid · "longer context"');
+
+  await kind.selectOption("input:select");
+  await page.getByRole("combobox", { name: /Reviewed value/ }).selectOption("one");
+  await expect(output).toContainText('Valid · "one"');
+
+  await kind.selectOption("input:choice");
+  await page.getByRole("radio", { name: "Two" }).check();
+  await expect(output).toContainText('Valid · "two"');
+
+  await kind.selectOption("input:choices");
+  await page.getByRole("checkbox", { name: "One" }).check();
+  await expect(output).toContainText('Valid · ["one"]');
+
+  for (const authKind of ["approval", "auth:phishing-resistant"]) {
+    await kind.selectOption(authKind);
+    await expect(output).toContainText("Valid · true");
+  }
+  await kind.selectOption("auth:reauth");
+  await page.getByRole("textbox", { name: "Current password" }).fill("secret");
+  await expect(output).toContainText('Valid · "secret"');
+  await kind.selectOption("auth:second-factor");
+  await page.getByRole("textbox", { name: "Authentication code" }).fill("123456");
+  await expect(output).toContainText('Valid · "123456"');
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test("stacks narrow dialog actions at full width in safe visual order", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto("/admin-kit/");

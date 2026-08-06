@@ -78,7 +78,7 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PromptDialog, RadioField, SelectField, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PowerRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
@@ -87,6 +87,8 @@ mount(App, { target: document.getElementById("app") });
   let publishButton;
   let storeFrame;
   let messageField;
+  let powerValue;
+  let powerValid = false;
 </script>
 
 <main>
@@ -99,6 +101,13 @@ mount(App, { target: document.getElementById("app") });
   <Notice variant="success" title="Ready">Package exports resolve.</Notice>
   <EmbedFrame bind:element={storeFrame} title="Store" srcdoc="<!doctype html><html><body>Store</body></html>" />
   <TextAreaField id="message" label="Message" bind:element={messageField} />
+  <PowerRequestFields
+    request={{ kind: "input:text", label: "Value", required: true, placeholder: null, min_length: 1, max_length: 80 }}
+    resetKey="consumer"
+    labels={{ required: "Required", optional: "Optional", chooseOption: "Choose", selectionHint: "Choose one", thirdPartySecret: "Third-party secret", reauthHint: "Confirm your password", reauthLabel: "Password", secondFactorHint: "Enter your code", secondFactorLabel: "Code", secondFactorPlaceholder: "123456", passkeyHint: "Use your passkey" }}
+    bind:value={powerValue}
+    bind:valid={powerValid}
+  />
 </main>
 `,
   );
