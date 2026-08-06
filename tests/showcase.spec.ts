@@ -136,14 +136,18 @@ test("renders and operates the reusable Admin component kit", async ({ page }) =
   await page.getByRole("button", { name: "Show toast" }).click();
   const toast = page.getByRole("status");
   await expect(toast).toContainText("Presentation contract synchronized.");
-  await expect(toast).toHaveCSS("position", "fixed");
-  expect(Number(await toast.evaluate((element) => getComputedStyle(element).zIndex))).toBeGreaterThan(70);
+  await expect(toast).toHaveCSS("position", "relative");
   expect(await toast.evaluate((element) => getComputedStyle(element).clipPath)).not.toBe("none");
-  const [toastBox, viewport] = await Promise.all([toast.boundingBox(), page.evaluate(() => ({ width: innerWidth, height: innerHeight }))]);
+  const [toastBox, workspaceBox, viewport] = await Promise.all([
+    toast.boundingBox(),
+    page.locator('[data-slot="workspace-shell"]').boundingBox(),
+    page.evaluate(() => ({ width: innerWidth })),
+  ]);
   if (!toastBox) throw new Error("Toast has no rendered bounds");
-  expect(toastBox.width).toBeLessThanOrEqual(448);
-  expect(viewport.width - toastBox.x - toastBox.width).toBeGreaterThanOrEqual(15);
-  expect(viewport.height - toastBox.y - toastBox.height).toBeGreaterThanOrEqual(15);
+  if (!workspaceBox) throw new Error("Workspace has no rendered bounds");
+  expect(Math.abs(toastBox.width - viewport.width)).toBeLessThan(1);
+  expect(Math.abs(toastBox.x)).toBeLessThan(1);
+  expect(workspaceBox.y).toBeGreaterThanOrEqual(toastBox.y + toastBox.height);
   await page.getByRole("button", { name: "Dismiss notification" }).click();
   await expect(toast).toBeHidden();
   await expect(page.getByLabel("You")).toContainText("List active DNS records.");
