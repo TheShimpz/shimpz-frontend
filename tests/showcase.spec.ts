@@ -213,6 +213,17 @@ test("keeps long dialog actions visible while only its body scrolls", async ({ p
   expect(footerBox.y + footerBox.height).toBeLessThanOrEqual(600);
 });
 
+test("keeps PromptDialog open state synchronized with native cancellation", async ({ page }) => {
+  await page.goto("/admin-kit/");
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  const dialog = page.getByRole("dialog", { name: "Choose a Team" });
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  await expect(dialog).toBeVisible();
+});
+
 test("stacks narrow dialog actions at full width in safe visual order", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto("/admin-kit/");

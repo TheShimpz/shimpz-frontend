@@ -78,7 +78,7 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, RadioField, SelectField, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PromptDialog, RadioField, SelectField, ShimpzBrand, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";

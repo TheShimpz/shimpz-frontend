@@ -16,6 +16,7 @@ export { default as Message } from "./Message.svelte";
 export { default as NavItem } from "./NavItem.svelte";
 export { default as Notice } from "./Notice.svelte";
 export { default as PageIntro } from "./PageIntro.svelte";
+export { default as PromptDialog } from "./PromptDialog.svelte";
 export { default as RadioField } from "./RadioField.svelte";
 export { default as ShimpzBrand } from "./ShimpzBrand.svelte";
 export { default as SelectField } from "./SelectField.svelte";

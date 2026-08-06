@@ -6,17 +6,16 @@
     Card,
     CheckboxField,
     ChoiceItem,
-    DialogFrame,
     Disclosure,
     Drawer,
     DropdownMenu,
     EmptyState,
     EmbedFrame,
     FileInput,
-    Modal,
     Message,
     NavItem,
     PageIntro,
+    PromptDialog,
     RadioField,
     ScrollArea,
     SelectField,
@@ -32,8 +31,8 @@
     WorkspaceShell,
   } from "$lib";
 
-  let modal = $state<HTMLDialogElement>();
-  let tallModal = $state<HTMLDialogElement>();
+  let dialogOpen = $state(false);
+  let tallDialogOpen = $state(false);
   let fileInput = $state<HTMLInputElement>();
   let drawerOpen = $state(false);
   let enabled = $state(false);
@@ -99,7 +98,7 @@
           <RadioField id="mode-fast" name="execution-mode" optionValue="fast" label="Fast" description="Apply the reviewed batch." bind:value={executionMode} />
         </fieldset>
         <CheckboxField id="enabled" label="Enable Assistant" bind:checked={enabled} />
-        <Toolbar><Button onclick={() => modal?.showModal()}>Open dialog</Button><Button variant="secondary" onclick={() => tallModal?.showModal()}>Open tall dialog</Button><Button variant="ghost" onclick={() => (toastVisible = true)}>Show toast</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
+        <Toolbar><Button onclick={() => (dialogOpen = true)}>Open dialog</Button><Button variant="secondary" onclick={() => (tallDialogOpen = true)}>Open tall dialog</Button><Button variant="ghost" onclick={() => (toastVisible = true)}>Show toast</Button><ActionLink href="#chat">Go to Chat</ActionLink></Toolbar>
       </Card>
       <Card tone="accent" title="Assistant" description="Status, identity and execution details.">
         {#snippet action()}<StatusBadge tone="info">Running</StatusBadge>{/snippet}
@@ -155,42 +154,40 @@
   </div>
 </WorkspaceShell>
 
-<Modal bind:element={modal} labelledBy="kit-dialog-title">
-  <DialogFrame
-    kicker="Destination // Team"
-    title="Choose a Team"
-    titleId="kit-dialog-title"
-    lead="The selection stays within this presentation contract."
-  >
-    <div class="team-list">
-      <ChoiceItem title="Marketing" description="marketing" meta="Current" selected />
-      <ChoiceItem title="Operations" description="operations" />
-    </div>
-    {#snippet footer()}
-      <Button variant="secondary" onclick={() => modal?.close()}>Close</Button>
-      <Button onclick={() => modal?.close()}>Confirm</Button>
-    {/snippet}
-  </DialogFrame>
-</Modal>
+<PromptDialog
+  bind:open={dialogOpen}
+  kicker="Destination // Team"
+  title="Choose a Team"
+  titleId="kit-dialog-title"
+  lead="The selection stays within this presentation contract."
+>
+  <div class="team-list">
+    <ChoiceItem title="Marketing" description="marketing" meta="Current" selected />
+    <ChoiceItem title="Operations" description="operations" />
+  </div>
+  {#snippet footer()}
+    <Button variant="secondary" onclick={() => (dialogOpen = false)}>Close</Button>
+    <Button onclick={() => (dialogOpen = false)}>Confirm</Button>
+  {/snippet}
+</PromptDialog>
 
-<Modal bind:element={tallModal} labelledBy="tall-dialog-title">
-  <DialogFrame
-    kicker="Stress test // Scroll"
-    title="Review a long Team list"
-    titleId="tall-dialog-title"
-    lead="Only the content region scrolls; actions remain available."
-  >
-    <div class="team-list">
-      {#each Array.from({ length: 14 }, (_, index) => index + 1) as index}
-        <ChoiceItem title={`Team ${index}`} description={`team_${index}`} selected={index === 1} />
-      {/each}
-    </div>
-    {#snippet footer()}
-      <Button variant="secondary" onclick={() => tallModal?.close()}>Cancel</Button>
-      <Button onclick={() => tallModal?.close()}>Continue</Button>
-    {/snippet}
-  </DialogFrame>
-</Modal>
+<PromptDialog
+  bind:open={tallDialogOpen}
+  kicker="Stress test // Scroll"
+  title="Review a long Team list"
+  titleId="tall-dialog-title"
+  lead="Only the content region scrolls; actions remain available."
+>
+  <div class="team-list">
+    {#each Array.from({ length: 14 }, (_, index) => index + 1) as index}
+      <ChoiceItem title={`Team ${index}`} description={`team_${index}`} selected={index === 1} />
+    {/each}
+  </div>
+  {#snippet footer()}
+    <Button variant="secondary" onclick={() => (tallDialogOpen = false)}>Cancel</Button>
+    <Button onclick={() => (tallDialogOpen = false)}>Continue</Button>
+  {/snippet}
+</PromptDialog>
 
 <Drawer open={drawerOpen} labelledBy="kit-drawer-title">
   <h2 id="kit-drawer-title">System drawer</h2>
