@@ -53,8 +53,6 @@
   .lead { max-inline-size: var(--shimpz-type-copy-measure); margin: var(--shimpz-space-5) 0 0; color: var(--shimpz-color-text-muted); line-height: 1.7; }
   .content { margin-block-start: var(--shimpz-space-6); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--shimpz-space-3); margin-block-start: var(--shimpz-space-6); }
-  :global(html:lang(zh)) h2, :global(html:lang(ja)) h2 { line-height: 1.08; letter-spacing: -.02em; }
-  :global(html:lang(ar)) h2 { line-height: 1.16; letter-spacing: 0; }
   @media (max-width: 760px) { section.has-media { grid-template-columns: 1fr; } section.media-start .copy, section.media-start .media { order: initial; } }
   @media (forced-colors: active) { h2 { color: CanvasText; } }
 </style>

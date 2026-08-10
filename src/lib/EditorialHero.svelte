@@ -51,8 +51,6 @@
   .meta { margin-block-start: var(--shimpz-space-6); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--shimpz-space-3); margin-block-start: var(--shimpz-space-4); }
   .media { min-width: 0; }
-  :global(html:lang(zh)) h1, :global(html:lang(ja)) h1 { line-height: 1.04; letter-spacing: -.025em; }
-  :global(html:lang(ar)) h1 { line-height: 1.12; letter-spacing: 0; }
   @media (max-width: 760px) { section { gap: var(--shimpz-space-8); } .body.has-media { grid-template-columns: 1fr; } }
   @media (forced-colors: active) { h1 { color: CanvasText; } }
 </style>

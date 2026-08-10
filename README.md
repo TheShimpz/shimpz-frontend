@@ -65,15 +65,22 @@ of inventing local display scales or image frames:
 Display copy should be concise enough to balance at about two lines on a
 reference desktop viewport and no more than three to four lines on narrow
 screens. Do not force an exact line count with manual `<br>` elements: all
-supported scripts must reflow naturally. Chinese, Japanese, and Arabic use the
-component's script-aware leading and tracking.
+supported scripts must reflow naturally. Chinese, Japanese, and Arabic inherit
+script-aware leading and tracking from the shared typography tokens, including
+when a consumer composes a custom editorial section.
 
 Product illustrations belong to the consuming product repository. They must
-contain no embedded copy, fake interface, or unverified product evidence. Pass
+contain no embedded copy, simulated product interface, or unverified product
+evidence. Abstract capability panels are acceptable when they are clearly
+illustrative and cannot be mistaken for the actual product surface. Pass
 an empty `alt` when adjacent text already communicates the full meaning; use
 descriptive alternative text only when the image contributes unique content.
 Only the first-fold visual may set `priority`; every later visual stays lazy.
 Provide explicit dimensions and responsive WebP or AVIF sources.
+
+The `data-slot` values emitted by editorial primitives are stable semantic
+hooks for rendered accessibility, loading, and layout contracts. Consumers
+must not style against the components' internal class names.
 
 ```svelte
 <script lang="ts">

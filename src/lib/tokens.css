@@ -61,3 +61,21 @@
   --shimpz-glow-cyan: 0 0 18px color-mix(in srgb, var(--shimpz-color-cyan) 8%, transparent);
   --shimpz-glow-danger: 0 0 18px color-mix(in srgb, var(--shimpz-color-danger) 10%, transparent);
 }
+
+:root:lang(zh),
+:root:lang(ja),
+.shimpz-theme:lang(zh),
+.shimpz-theme:lang(ja) {
+  --shimpz-type-display-leading: 1.04;
+  --shimpz-type-display-tracking: -0.025em;
+  --shimpz-type-section-leading: 1.08;
+  --shimpz-type-section-tracking: -0.02em;
+}
+
+:root:lang(ar),
+.shimpz-theme:lang(ar) {
+  --shimpz-type-display-leading: 1.12;
+  --shimpz-type-display-tracking: 0;
+  --shimpz-type-section-leading: 1.16;
+  --shimpz-type-section-tracking: 0;
+}
