@@ -1,9 +1,49 @@
 <script lang="ts">
-  import { Button, Card, Notice, ShimpzBrand, TextField } from "$lib";
+  import {
+    Button,
+    Card,
+    EditorialHero,
+    EditorialSection,
+    EditorialVisual,
+    Notice,
+    ShimpzBrand,
+    TextField,
+  } from "$lib";
+  import shimpzThinking from "$lib/assets/shimpz-thinking.svg";
 
   let clicks = $state(0);
   let assistantId = $state("hello-world");
 </script>
+
+{#snippet heroMeta()}
+  <output aria-live="polite">{clicks} transmissions acknowledged</output>
+{/snippet}
+
+{#snippet heroActions()}
+  <Button onclick={() => (clicks += 1)}>Transmit signal</Button>
+  <Button variant="secondary">Read protocol</Button>
+{/snippet}
+
+{#snippet heroMedia()}
+  <EditorialVisual
+    class="showcase-visual"
+    src={shimpzThinking}
+    alt=""
+    width={640}
+    height={426}
+    fit="contain"
+    priority
+  />
+{/snippet}
+
+{#snippet colorsContent()}
+  <div class="swatches">
+    <div class="cyan"><span>#00F0FF</span>Cyan</div>
+    <div class="magenta"><span>#FF2A6D</span>Magenta</div>
+    <div class="yellow"><span>#FCEE0A</span>Yellow</div>
+    <div class="green"><span>#05FFA1</span>Green</div>
+  </div>
+{/snippet}
 
 <svelte:head>
   <title>Shimpz Frontend</title>
@@ -20,38 +60,25 @@
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <p class="shimpz-kicker">Public design system // Svelte 5</p>
-        <h1 id="hero-title">Signal over <span>noise.</span></h1>
-        <p class="lead">
-          One precise visual language for the Shimpz ecosystem. Cyberpunk restraint, accessible
-          primitives, zero business logic.
-        </p>
-        <div class="actions">
-          <Button onclick={() => (clicks += 1)}>Transmit signal</Button>
-          <Button variant="secondary">Read protocol</Button>
-        </div>
-        <output aria-live="polite">{clicks} transmissions acknowledged</output>
-      </div>
-      <Card class="hero-brand">
-        <ShimpzBrand variant="hero" product="Frontend" />
-        <p>Canonical assets. Closed variants. Local fonts.</p>
-      </Card>
-    </section>
+    <EditorialHero
+      class="showcase-hero"
+      kicker="Public design system // Svelte 5"
+      titleId="hero-title"
+      title="Signal over noise."
+      lead="One precise visual language for the Shimpz ecosystem. Cyberpunk restraint, accessible primitives, zero business logic."
+      meta={heroMeta}
+      actions={heroActions}
+      media={heroMedia}
+    />
 
-    <section aria-labelledby="colors-title">
-      <div class="section-heading">
-        <p class="shimpz-kicker">01 // Foundation</p>
-        <h2 id="colors-title">Core signals</h2>
-      </div>
-      <div class="swatches">
-        <div class="cyan"><span>#00F0FF</span>Cyan</div>
-        <div class="magenta"><span>#FF2A6D</span>Magenta</div>
-        <div class="yellow"><span>#FCEE0A</span>Yellow</div>
-        <div class="green"><span>#05FFA1</span>Green</div>
-      </div>
-    </section>
+    <EditorialSection
+      class="foundation"
+      kicker="01 // Foundation"
+      titleId="colors-title"
+      title="Core signals"
+      lead="Bounded editorial type, deliberate contrast and reusable visual framing keep every public surface readable."
+      children={colorsContent}
+    />
 
     <section aria-labelledby="primitives-title">
       <div class="section-heading">
@@ -159,47 +186,8 @@
     padding-block: clamp(2.5rem, 6vw, 5rem);
   }
 
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
-    align-items: center;
-    gap: clamp(2rem, 6vw, 5rem);
-    min-height: min(38rem, calc(100vh - 6rem));
-    margin-top: 0;
-  }
-
-  h1,
   h2 {
     font-family: var(--shimpz-font-mono);
-  }
-
-  h1 {
-    max-width: 11ch;
-    margin: 1rem 0 1.5rem;
-    font-size: clamp(2.75rem, 7vw, 6rem);
-    letter-spacing: -0.065em;
-    line-height: 0.92;
-    text-transform: uppercase;
-  }
-
-  h1 span {
-    color: var(--shimpz-color-magenta);
-    text-shadow: 0 0 32px color-mix(in srgb, var(--shimpz-color-magenta) 25%, transparent);
-  }
-
-  .lead {
-    max-width: 40rem;
-    margin: 0;
-    color: var(--shimpz-color-text-muted);
-    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-    line-height: 1.6;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
   }
 
   output {
@@ -209,25 +197,10 @@
     font: 400 0.72rem/1.4 var(--shimpz-font-mono);
   }
 
-  :global(.hero-brand) {
-    display: grid;
-    place-items: center;
-    min-height: 20rem;
-    padding: 1.5rem;
-    text-align: center;
-    background:
-      radial-gradient(circle at 50% 40%, rgb(0 240 255 / 9%), transparent 48%),
-      var(--shimpz-color-surface);
-  }
-
-  :global(.hero-brand p) {
-    max-width: 15rem;
-    margin: 1.5rem 0 0;
-    color: var(--shimpz-color-text-dim);
-    font: 400 0.72rem/1.6 var(--shimpz-font-mono);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
+  :global(.showcase-hero) { min-height: min(38rem, calc(100vh - 6rem)); }
+  :global(.showcase-visual) { background: radial-gradient(circle, rgb(0 240 255 / 10%), transparent 52%), var(--shimpz-color-surface); }
+  :global(.showcase-visual img) { padding: clamp(2rem, 8vw, 6rem); }
+  :global(.foundation) { margin-top: clamp(4rem, 8vw, 7rem); }
 
   section {
     margin-top: clamp(4rem, 8vw, 7rem);
@@ -345,14 +318,7 @@
   }
 
   @media (max-width: 850px) {
-    .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-
-    :global(.hero-brand) {
-      min-height: 17rem;
-    }
+    :global(.showcase-hero) { min-height: auto; }
 
     .swatches {
       grid-template-columns: repeat(2, 1fr);
@@ -383,10 +349,6 @@
 
     .signal {
       display: none;
-    }
-
-    h1 {
-      font-size: clamp(2.75rem, 14vw, 4rem);
     }
 
     .section-heading,

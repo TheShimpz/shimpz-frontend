@@ -50,6 +50,53 @@ Then use the presentation primitives from the package root:
 </Card>
 ```
 
+## Editorial surfaces
+
+Public marketing and institutional pages use the editorial primitives instead
+of inventing local display scales or image frames:
+
+- `EditorialHero` owns the page display heading and its copy/media hierarchy.
+- `EditorialSection` owns bounded section headings and alternating media layout.
+- `EditorialVisual` reserves image space, applies the canonical frame, and
+  closes loading priority to one explicit hero image.
+- `PageIntro` remains the compact heading for application and catalog routes;
+  it is not a marketing hero.
+
+Display copy should be concise enough to balance at about two lines on a
+reference desktop viewport and no more than three to four lines on narrow
+screens. Do not force an exact line count with manual `<br>` elements: all
+supported scripts must reflow naturally. Chinese, Japanese, and Arabic use the
+component's script-aware leading and tracking.
+
+Product illustrations belong to the consuming product repository. They must
+contain no embedded copy, fake interface, or unverified product evidence. Pass
+an empty `alt` when adjacent text already communicates the full meaning; use
+descriptive alternative text only when the image contributes unique content.
+Only the first-fold visual may set `priority`; every later visual stays lazy.
+Provide explicit dimensions and responsive WebP or AVIF sources.
+
+```svelte
+<script lang="ts">
+  import { EditorialHero, EditorialVisual } from "@shimpz/frontend";
+</script>
+
+{#snippet media()}
+  <EditorialVisual
+    src="/illustration-1536.webp"
+    srcset="/illustration-768.webp 768w, /illustration-1536.webp 1536w"
+    alt=""
+    priority
+  />
+{/snippet}
+
+<EditorialHero
+  kicker="Open source // human authority"
+  title="Delegate without losing control."
+  lead="Keep consequential access and decisions attributable."
+  {media}
+/>
+```
+
 Lower-level consumers can import only the token contract:
 
 ```css

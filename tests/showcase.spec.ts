@@ -114,6 +114,35 @@ test("keeps public navigation usable at different item counts on mobile", async 
   }
 });
 
+test("bounds editorial hierarchy and reserves visual space", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.evaluate(() => document.fonts.ready);
+  const heading = page.locator('[data-slot="editorial-hero"] h1');
+  const desktopLines = await heading.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return element.clientHeight / Number.parseFloat(style.lineHeight);
+  });
+  expect(desktopLines).toBeLessThanOrEqual(2.1);
+
+  const visual = page.locator('[data-slot="editorial-visual"]');
+  const image = visual.locator("img");
+  await expect(image).toHaveAttribute("loading", "eager");
+  await expect(image).toHaveAttribute("fetchpriority", "high");
+  const [visualBox, imageBox] = await Promise.all([visual.boundingBox(), image.boundingBox()]);
+  if (!visualBox || !imageBox) throw new Error("Editorial visual has no rendered bounds");
+  expect(Math.abs(visualBox.width / visualBox.height - 1.5)).toBeLessThan(0.02);
+  expect(Math.abs(imageBox.width - visualBox.width)).toBeLessThan(3);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => document.fonts.ready);
+  const mobileLines = await heading.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return element.clientHeight / Number.parseFloat(style.lineHeight);
+  });
+  expect(mobileLines).toBeLessThanOrEqual(3.1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});
+
 test("has no detectable accessibility violations", async ({ page }) => {
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);

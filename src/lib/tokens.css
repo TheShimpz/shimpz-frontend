@@ -41,6 +41,16 @@
   --shimpz-dialog-xl: 64rem;
   --shimpz-content-width: 72rem;
   --shimpz-content-width-narrow: 42rem;
+  --shimpz-editorial-width: 82rem;
+  --shimpz-type-display-size: clamp(2.75rem, 6vw, 5.5rem);
+  --shimpz-type-display-leading: 0.96;
+  --shimpz-type-display-tracking: -0.055em;
+  --shimpz-type-display-measure: 22ch;
+  --shimpz-type-section-size: clamp(2rem, 3.5vw, 3.5rem);
+  --shimpz-type-section-leading: 1;
+  --shimpz-type-section-tracking: -0.045em;
+  --shimpz-type-section-measure: 18ch;
+  --shimpz-type-copy-measure: 62ch;
   --shimpz-sidebar-width: 16.5rem;
   --shimpz-card-padding: 1.25rem;
   --shimpz-page-padding: clamp(1rem, 2.5vw, 2rem);

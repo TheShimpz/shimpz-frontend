@@ -78,7 +78,7 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PowerRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EditorialHero, EditorialSection, EditorialVisual, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PowerRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
@@ -96,6 +96,9 @@ mount(App, { target: document.getElementById("app") });
 <main>
   <ShimpzBrand product="Consumer" />
   <img src={logoUrl} alt="Shimpz thinking" />
+  <EditorialHero title="A bounded display heading" lead="A concise editorial introduction." />
+  <EditorialSection title="A bounded section heading"><p>Consumer-owned content.</p></EditorialSection>
+  <EditorialVisual src={logoUrl} alt="" width={640} height={426} fit="contain" />
   <TextField id="assistant-id" label="Assistant ID" bind:value={assistantId} />
   <SelectField id="destination" label="Destination" options={[{ value: "marketing", label: "Marketing" }]} bind:value={destination} />
   <RadioField id="mode-safe" name="mode" optionValue="safe" label="Safe" bind:value={mode} />
