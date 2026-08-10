@@ -65,6 +65,41 @@ test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   expect(outline).toBe("solid");
 });
 
+test("renders the public site shell with crawlable language links", async ({ page }) => {
+  await page.goto("/site-kit/");
+  await expect(page).toHaveTitle("Public site kit — Shimpz Frontend");
+  await expect(page.getByRole("navigation", { name: "Primary navigation" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "page");
+  await page.getByRole("button", { name: "Language: English" }).click();
+  await expect(page.getByRole("menuitemradio", { name: "Português" })).toHaveAttribute(
+    "href",
+    "/site-kit/?language=pt",
+  );
+  await page.keyboard.press("Escape");
+  await page.getByRole("link", { name: "Skip to content" }).focus();
+  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+  await page.getByRole("link", { name: "Skip to content" }).click();
+  await expect(page.locator("#main-content")).toBeFocused();
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test("keeps public navigation usable at different item counts on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 780 });
+  for (const path of ["/site-kit/", "/site-kit/?short=1"]) {
+    await page.goto(path);
+    const header = page.locator('[data-slot="site-header"]');
+    const actions = page.locator('[data-slot="site-header-actions"]');
+    await expect(header).toBeVisible();
+    await expect(actions).toBeVisible();
+    const [headerBox, actionsBox] = await Promise.all([header.boundingBox(), actions.boundingBox()]);
+    if (!headerBox || !actionsBox) throw new Error("Public header has no rendered bounds");
+    expect(actionsBox.x).toBeGreaterThanOrEqual(headerBox.x);
+    expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(headerBox.x + headerBox.width + 1);
+    await expect(page.getByRole("link", { name: "Services" })).toBeVisible();
+  }
+});
+
 test("has no detectable accessibility violations", async ({ page }) => {
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);

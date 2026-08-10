@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import Button from "./Button.svelte";
 
-  type Item = { value: string; label: string; disabled?: boolean };
+  type Item = { value: string; label: string; disabled?: boolean; href?: string };
   type Props = {
     items: Item[];
     value?: string;
@@ -13,7 +13,7 @@
     triggerIcon?: Snippet;
     compact?: boolean;
     wide?: boolean;
-    onSelect: (value: string) => void;
+    onSelect?: (value: string) => void;
     class?: string;
   };
 
@@ -22,7 +22,8 @@
   let root = $state<HTMLDivElement>();
   let trigger = $state<HTMLButtonElement>();
   let menu = $state<HTMLDivElement>();
-  let menuItems = $state<HTMLButtonElement[]>([]);
+  let linkItems = $state<HTMLAnchorElement[]>([]);
+  let buttonItems = $state<HTMLButtonElement[]>([]);
   let focusedIndex = $state(0);
 
   function close(restore = false) {
@@ -44,12 +45,15 @@
     menu.style.setProperty("--menu-top", `${top}px`);
     menu.style.setProperty("--menu-width", `${width}px`);
   }
+  function itemDisabled(item: Item) {
+    return item.disabled || (!item.href && !onSelect);
+  }
   function enabledPositions() {
-    return items.flatMap((item, position) => item.disabled ? [] : [position]);
+    return items.flatMap((item, position) => itemDisabled(item) ? [] : [position]);
   }
   function focusItem(position: number) {
     focusedIndex = position;
-    queueMicrotask(() => menuItems[focusedIndex]?.focus());
+    queueMicrotask(() => (linkItems[focusedIndex] ?? buttonItems[focusedIndex])?.focus());
   }
   function moveFocus(direction: -1 | 1) {
     const enabled = enabledPositions();
@@ -70,7 +74,11 @@
       focusItem(focusedIndex);
     });
   }
-  function choose(item: Item) { if (item.disabled) return; onSelect(item.value); close(true); }
+  function choose(item: Item) {
+    if (itemDisabled(item)) return;
+    onSelect?.(item.value);
+    close(true);
+  }
   function outsidePointerdown(event: PointerEvent) {
     if (open && event.target instanceof Node && !root?.contains(event.target)) close();
   }
@@ -101,19 +109,34 @@
   </Button>
     <div bind:this={menu} class="content" role="menu" aria-label={menuLabel} popover="manual" hidden={!open} ontoggle={(event) => (open = event.newState === "open")}>
       {#each items as item, index (item.value)}
-        <Button
-          bind:element={menuItems[index]}
-          variant="ghost"
-          size="compact"
-          role="menuitemradio"
-          tabindex={focusedIndex === index ? 0 : -1}
-          aria-checked={item.value === value}
-          disabled={item.disabled}
-          class={item.value === value ? "item-selected" : undefined}
-          onclick={() => choose(item)}
-        >
-          <span>{item.label}</span>{#if item.value === value}<span class="selected" aria-hidden="true">●</span>{/if}
-        </Button>
+        {#if item.href}
+          <a
+            bind:this={linkItems[index]}
+            class={["item-link", item.value === value && "item-selected", item.disabled && "is-disabled"]}
+            role="menuitemradio"
+            tabindex={focusedIndex === index ? 0 : -1}
+            aria-checked={item.value === value}
+            aria-disabled={item.disabled || undefined}
+            href={item.disabled ? undefined : item.href}
+            onclick={() => close()}
+          >
+            <span>{item.label}</span>{#if item.value === value}<span class="selected" aria-hidden="true">●</span>{/if}
+          </a>
+        {:else}
+          <Button
+            bind:element={buttonItems[index]}
+            variant="ghost"
+            size="compact"
+            role="menuitemradio"
+            tabindex={focusedIndex === index ? 0 : -1}
+            aria-checked={item.value === value}
+            disabled={itemDisabled(item)}
+            class={item.value === value ? "item-selected" : undefined}
+            onclick={() => choose(item)}
+          >
+            <span>{item.label}</span>{#if item.value === value}<span class="selected" aria-hidden="true">●</span>{/if}
+          </Button>
+        {/if}
       {/each}
     </div>
 </div>
@@ -131,6 +154,9 @@
   .content[hidden] { display: none !important; }
   .content :global(.shimpz-button) { width: 100%; justify-content: flex-start; color: var(--shimpz-color-text-muted); background: transparent; border: 0; clip-path: none; text-align: start; }
   .content :global(.shimpz-button > span) { width: 100%; justify-content: space-between; gap: var(--shimpz-space-3); }
-  .content :global(.shimpz-button:hover), .content :global(.item-selected) { color: var(--shimpz-color-cyan); background: var(--shimpz-color-surface-high); }
+  .item-link { display: flex; width: 100%; min-height: var(--shimpz-control-height-compact); align-items: center; justify-content: space-between; gap: var(--shimpz-space-3); padding: 0.45rem 0.65rem; color: var(--shimpz-color-text-muted); font: 600 0.72rem/1.2 var(--shimpz-font-mono); text-decoration: none; }
+  .item-link.is-disabled { cursor: not-allowed; opacity: 0.48; }
+  .item-link:focus-visible { outline: 2px solid var(--shimpz-color-yellow); outline-offset: -2px; }
+  .content :global(.shimpz-button:hover), .content :global(.item-selected), .item-link:not(.is-disabled):hover { color: var(--shimpz-color-cyan); background: var(--shimpz-color-surface-high); }
   .selected { margin-inline-start: auto; }
 </style>
