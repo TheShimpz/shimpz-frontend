@@ -25,6 +25,7 @@
   let linkItems = $state<HTMLAnchorElement[]>([]);
   let buttonItems = $state<HTMLButtonElement[]>([]);
   let focusedIndex = $state(0);
+  const menuId = $props.id();
 
   function close(restore = false) {
     if (menu?.matches(":popover-open")) menu.hidePopover();
@@ -74,6 +75,10 @@
       focusItem(focusedIndex);
     });
   }
+  function triggerClick(event: MouseEvent) {
+    event.preventDefault();
+    toggle();
+  }
   function choose(item: Item) {
     if (itemDisabled(item)) return;
     onSelect?.(item.value);
@@ -102,12 +107,12 @@
 <svelte:document onpointerdown={outsidePointerdown} />
 
 <div bind:this={root} class={["shimpz-dropdown", wide && "is-wide", className]}>
-  <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" onclick={toggle} aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
+  <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" onclick={triggerClick} popovertarget={menuId} popovertargetaction="toggle" aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
     {#if triggerIcon}<span class="trigger-icon">{@render triggerIcon()}</span>{/if}
     {#if !compact}<span class="trigger-label">{triggerLabel}</span>{/if}
     <span class="chevron" aria-hidden="true">⌄</span>
   </Button>
-    <div bind:this={menu} class="content" role="menu" aria-label={menuLabel} popover="manual" hidden={!open} ontoggle={(event) => (open = event.newState === "open")}>
+    <div bind:this={menu} id={menuId} class="content" role="menu" aria-label={menuLabel} popover="manual" ontoggle={(event) => (open = event.newState === "open")}>
       {#each items as item, index (item.value)}
         {#if item.href}
           <a
@@ -151,7 +156,6 @@
   .chevron { margin-inline-start: auto; color: var(--shimpz-color-text-dim); }
   .content { position: fixed; z-index: 80; top: var(--menu-top); left: var(--menu-left); display: grid; width: var(--menu-width); min-width: 11rem; max-height: min(22rem, calc(100dvh - 1rem)); gap: 1px; padding: var(--shimpz-space-1); margin: 0; overflow: auto; color: var(--shimpz-color-text); background: var(--shimpz-color-surface-raised); border: 1px solid var(--shimpz-color-border); box-shadow: 0 1rem 3rem rgb(0 0 0 / 65%); }
   .content:not(:popover-open) { display: none; }
-  .content[hidden] { display: none !important; }
   .content :global(.shimpz-button) { width: 100%; justify-content: flex-start; color: var(--shimpz-color-text-muted); background: transparent; border: 0; clip-path: none; text-align: start; }
   .content :global(.shimpz-button > span) { width: 100%; justify-content: space-between; gap: var(--shimpz-space-3); }
   .item-link { display: flex; width: 100%; min-height: var(--shimpz-control-height-compact); align-items: center; justify-content: space-between; gap: var(--shimpz-space-3); padding: 0.45rem 0.65rem; color: var(--shimpz-color-text-muted); font: 600 0.72rem/1.2 var(--shimpz-font-mono); text-decoration: none; }

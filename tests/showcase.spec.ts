@@ -84,6 +84,20 @@ test("renders the public site shell with crawlable language links", async ({ pag
   expect(results.violations).toEqual([]);
 });
 
+test.describe("without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("opens crawlable language navigation declaratively", async ({ page }) => {
+    await page.goto("/site-kit/");
+    await page.getByRole("button", { name: "Language: English" }).click();
+    await expect(page.getByRole("menuitemradio", { name: "Português" })).toBeVisible();
+    await expect(page.getByRole("menuitemradio", { name: "Português" })).toHaveAttribute(
+      "href",
+      "/site-kit/?language=pt",
+    );
+  });
+});
+
 test("keeps public navigation usable at different item counts on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 780 });
   for (const path of ["/site-kit/", "/site-kit/?short=1"]) {
