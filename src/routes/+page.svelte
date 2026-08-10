@@ -32,6 +32,7 @@
     width={640}
     height={426}
     fit="contain"
+    treatment="unframed"
     priority
   />
 {/snippet}
@@ -198,7 +199,6 @@
   }
 
   :global(.showcase-hero) { min-height: min(38rem, calc(100vh - 6rem)); }
-  :global(.showcase-visual) { background: radial-gradient(circle, rgb(0 240 255 / 10%), transparent 52%), var(--shimpz-color-surface); }
   :global(.showcase-visual img) { padding: clamp(2rem, 8vw, 6rem); }
   :global(.foundation) { margin-top: clamp(4rem, 8vw, 7rem); }
 

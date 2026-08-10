@@ -130,6 +130,9 @@ test("bounds editorial hierarchy and reserves visual space", async ({ page }) =>
   await expect(image).toHaveAttribute("fetchpriority", "high");
   const [visualBox, imageBox] = await Promise.all([visual.boundingBox(), image.boundingBox()]);
   if (!visualBox || !imageBox) throw new Error("Editorial visual has no rendered bounds");
+  await expect(visual).toHaveCSS("border-top-width", "0px");
+  await expect(visual).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(visual).toHaveCSS("clip-path", "none");
   expect(Math.abs(visualBox.width / visualBox.height - 1.5)).toBeLessThan(0.02);
   expect(Math.abs(imageBox.width - visualBox.width)).toBeLessThan(3);
 

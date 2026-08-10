@@ -57,8 +57,9 @@ of inventing local display scales or image frames:
 
 - `EditorialHero` owns the page display heading and its copy/media hierarchy.
 - `EditorialSection` owns bounded section headings and alternating media layout.
-- `EditorialVisual` reserves image space, applies the canonical frame, and
-  closes loading priority to one explicit hero image.
+- `EditorialVisual` reserves image space, applies the canonical frame by
+  default, offers an explicit `unframed` treatment for transparent editorial
+  illustrations, and closes loading priority to one explicit hero image.
 - `PageIntro` remains the compact heading for application and catalog routes;
   it is not a marketing hero.
 
@@ -69,12 +70,15 @@ supported scripts must reflow naturally. Chinese, Japanese, and Arabic inherit
 script-aware leading and tracking from the shared typography tokens, including
 when a consumer composes a custom editorial section.
 
-Product illustrations belong to the consuming product repository. They must
-contain no embedded copy, simulated product interface, or unverified product
-evidence. Abstract capability panels are acceptable when they are clearly
-illustrative and cannot be mistaken for the actual product surface. Pass
-an empty `alt` when adjacent text already communicates the full meaning; use
-descriptive alternative text only when the image contributes unique content.
+Product illustrations belong to the consuming product repository. Keep
+localized explanatory labels in semantic consumer-owned HTML rather than
+baking one language into the asset. They must contain no simulated product
+interface or unverified product evidence. Abstract capability diagrams are
+acceptable when they are clearly illustrative and cannot be mistaken for the
+actual product surface. Use `treatment="unframed"` for transparent diagrams
+that should sit directly on the page. Pass an empty `alt` when adjacent text or
+a semantic legend already communicates the full meaning; use descriptive
+alternative text only when the image contributes unique content.
 Only the first-fold visual may set `priority`; every later visual stays lazy.
 Provide explicit dimensions and responsive WebP or AVIF sources.
 
@@ -92,6 +96,7 @@ must not style against the components' internal class names.
     src="/illustration-1536.webp"
     srcset="/illustration-768.webp 768w, /illustration-1536.webp 1536w"
     alt=""
+    treatment="unframed"
     priority
   />
 {/snippet}
