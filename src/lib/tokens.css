@@ -42,7 +42,7 @@
   --shimpz-content-width: 72rem;
   --shimpz-content-width-narrow: 42rem;
   --shimpz-editorial-width: 82rem;
-  --shimpz-type-display-size: clamp(2.25rem, 6vw, 5.5rem);
+  --shimpz-type-display-size: clamp(2.25rem, 5vw, 4.5rem);
   --shimpz-type-display-leading: 0.96;
   --shimpz-type-display-tracking: -0.055em;
   --shimpz-type-display-measure: 22ch;

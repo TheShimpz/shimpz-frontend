@@ -41,11 +41,11 @@
 </section>
 
 <style>
-  section { display: grid; min-width: 0; gap: clamp(var(--shimpz-space-8), 5vw, var(--shimpz-space-16)); }
+  section { display: grid; min-width: 0; gap: clamp(var(--shimpz-space-8), 4vw, var(--shimpz-space-12)); }
   header, .copy { min-width: 0; }
   .kicker { margin: 0 0 var(--shimpz-space-4); color: var(--shimpz-color-cyan); font: 600 .68rem/1.4 var(--shimpz-font-mono); letter-spacing: .16em; text-transform: uppercase; }
   h1 { max-inline-size: var(--shimpz-type-display-measure); margin: 0; color: var(--shimpz-color-text); font: 680 var(--shimpz-type-display-size)/var(--shimpz-type-display-leading) var(--shimpz-font-sans); letter-spacing: var(--shimpz-type-display-tracking); text-wrap: balance; }
-  .body { display: grid; min-width: 0; gap: clamp(var(--shimpz-space-8), 6vw, var(--shimpz-space-16)); align-items: center; }
+  .body { display: grid; min-width: 0; gap: clamp(var(--shimpz-space-8), 6vw, var(--shimpz-space-16)); align-items: start; }
   .body.has-media { grid-template-columns: minmax(18rem, .72fr) minmax(0, 1.28fr); }
   .lead { max-inline-size: var(--shimpz-type-copy-measure); margin: 0; color: var(--shimpz-color-text-muted); font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.65; }
   .meta { margin-block-start: var(--shimpz-space-6); }

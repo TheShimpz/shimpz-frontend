@@ -70,7 +70,14 @@ supported scripts must reflow naturally. Chinese, Japanese, and Arabic inherit
 script-aware leading and tracking from the shared typography tokens, including
 when a consumer composes a custom editorial section.
 
-Product illustrations belong to the consuming product repository. Keep
+The shared display scale tops out at 4.5rem (72px), and editorial copy aligns to
+the top of adjacent media. A tall illustration must never push a hero lead away
+from its headline or vertically center explanatory copy in otherwise empty
+space.
+
+Product illustrations belong to the consuming product repository. Prefer one
+directional architectural flows with few large stages over radial, orbital, or
+decorative node clusters. Keep
 localized explanatory labels in semantic consumer-owned HTML rather than
 baking one language into the asset. They must contain no simulated product
 interface or unverified product evidence. Abstract capability diagrams are

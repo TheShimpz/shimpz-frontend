@@ -43,7 +43,7 @@
 </section>
 
 <style>
-  section { display: grid; min-width: 0; align-items: center; gap: clamp(var(--shimpz-space-8), 7vw, var(--shimpz-space-16)); }
+  section { display: grid; min-width: 0; align-items: start; gap: clamp(var(--shimpz-space-8), 7vw, var(--shimpz-space-16)); }
   section.has-media { grid-template-columns: minmax(18rem, .82fr) minmax(0, 1.18fr); }
   section.media-start .copy { order: 2; }
   section.media-start .media { order: 1; }

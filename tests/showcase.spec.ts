@@ -118,11 +118,16 @@ test("bounds editorial hierarchy and reserves visual space", async ({ page }) =>
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.evaluate(() => document.fonts.ready);
   const heading = page.locator('[data-slot="editorial-hero"] h1');
+  const lead = page.getByText("One precise visual language for the Shimpz ecosystem.", { exact: false });
+  expect(await heading.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))).toBeLessThanOrEqual(72);
   const desktopLines = await heading.evaluate((element) => {
     const style = getComputedStyle(element);
     return element.clientHeight / Number.parseFloat(style.lineHeight);
   });
   expect(desktopLines).toBeLessThanOrEqual(2.1);
+  const [headingBox, leadBox] = await Promise.all([heading.boundingBox(), lead.boundingBox()]);
+  if (!headingBox || !leadBox) throw new Error("Editorial hero copy has no rendered bounds");
+  expect(leadBox.y - (headingBox.y + headingBox.height)).toBeLessThanOrEqual(64);
 
   const visual = page.locator('[data-slot="editorial-visual"]');
   const image = visual.locator("img");
@@ -143,6 +148,9 @@ test("bounds editorial hierarchy and reserves visual space", async ({ page }) =>
     return element.clientHeight / Number.parseFloat(style.lineHeight);
   });
   expect(mobileLines).toBeLessThanOrEqual(3.1);
+  const [mobileHeadingBox, mobileLeadBox] = await Promise.all([heading.boundingBox(), lead.boundingBox()]);
+  if (!mobileHeadingBox || !mobileLeadBox) throw new Error("Mobile editorial hero copy has no rendered bounds");
+  expect(mobileLeadBox.y - (mobileHeadingBox.y + mobileHeadingBox.height)).toBeLessThanOrEqual(48);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
