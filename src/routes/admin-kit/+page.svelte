@@ -106,7 +106,7 @@
         <Separator />
         <Disclosure>
           {#snippet summary()}Execution stages <span class="count">3</span>{/snippet}
-          <ol><li>Admin prepares the request</li><li>Team gathers context</li><li>Assistant executes the Power</li></ol>
+          <ol><li>Admin prepares the request</li><li>Team gathers context</li><li>Assistant executes the Action</li></ol>
         </Disclosure>
       </Card>
       <Card title="Assistant selection" description="Pressed rows expose selection without a duplicate checkbox.">

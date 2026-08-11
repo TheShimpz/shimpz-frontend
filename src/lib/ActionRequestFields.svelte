@@ -1,6 +1,5 @@
 <script lang="ts">
   import CheckboxField from "./CheckboxField.svelte";
-  import Notice from "./Notice.svelte";
   import RadioField from "./RadioField.svelte";
   import SelectField from "./SelectField.svelte";
   import TextAreaField from "./TextAreaField.svelte";
@@ -11,13 +10,9 @@
     optional: string;
     chooseOption: string;
     selectionHint: string;
-    thirdPartySecret: string;
-    reauthHint: string;
     reauthLabel: string;
-    secondFactorHint: string;
     secondFactorLabel: string;
     secondFactorPlaceholder: string;
-    passkeyHint: string;
   };
 
   type Props = {
@@ -84,9 +79,8 @@
   }
 </script>
 
-<div class="power-request-fields" data-slot="power-request-fields">
+<div class="action-request-fields" data-slot="action-request-fields">
   {#if kind === "input:text" || kind === "input:password" || kind === "input:phone"}
-    {#if kind === "input:password"}<Notice variant="warning">{labels.thirdPartySecret}</Notice>{/if}
     <TextField
       id="human-request-value"
       label={`${request.label} · ${requiredLabel}`}
@@ -149,7 +143,6 @@
       {/each}
     </fieldset>
   {:else if kind === "auth:reauth"}
-    <Notice variant="warning">{labels.reauthHint}</Notice>
     <TextField
       id="human-request-auth"
       label={labels.reauthLabel}
@@ -160,7 +153,6 @@
       bind:value={textValue}
     />
   {:else if kind === "auth:second-factor"}
-    <Notice variant="warning">{labels.secondFactorHint}</Notice>
     <TextField
       id="human-request-auth"
       label={labels.secondFactorLabel}
@@ -172,13 +164,11 @@
       maxlength={16}
       bind:value={textValue}
     />
-  {:else if kind === "auth:phishing-resistant"}
-    <Notice variant="warning">{labels.passkeyHint}</Notice>
   {/if}
 </div>
 
 <style>
-  .power-request-fields {
+  .action-request-fields {
     display: contents;
   }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PowerRequestFields, SelectField } from "$lib";
+  import { ActionRequestFields, SelectField } from "$lib";
 
   const options = [
     { value: "input:text", label: "Text" },
@@ -23,13 +23,9 @@
     optional: "Optional",
     chooseOption: "Choose an option",
     selectionHint: "Choose 1–2 options",
-    thirdPartySecret: "This secret is sent only to the requesting Power.",
-    reauthHint: "Confirm the current Account password.",
     reauthLabel: "Current password",
-    secondFactorHint: "Enter the current authentication code.",
     secondFactorLabel: "Authentication code",
     secondFactorPlaceholder: "123456",
-    passkeyHint: "Continue with a phishing-resistant passkey.",
   };
 
   let kind = $state("input:text");
@@ -48,13 +44,13 @@
   });
 </script>
 
-<svelte:head><title>Power requests — Shimpz Frontend</title></svelte:head>
+<svelte:head><title>Action requests — Shimpz Frontend</title></svelte:head>
 
 <main>
-  <p class="shimpz-kicker">Presentation contract // Power requests</p>
+  <p class="shimpz-kicker">Presentation contract // Action requests</p>
   <h1>Human request fields</h1>
   <SelectField id="request-kind" label="Request kind" {options} bind:value={kind} />
-  <PowerRequestFields {request} resetKey={kind} {labels} bind:value bind:valid />
+  <ActionRequestFields {request} resetKey={kind} {labels} bind:value bind:valid />
   <output aria-live="polite">{valid ? "Valid" : "Waiting"} · {JSON.stringify(value)}</output>
 </main>
 

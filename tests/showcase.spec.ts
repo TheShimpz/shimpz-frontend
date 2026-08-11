@@ -344,8 +344,8 @@ test("keeps PromptDialog open state synchronized with native cancellation", asyn
   await expect(dialog).toBeVisible();
 });
 
-test("renders and validates every reusable Power request field", async ({ page }) => {
-  await page.goto("/power-requests/");
+test("renders and validates every reusable Action request field", async ({ page }) => {
+  await page.goto("/action-requests/");
   const kind = page.getByRole("combobox", { name: "Request kind" });
   const output = page.locator("output");
 
