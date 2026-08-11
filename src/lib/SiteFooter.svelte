@@ -10,6 +10,7 @@
     meta?: Snippet;
     brandProduct?: string;
     brandAriaLabel?: string;
+    contentWidth?: "content" | "editorial";
     class?: string;
   };
 
@@ -21,17 +22,23 @@
     meta,
     brandProduct,
     brandAriaLabel,
+    contentWidth = "content",
     class: className,
   }: Props = $props();
 </script>
 
-<footer data-slot="site-footer" class={["shimpz-site-footer", className]}>
-  <div class="inner">
-    <div class="brand">
-      <ShimpzBrand href={brandHref} product={brandProduct} ariaLabel={brandAriaLabel} />
-      {#if statement}<p>{statement}</p>{/if}
+<footer data-slot="site-footer" class={["shimpz-site-footer", `width-${contentWidth}`, className]}>
+  <div data-slot="site-footer-inner" class="inner">
+    <div data-slot="site-footer-monument" class="monument" aria-hidden="true">
+      {#each [..."SHIMPZ"] as letter}<span>{letter}</span>{/each}
     </div>
-    <nav aria-label={linksLabel}>{@render links()}</nav>
+    <div class="utility">
+      <div class="brand">
+        <ShimpzBrand href={brandHref} product={brandProduct} ariaLabel={brandAriaLabel} />
+        {#if statement}<p>{statement}</p>{/if}
+      </div>
+      <nav aria-label={linksLabel}>{@render links()}</nav>
+    </div>
     {#if meta}<div data-slot="site-footer-meta" class="meta">{@render meta()}</div>{/if}
   </div>
 </footer>
@@ -39,17 +46,37 @@
 <style>
   .shimpz-site-footer {
     margin-block-start: clamp(5rem, 10vw, 8rem);
-    border-block-start: 1px solid var(--shimpz-color-border);
+    background: var(--shimpz-color-surface);
   }
 
   .inner {
-    display: grid;
     width: min(calc(100% - 2rem), var(--shimpz-content-width));
-    min-height: 8.5rem;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 1.5rem;
+    min-height: clamp(24rem, 44vw, 36rem);
+    padding-block: clamp(3rem, 7vw, 6rem) 2rem;
     margin-inline: auto;
+    container-type: inline-size;
+  }
+
+  .width-editorial .inner {
+    width: min(calc(100% - 2rem), var(--shimpz-editorial-width));
+  }
+
+  .monument {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--shimpz-color-text);
+    font: 760 clamp(4rem, 18cqi, 15rem)/0.78 var(--shimpz-font-sans);
+    letter-spacing: -0.08em;
+  }
+
+  .utility {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
+    align-items: start;
+    gap: clamp(2rem, 8vw, 8rem);
+    margin-block-start: clamp(4rem, 8vw, 7rem);
   }
 
   .brand {
@@ -70,7 +97,22 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: 0.65rem 1rem;
+    gap: 2rem clamp(2rem, 5vw, 4rem);
+  }
+
+  nav :global([data-slot="site-footer-group"]) {
+    display: grid;
+    min-width: 9rem;
+    align-content: start;
+    gap: 0.75rem;
+  }
+
+  nav :global([data-slot="site-footer-group-title"]) {
+    margin: 0 0 0.35rem;
+    color: var(--shimpz-color-text-dim);
+    font: 600 0.62rem/1.4 var(--shimpz-font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   nav :global(a) {
@@ -99,14 +141,19 @@
     color: var(--shimpz-color-text-dim);
     font: 400 0.6rem/1.4 var(--shimpz-font-mono);
     letter-spacing: 0.1em;
-    border-block-start: 1px solid var(--shimpz-color-border);
+    margin-block-start: clamp(2rem, 5vw, 4rem);
     text-transform: uppercase;
   }
 
   @media (max-width: 620px) {
     .inner {
+      min-height: 30rem;
+      padding-block-start: 3rem;
+    }
+
+    .utility {
       grid-template-columns: minmax(0, 1fr);
-      padding-block: 1.5rem;
+      margin-block-start: 3rem;
     }
 
     .brand {
@@ -117,10 +164,6 @@
 
     nav {
       justify-content: flex-start;
-    }
-
-    .meta {
-      grid-column: 1;
     }
   }
 </style>

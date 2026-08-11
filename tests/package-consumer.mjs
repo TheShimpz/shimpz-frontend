@@ -92,9 +92,10 @@ mount(App, { target: document.getElementById("app") });
 </script>
 
 {#snippet navigation()}<SiteNavLink href="/">Home</SiteNavLink>{/snippet}
-<SiteHeader brandHref="/" navigationLabel="Primary" {navigation} />
+<SiteHeader brandHref="/" navigationLabel="Primary" contentWidth="editorial" {navigation} />
 <main>
   <ShimpzBrand product="Consumer" />
+  <ShimpzBrand variant="hero" decorative />
   <img src={logoUrl} alt="Shimpz thinking" />
   <EditorialHero title="A bounded display heading" lead="A concise editorial introduction." />
   <EditorialSection title="A bounded section heading"><p>Consumer-owned content.</p></EditorialSection>
@@ -115,7 +116,7 @@ mount(App, { target: document.getElementById("app") });
   />
 </main>
 {#snippet links()}<a href="/">Home</a>{/snippet}
-<SiteFooter brandHref="/" linksLabel="Footer" {links} />
+<SiteFooter brandHref="/" linksLabel="Footer" contentWidth="editorial" {links} />
 `,
   );
   writeFileSync(

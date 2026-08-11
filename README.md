@@ -76,6 +76,14 @@ the top of adjacent media. A tall illustration must never push a hero lead away
 from its headline or vertically center explanatory copy in otherwise empty
 space.
 
+Public site chrome uses the `content` width by default. Institutional consumers
+may select `contentWidth="editorial"` on `SiteHeader` and `SiteFooter` when their
+page grid uses the editorial width; that mode preserves the same one-rem gutter
+on every viewport. `SiteFooter` supports consumer-owned link groups through
+`data-slot="site-footer-group"`, with no more than three related links per group.
+Its giant footer wordmark is decorative; the compact linked brand remains the
+accessible home destination.
+
 Product illustrations belong to the consuming product repository. Prefer one
 directional architectural flows with few large stages over radial, orbital, or
 decorative node clusters. Keep

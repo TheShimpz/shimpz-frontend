@@ -45,10 +45,10 @@
 
 <SiteHeader
   brandHref="/site-kit/"
-  brandProduct="Space"
   brandAriaLabel="Shimpz home"
   navigationLabel="Primary navigation"
   skipLabel="Skip to content"
+  contentWidth="editorial"
   {navigation}
   {actions}
 />
@@ -80,9 +80,15 @@
 </main>
 
 {#snippet links()}
-  <a href="/site-kit/#services">Privacy</a>
-  <a href="/site-kit/#services">Terms</a>
-  <a href="/site-kit/#docs">Docs</a>
+  <div data-slot="site-footer-group">
+    <p data-slot="site-footer-group-title">Project</p>
+    <a href="/site-kit/#services">Privacy</a>
+    <a href="/site-kit/#services">Terms</a>
+  </div>
+  <div data-slot="site-footer-group">
+    <p data-slot="site-footer-group-title">Learn</p>
+    <a href="/site-kit/#docs">Docs</a>
+  </div>
 {/snippet}
 {#snippet footerMeta()}
   <span>Space platform // public presentation</span>
@@ -92,13 +98,14 @@
   brandAriaLabel="Shimpz home"
   linksLabel="Footer links"
   statement="Teams stay isolated · permissions stay explicit"
+  contentWidth="editorial"
   links={links}
   meta={footerMeta}
 />
 
 <style>
   main {
-    width: min(calc(100% - 2rem), var(--shimpz-content-width));
+    width: min(calc(100% - 2rem), var(--shimpz-editorial-width));
     min-height: 42rem;
     padding-block: clamp(3rem, 7vw, 6rem);
     margin-inline: auto;

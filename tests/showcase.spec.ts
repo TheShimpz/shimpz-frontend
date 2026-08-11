@@ -80,6 +80,36 @@ test("renders the public site shell with crawlable language links", async ({ pag
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
   await page.getByRole("link", { name: "Skip to content" }).click();
   await expect(page.locator("#main-content")).toBeFocused();
+  const headerBrand = page.locator('[data-slot="site-header"] .shimpz-brand');
+  const [markBox, wordBox] = await Promise.all([
+    headerBrand.locator('[data-slot="shimpz-brand-mark"]').boundingBox(),
+    headerBrand.locator('[data-slot="shimpz-brand-wordmark"]').boundingBox(),
+  ]);
+  if (!markBox || !wordBox) throw new Error("Header brand has no rendered bounds");
+  expect(Math.abs((markBox.y + markBox.height / 2) - (wordBox.y + wordBox.height / 2))).toBeLessThan(2);
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const [headerInner, main, footerInner] = await Promise.all([
+    page.locator('[data-slot="site-header-inner"]').boundingBox(),
+    page.locator("#main-content").boundingBox(),
+    page.locator('[data-slot="site-footer-inner"]').boundingBox(),
+  ]);
+  if (!headerInner || !main || !footerInner) throw new Error("Public chrome has no rendered bounds");
+  expect(Math.abs(headerInner.x - main.x)).toBeLessThan(1);
+  expect(Math.abs(headerInner.width - main.width)).toBeLessThan(1);
+  expect(Math.abs(footerInner.x - main.x)).toBeLessThan(1);
+  expect(Math.abs(footerInner.width - main.width)).toBeLessThan(1);
+  const footer = page.locator('[data-slot="site-footer"]');
+  await expect(footer).toHaveCSS("border-top-width", "0px");
+  await expect(page.locator('[data-slot="site-footer-meta"]')).toHaveCSS("border-top-width", "0px");
+  const monument = page.locator('[data-slot="site-footer-monument"]');
+  const monumentBox = await monument.boundingBox();
+  if (!monumentBox) throw new Error("Footer monument has no rendered bounds");
+  expect(monumentBox.width).toBeGreaterThanOrEqual(footerInner.width * 0.9);
+  await expect(page.locator('[data-slot="site-footer-group"]')).toHaveCount(2);
+  for (const group of await page.locator('[data-slot="site-footer-group"]').all()) {
+    expect(await group.getByRole("link").count()).toBeLessThanOrEqual(3);
+  }
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });

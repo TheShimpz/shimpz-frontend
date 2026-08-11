@@ -9,6 +9,7 @@
     actions?: Snippet;
     brandProduct?: string;
     brandAriaLabel?: string;
+    contentWidth?: "content" | "editorial";
     skipLabel?: string;
     mainId?: string;
     class?: string;
@@ -21,6 +22,7 @@
     actions,
     brandProduct,
     brandAriaLabel,
+    contentWidth = "content",
     skipLabel = "Skip to content",
     mainId = "main-content",
     class: className,
@@ -28,8 +30,8 @@
 </script>
 
 <a class="skip" href={`#${mainId}`}>{skipLabel}</a>
-<header data-slot="site-header" class={["shimpz-site-header", className]}>
-  <div class="inner">
+<header data-slot="site-header" class={["shimpz-site-header", `width-${contentWidth}`, className]}>
+  <div data-slot="site-header-inner" class="inner">
     <ShimpzBrand href={brandHref} product={brandProduct} ariaLabel={brandAriaLabel} />
     <nav aria-label={navigationLabel}>
       {@render navigation()}
@@ -77,6 +79,10 @@
     margin-inline: auto;
   }
 
+  .width-editorial .inner {
+    width: min(calc(100% - 2rem), var(--shimpz-editorial-width));
+  }
+
   nav {
     display: flex;
     min-width: 0;
@@ -122,6 +128,10 @@
     .inner {
       width: min(calc(100% - 1rem), var(--shimpz-content-width));
       column-gap: 0.5rem;
+    }
+
+    .width-editorial .inner {
+      width: min(calc(100% - 2rem), var(--shimpz-editorial-width));
     }
 
     nav {

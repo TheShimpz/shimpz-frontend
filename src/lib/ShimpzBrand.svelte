@@ -6,6 +6,7 @@
     product?: string;
     href?: string;
     ariaLabel?: string;
+    decorative?: boolean;
     class?: string;
   };
 
@@ -14,6 +15,7 @@
     product,
     href,
     ariaLabel,
+    decorative = false,
     class: className,
   }: Props = $props();
 
@@ -21,9 +23,9 @@
 </script>
 
 {#snippet content()}
-  <img src={thinkingUrl} alt="" aria-hidden="true" />
+  <img data-slot="shimpz-brand-mark" src={thinkingUrl} alt="" aria-hidden="true" />
   {#if variant !== "symbol"}
-    <span class="wordmark">Shimpz</span>
+    <span data-slot="shimpz-brand-wordmark" class="wordmark">Shimpz</span>
     {#if product}
       <span class="product">{product}</span>
     {/if}
@@ -31,14 +33,15 @@
 {/snippet}
 
 {#if href}
-  <a class={["shimpz-brand", `shimpz-brand--${variant}`, className]} {href} aria-label={label}>
+  <a class={["shimpz-brand", `shimpz-brand--${variant}`, product && "has-product", className]} {href} aria-label={label}>
     {@render content()}
   </a>
 {:else}
   <div
-    class={["shimpz-brand", `shimpz-brand--${variant}`, className]}
-    role="img"
-    aria-label={label}
+    class={["shimpz-brand", `shimpz-brand--${variant}`, product && "has-product", className]}
+    role={decorative ? undefined : "img"}
+    aria-label={decorative ? undefined : label}
+    aria-hidden={decorative ? "true" : undefined}
   >
     {@render content()}
   </div>
@@ -46,25 +49,41 @@
 
 <style>
   .shimpz-brand {
-    display: inline-grid;
-    grid-template-columns: auto auto;
+    display: inline-flex;
     align-items: center;
     justify-content: start;
-    gap: 0.35rem 0.55rem;
+    gap: 0.55rem;
     color: var(--shimpz-color-text);
     font-family: var(--shimpz-font-mono);
     text-decoration: none;
   }
 
   img {
-    grid-row: 1 / span 2;
     width: 2.25rem;
     height: 2.25rem;
+    flex: none;
     object-fit: contain;
   }
 
-  .wordmark {
+  .has-product {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: 0.35rem 0.55rem;
+  }
+
+  .has-product img {
+    grid-row: 1 / span 2;
+  }
+
+  .has-product .wordmark {
     align-self: end;
+  }
+
+  .has-product .product {
+    align-self: start;
+  }
+
+  .wordmark {
     font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -87,12 +106,12 @@
   }
 
   .shimpz-brand--hero img {
-    width: clamp(4.5rem, 10vw, 6rem);
-    height: clamp(4.5rem, 10vw, 6rem);
+    width: var(--shimpz-brand-hero-mark-size, clamp(4.5rem, 10vw, 6rem));
+    height: var(--shimpz-brand-hero-mark-size, clamp(4.5rem, 10vw, 6rem));
   }
 
   .shimpz-brand--hero .wordmark {
-    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-size: var(--shimpz-brand-hero-word-size, clamp(1.75rem, 5vw, 2.75rem));
     letter-spacing: 0.13em;
   }
 
