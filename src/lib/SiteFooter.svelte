@@ -29,7 +29,7 @@
 
 <footer data-slot="site-footer" class={["shimpz-site-footer", `width-${contentWidth}`, className]}>
   <div data-slot="site-footer-inner" class="inner">
-    <div data-slot="site-footer-monument" class="monument" aria-hidden="true">
+    <div data-slot="site-footer-monument" class="monument" dir="ltr" aria-hidden="true">
       {#each [..."SHIMPZ"] as letter}<span>{letter}</span>{/each}
     </div>
     <div class="utility">

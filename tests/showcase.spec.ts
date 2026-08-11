@@ -103,6 +103,7 @@ test("renders the public site shell with crawlable language links", async ({ pag
   await expect(footer).toHaveCSS("border-top-width", "0px");
   await expect(page.locator('[data-slot="site-footer-meta"]')).toHaveCSS("border-top-width", "0px");
   const monument = page.locator('[data-slot="site-footer-monument"]');
+  await expect(monument).toHaveAttribute("dir", "ltr");
   const monumentBox = await monument.boundingBox();
   if (!monumentBox) throw new Error("Footer monument has no rendered bounds");
   expect(monumentBox.width).toBeGreaterThanOrEqual(footerInner.width * 0.9);
