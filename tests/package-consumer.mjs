@@ -78,7 +78,7 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, Disclosure, EditorialHero, EditorialSection, EditorialVisual, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PowerRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, DialogFrame, Disclosure, EditorialHero, EditorialSection, EditorialVisual, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, PowerRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
@@ -114,6 +114,7 @@ mount(App, { target: document.getElementById("app") });
     bind:value={powerValue}
     bind:valid={powerValid}
   />
+  <DialogFrame title="Nested proof" titleId="nested-proof-title" titleLevel={3}><p>Consumer-owned proof.</p></DialogFrame>
 </main>
 {#snippet links()}<a href="/">Home</a>{/snippet}
 <SiteFooter brandHref="/" linksLabel="Footer" contentWidth="editorial" {links} />

@@ -6,6 +6,7 @@
     kicker?: string;
     title: string;
     titleId: string;
+    titleLevel?: 2 | 3;
     lead?: string;
     children: Snippet;
     footer?: Snippet;
@@ -15,6 +16,7 @@
     kicker,
     title,
     titleId,
+    titleLevel = 2,
     lead,
     children,
     footer,
@@ -26,7 +28,11 @@
 <div class={["shimpz-dialog-frame", className]} {...attributes}>
   <header>
     {#if kicker}<p class="kicker">{kicker}</p>{/if}
-    <h2 id={titleId}>{title}</h2>
+    {#if titleLevel === 3}
+      <h3 id={titleId}>{title}</h3>
+    {:else}
+      <h2 id={titleId}>{title}</h2>
+    {/if}
     {#if lead}<p class="lead">{lead}</p>{/if}
   </header>
   <div class="body">{@render children()}</div>
@@ -66,7 +72,8 @@
     text-transform: uppercase;
   }
 
-  h2 {
+  h2,
+  h3 {
     margin: 0;
     font: 700 clamp(1.25rem, 4vw, 1.65rem)/1.08 var(--shimpz-font-mono);
     letter-spacing: -0.035em;
