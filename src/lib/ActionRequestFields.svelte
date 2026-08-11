@@ -6,8 +6,6 @@
   import TextField from "./TextField.svelte";
 
   type Labels = {
-    required: string;
-    optional: string;
     chooseOption: string;
     selectionHint: string;
     reauthLabel: string;
@@ -37,7 +35,6 @@
   let selectedValues = $state<string[]>([]);
 
   const kind = $derived(request.kind ?? "");
-  const requiredLabel = $derived(request.required ? labels.required : labels.optional);
   const responseValue = $derived.by(() => {
     if (kind === "approval" || kind === "auth:phishing-resistant") return true;
     if (kind === "input:select" || kind === "input:choice") return singleValue;
@@ -83,7 +80,8 @@
   {#if kind === "input:text" || kind === "input:password" || kind === "input:phone"}
     <TextField
       id="human-request-value"
-      label={`${request.label} · ${requiredLabel}`}
+      label={request.label}
+      visuallyHiddenLabel
       type={kind === "input:password" ? "password" : kind === "input:phone" ? "tel" : "text"}
       inputmode={kind === "input:phone" ? "tel" : undefined}
       autocomplete={kind === "input:phone" ? "tel" : "off"}
@@ -97,7 +95,8 @@
   {:else if kind === "input:textarea"}
     <TextAreaField
       id="human-request-value"
-      label={`${request.label} · ${requiredLabel}`}
+      label={request.label}
+      visuallyHiddenLabel
       placeholder={request.placeholder ?? undefined}
       minlength={request.min_length}
       maxlength={request.max_length}
@@ -108,7 +107,8 @@
   {:else if kind === "input:select"}
     <SelectField
       id="human-request-value"
-      label={`${request.label} · ${requiredLabel}`}
+      label={request.label}
+      visuallyHiddenLabel
       placeholder={labels.chooseOption}
       options={request.options}
       required={request.required}
@@ -116,7 +116,7 @@
     />
   {:else if kind === "input:choice"}
     <fieldset>
-      <legend>{request.label} · {requiredLabel}</legend>
+      <legend class="visually-hidden">{request.label}</legend>
       {#each request.options as option (option.value)}
         <RadioField
           id={`human-request-${option.value}`}
@@ -130,7 +130,7 @@
     </fieldset>
   {:else if kind === "input:choices"}
     <fieldset>
-      <legend>{request.label} · {requiredLabel}</legend>
+      <legend class="visually-hidden">{request.label}</legend>
       <p class="field-hint">{labels.selectionHint}</p>
       {#each request.options as option (option.value)}
         <CheckboxField
@@ -146,6 +146,7 @@
     <TextField
       id="human-request-auth"
       label={labels.reauthLabel}
+      visuallyHiddenLabel
       type="password"
       autocomplete="current-password"
       required
@@ -156,6 +157,7 @@
     <TextField
       id="human-request-auth"
       label={labels.secondFactorLabel}
+      visuallyHiddenLabel
       type="text"
       inputmode="numeric"
       autocomplete="one-time-code"
@@ -187,6 +189,15 @@
     font: 600 0.7rem/1.2 var(--shimpz-font-mono);
     letter-spacing: 0.07em;
     text-transform: uppercase;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
 
   .field-hint {

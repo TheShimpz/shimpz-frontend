@@ -15,6 +15,7 @@
     hint?: string;
     error?: string;
     value?: string;
+    visuallyHiddenLabel?: boolean;
   };
 
   let {
@@ -25,6 +26,7 @@
     hint,
     error,
     value = $bindable(""),
+    visuallyHiddenLabel = false,
     class: className,
     "aria-describedby": externalDescription,
     ...attributes
@@ -38,7 +40,7 @@
 </script>
 
 <div class={["shimpz-select-field", className]}>
-  <label for={id}>{label}</label>
+  <label for={id} class:visually-hidden={visuallyHiddenLabel}>{label}</label>
   <span class="control">
     <select
       {id}
@@ -60,6 +62,7 @@
 <style>
   div { display: grid; gap: 0.4rem; }
   label { color: var(--shimpz-color-text); font: 600 0.7rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.07em; text-transform: uppercase; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); }
   .control { position: relative; display: grid; }
   .control::after { position: absolute; inset-block-start: 50%; inset-inline-end: 0.8rem; color: var(--shimpz-color-cyan); font: 700 0.75rem/1 var(--shimpz-font-mono); content: "⌄"; pointer-events: none; transform: translateY(-55%); }
   select { width: 100%; min-height: var(--shimpz-control-height); padding: 0.55rem 2.2rem 0.55rem 0.7rem; color: var(--shimpz-color-text); font: 400 1rem/1.25 var(--shimpz-font-sans); appearance: none; background: var(--shimpz-color-surface-raised); border: 1px solid var(--shimpz-color-border); border-radius: 0; }

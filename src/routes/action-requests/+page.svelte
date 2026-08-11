@@ -19,8 +19,6 @@
     { value: "two", label: "Two", description: null },
   ];
   const labels = {
-    required: "Required",
-    optional: "Optional",
     chooseOption: "Choose an option",
     selectionHint: "Choose 1–2 options",
     reauthLabel: "Current password",

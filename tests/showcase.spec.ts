@@ -351,6 +351,8 @@ test("renders and validates every reusable Action request field", async ({ page 
 
   await page.getByRole("textbox", { name: /Reviewed value/ }).fill("reviewed");
   await expect(output).toContainText('Valid · "reviewed"');
+  await expect(page.locator('label[for="human-request-value"]')).toHaveClass(/visually-hidden/);
+  await expect(page.getByText("Reviewed value", { exact: true })).toHaveCount(1);
 
   await kind.selectOption("input:textarea");
   await page.getByRole("textbox", { name: /Reviewed value/ }).fill("longer context");
@@ -361,6 +363,7 @@ test("renders and validates every reusable Action request field", async ({ page 
   await expect(output).toContainText('Valid · "one"');
 
   await kind.selectOption("input:choice");
+  await expect(page.locator("fieldset legend")).toHaveClass(/visually-hidden/);
   await page.getByRole("radio", { name: "Two" }).check();
   await expect(output).toContainText('Valid · "two"');
 
@@ -373,6 +376,7 @@ test("renders and validates every reusable Action request field", async ({ page 
     await expect(output).toContainText("Valid · true");
   }
   await kind.selectOption("auth:reauth");
+  await expect(page.locator('label[for="human-request-auth"]')).toHaveClass(/visually-hidden/);
   await page.getByRole("textbox", { name: "Current password" }).fill("secret");
   await expect(output).toContainText('Valid · "secret"');
   await kind.selectOption("auth:second-factor");

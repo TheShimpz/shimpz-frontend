@@ -8,6 +8,7 @@
     error?: string;
     value?: string;
     variant?: "text" | "code";
+    visuallyHiddenLabel?: boolean;
   };
 
   let {
@@ -17,6 +18,7 @@
     error,
     value = $bindable(""),
     variant = "text",
+    visuallyHiddenLabel = false,
     class: className,
     "aria-describedby": externalDescription,
     ...attributes
@@ -30,7 +32,7 @@
 </script>
 
 <div class={["shimpz-field", `shimpz-field--${variant}`, className]}>
-  <label for={id}>{label}</label>
+  <label for={id} class:visually-hidden={visuallyHiddenLabel}>{label}</label>
   <input
     {id}
     bind:value
@@ -57,6 +59,15 @@
     font: 600 0.7rem/1.2 var(--shimpz-font-mono);
     letter-spacing: 0.07em;
     text-transform: uppercase;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
 
   input {
