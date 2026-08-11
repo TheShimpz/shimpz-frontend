@@ -6,7 +6,7 @@
     alt: string;
     width?: number;
     height?: number;
-    aspect?: "landscape" | "wide" | "square";
+    aspect?: "landscape" | "wide" | "flow" | "square";
     fit?: "cover" | "contain";
     treatment?: "framed" | "unframed";
     priority?: boolean;
@@ -53,6 +53,7 @@
   .treatment-framed::after { position: absolute; z-index: 1; inset: 0; pointer-events: none; content: ""; background: repeating-linear-gradient(180deg, transparent 0 5px, rgb(255 255 255 / 1.2%) 6px); mix-blend-mode: screen; }
   img { display: block; width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
   .aspect-wide img { aspect-ratio: 16 / 9; }
+  .aspect-flow img { aspect-ratio: 3 / 1; }
   .aspect-square img { aspect-ratio: 1; }
   .fit-contain img { object-fit: contain; }
   @media (forced-colors: active) { .treatment-framed { border-color: CanvasText; clip-path: none; } .treatment-framed::before, .treatment-framed::after { display: none; } }

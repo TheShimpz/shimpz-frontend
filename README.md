@@ -59,7 +59,8 @@ of inventing local display scales or image frames:
 - `EditorialSection` owns bounded section headings and alternating media layout.
 - `EditorialVisual` reserves image space, applies the canonical frame by
   default, offers an explicit `unframed` treatment for transparent editorial
-  illustrations, and closes loading priority to one explicit hero image.
+  illustrations, closes loading priority to one explicit hero image, and
+  provides a `flow` aspect for wide, directional architecture diagrams.
 - `PageIntro` remains the compact heading for application and catalog routes;
   it is not a marketing hero.
 
