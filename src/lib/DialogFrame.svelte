@@ -5,6 +5,7 @@
   type Props = HTMLAttributes<HTMLDivElement> & {
     kicker?: string;
     title: string;
+    titleContent?: Snippet;
     titleId: string;
     titleLevel?: 2 | 3;
     lead?: string;
@@ -15,6 +16,7 @@
   let {
     kicker,
     title,
+    titleContent,
     titleId,
     titleLevel = 2,
     lead,
@@ -29,9 +31,9 @@
   <header>
     {#if kicker}<p class="kicker">{kicker}</p>{/if}
     {#if titleLevel === 3}
-      <h3 id={titleId}>{title}</h3>
+      <h3 id={titleId}>{#if titleContent}{@render titleContent()}{:else}{title}{/if}</h3>
     {:else}
-      <h2 id={titleId}>{title}</h2>
+      <h2 id={titleId}>{#if titleContent}{@render titleContent()}{:else}{title}{/if}</h2>
     {/if}
     {#if lead}<p class="lead">{lead}</p>{/if}
   </header>
