@@ -19,7 +19,9 @@ test("renders and operates the built design-system showcase", async ({ page }) =
   const button = page.getByRole("button", { name: "Transmit signal" });
   await button.click();
   await expect(page.getByText("1 transmissions acknowledged")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Unavailable" })).toBeDisabled();
+  const unavailable = page.getByRole("button", { name: "Unavailable" });
+  await expect(unavailable).toBeDisabled();
+  await expect(unavailable).toHaveCSS("transition-duration", "0s");
   const assistantId = page.getByRole("textbox", { name: "Assistant ID" });
   await assistantId.fill("release-agent");
   await expect(assistantId).toHaveValue("release-agent");

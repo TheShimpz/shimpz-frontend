@@ -114,6 +114,7 @@
     cursor: not-allowed;
     filter: grayscale(0.55);
     opacity: 0.5;
+    transition: none;
   }
 
   span {
