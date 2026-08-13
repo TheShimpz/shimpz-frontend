@@ -7,12 +7,19 @@
     EditorialVisual,
     Notice,
     ShimpzBrand,
+    SignalList,
     TextField,
   } from "$lib";
   import shimpzThinking from "$lib/assets/shimpz-thinking.svg";
 
   let clicks = $state(0);
   let assistantId = $state("hello-world");
+  const showcaseSignals = [
+    { id: "resolve-zone", channel: "cloudflare", assurance: "approval" },
+    { id: "inspect-records", channel: "dns.read", assurance: "none" },
+    { id: "publish-record", channel: "dns.write", assurance: "reauth" },
+  ] as const;
+  const emptySignals: (typeof showcaseSignals)[number][] = [];
 </script>
 
 {#snippet heroMeta()}
@@ -44,6 +51,20 @@
     <div class="yellow"><span>#FCEE0A</span>Yellow</div>
     <div class="green"><span>#05FFA1</span>Green</div>
   </div>
+{/snippet}
+
+{#snippet signalIdentity(item: (typeof showcaseSignals)[number])}
+  <div class="signal-identity">
+    <span>Signal</span>
+    <code>{item.id}</code>
+  </div>
+{/snippet}
+
+{#snippet signalMeta(item: (typeof showcaseSignals)[number])}
+  <dl class="signal-meta">
+    <div><dt>Channel</dt><dd>{item.channel}</dd></div>
+    <div><dt>Assurance</dt><dd>{item.assurance}</dd></div>
+  </dl>
 {/snippet}
 
 <svelte:head>
@@ -116,6 +137,27 @@
               label="Invalid example"
               value="Not valid"
               error="Use lowercase ASCII characters."
+            />
+          </div>
+        </Card>
+        <Card class="signal-list-card" title="Signal list">
+          <div class="signal-list-grid">
+            <SignalList
+              id="showcase-signal-list"
+              items={showcaseSignals}
+              getKey={(item) => item.id}
+              signal={signalIdentity}
+              meta={signalMeta}
+              aria-label="System signals"
+            />
+            <SignalList
+              id="empty-signal-list"
+              class="empty-signal-list"
+              items={emptySignals}
+              getKey={(item) => item.id}
+              signal={signalIdentity}
+              meta={signalMeta}
+              aria-label="Empty signals"
             />
           </div>
         </Card>
@@ -261,8 +303,55 @@
     gap: 1.5rem;
   }
 
+  :global(.signal-list-card),
   :global(.notices) {
     grid-column: 1 / -1;
+  }
+
+  .signal-list-grid {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :global(.empty-signal-list) {
+    display: none;
+  }
+
+  .signal-identity {
+    display: grid;
+    min-width: 0;
+    gap: 0.2rem;
+  }
+
+  .signal-identity span,
+  .signal-meta dt {
+    color: var(--shimpz-color-text-dim);
+    font: 700 0.58rem/1.3 var(--shimpz-font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .signal-identity code {
+    overflow-wrap: anywhere;
+    color: var(--shimpz-color-text);
+    font: 600 0.82rem/1.4 var(--shimpz-font-mono);
+  }
+
+  .signal-meta {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .signal-meta dd {
+    min-width: 0;
+    margin: 0.2rem 0 0;
+    overflow-wrap: anywhere;
+    color: var(--shimpz-color-text-muted);
+    font: 400 0.72rem/1.4 var(--shimpz-font-mono);
   }
 
   .stack {
@@ -328,6 +417,7 @@
       grid-template-columns: 1fr;
     }
 
+    :global(.signal-list-card),
     :global(.notices) {
       grid-column: auto;
     }

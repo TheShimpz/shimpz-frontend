@@ -78,7 +78,7 @@ mount(App, { target: document.getElementById("app") });
   writeFileSync(
     join(consumerDirectory, "App.svelte"),
     `<script>
-  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, DialogFrame, Disclosure, EditorialHero, EditorialSection, EditorialVisual, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, ActionRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
+  import { ActionLink, AssistantIcon, Button, Card, CheckboxField, DialogFrame, Disclosure, EditorialHero, EditorialSection, EditorialVisual, EmbedFrame, FileInput, Modal, NavItem, Notice, PageIntro, ActionRequestFields, PromptDialog, RadioField, SelectField, ShimpzBrand, SignalList, SiteFooter, SiteHeader, SiteNavLink, StatusBadge, TextAreaField, TextField, TextLink, WorkspaceShell } from "@shimpz/frontend";
   import logoUrl from "@shimpz/frontend/assets/shimpz-thinking.svg";
 
   let assistantId = "hello-world";
@@ -89,9 +89,12 @@ mount(App, { target: document.getElementById("app") });
   let messageField;
   let actionValue;
   let actionValid = false;
+  const signals = [{ id: "consumer-signal", status: "ready" }];
 </script>
 
 {#snippet navigation()}<SiteNavLink href="/">Home</SiteNavLink>{/snippet}
+{#snippet signal(item)}<code>{item.id}</code>{/snippet}
+{#snippet signalMeta(item)}<span>{item.status}</span>{/snippet}
 <SiteHeader brandHref="/" navigationLabel="Primary" contentWidth="editorial" {navigation} />
 <main>
   <ShimpzBrand product="Consumer" />
@@ -105,6 +108,7 @@ mount(App, { target: document.getElementById("app") });
   <RadioField id="mode-safe" name="mode" optionValue="safe" label="Safe" bind:value={mode} />
   <Button bind:element={publishButton}>Publish</Button>
   <Notice variant="success" title="Ready">Package exports resolve.</Notice>
+  <SignalList items={signals} getKey={(item) => item.id} {signal} meta={signalMeta} aria-label="Consumer signals" />
   <EmbedFrame bind:element={storeFrame} title="Store" srcdoc="<!doctype html><html><body>Store</body></html>" />
   <TextAreaField id="message" label="Message" bind:element={messageField} />
   <ActionRequestFields

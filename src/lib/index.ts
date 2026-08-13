@@ -23,6 +23,7 @@ export { default as PromptDialog } from "./PromptDialog.svelte";
 export { default as ActionRequestFields } from "./ActionRequestFields.svelte";
 export { default as RadioField } from "./RadioField.svelte";
 export { default as ShimpzBrand } from "./ShimpzBrand.svelte";
+export { default as SignalList } from "./SignalList.svelte";
 export { default as SelectField } from "./SelectField.svelte";
 export { default as ScrollArea } from "./ScrollArea.svelte";
 export { default as Separator } from "./Separator.svelte";

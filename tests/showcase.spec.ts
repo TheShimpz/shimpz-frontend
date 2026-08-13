@@ -52,6 +52,41 @@ test("renders and operates the built design-system showcase", async ({ page }) =
   }
 });
 
+test("renders SignalList as a responsive semantic signal rail", async ({ page }) => {
+  const list = page.locator("#showcase-signal-list");
+  const emptyList = page.locator("#empty-signal-list");
+  await expect(list).toHaveAttribute("role", "list");
+  await expect(list.locator('[data-slot="signal-list-item"]')).toHaveCount(3);
+  await expect(emptyList).toHaveAttribute("role", "list");
+  await expect(emptyList.locator('[data-slot="signal-list-item"]')).toHaveCount(0);
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const item = list.locator('[data-slot="signal-list-item"]').first();
+  const signal = item.locator('[data-slot="signal-list-signal"]');
+  const meta = item.locator('[data-slot="signal-list-meta"]');
+  const [listBox, signalBox, metaBox] = await Promise.all([
+    list.boundingBox(),
+    signal.boundingBox(),
+    meta.boundingBox(),
+  ]);
+  if (!listBox || !signalBox || !metaBox) throw new Error("SignalList has no rendered bounds");
+  expect(listBox.width).toBeGreaterThan(0);
+  expect(metaBox.x).toBeGreaterThan(signalBox.x + signalBox.width);
+  expect(Math.abs(metaBox.y - signalBox.y)).toBeLessThan(16);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const [mobileSignalBox, mobileMetaBox] = await Promise.all([
+    signal.boundingBox(),
+    meta.boundingBox(),
+  ]);
+  if (!mobileSignalBox || !mobileMetaBox) throw new Error("Mobile SignalList has no rendered regions");
+  expect(mobileMetaBox.y).toBeGreaterThanOrEqual(mobileSignalBox.y + mobileSignalBox.height);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+
+  const results = await new AxeBuilder({ page }).include(".signal-list-card").analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   const fonts = await page.evaluate(() => ({
     sans: document.fonts.check('16px "Inter Variable"'),
@@ -452,6 +487,10 @@ test("honors reduced motion and forced colors", async ({ page }) => {
   const button = page.getByRole("button", { name: "Transmit signal" });
   await expect(button).toHaveCSS("transition-duration", "1e-05s");
   await expect(page.locator(".shimpz-card").first()).toHaveCSS("clip-path", "none");
+  await expect(page.locator("#showcase-signal-list")).toHaveCSS("clip-path", "none");
+  expect(await page.locator('[data-slot="signal-list-marker"]').first().evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
+  )).not.toBe("rgba(0, 0, 0, 0)");
 });
 
 test("matches the desktop visual contract", async ({ page }) => {
