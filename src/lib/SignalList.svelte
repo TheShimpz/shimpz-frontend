@@ -105,7 +105,8 @@
   @container signal-list (max-width: 40rem) {
     li {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--shimpz-space-3);
+      gap: var(--shimpz-space-2);
+      padding-block: var(--shimpz-space-2);
     }
   }
 
