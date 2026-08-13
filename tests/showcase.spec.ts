@@ -488,6 +488,7 @@ test("honors reduced motion and forced colors", async ({ page }) => {
   await expect(button).toHaveCSS("transition-duration", "1e-05s");
   await expect(page.locator(".shimpz-card").first()).toHaveCSS("clip-path", "none");
   await expect(page.locator("#showcase-signal-list")).toHaveCSS("clip-path", "none");
+  await expect(page.locator("#showcase-signal-list")).toHaveCSS("border-top-width", "1px");
   expect(await page.locator('[data-slot="signal-list-marker"]').first().evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   )).not.toBe("rgba(0, 0, 0, 0)");

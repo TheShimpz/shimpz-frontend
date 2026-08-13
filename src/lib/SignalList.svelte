@@ -112,13 +112,19 @@
 
   @media (forced-colors: active) {
     ol {
-      --signal-list-border: CanvasText;
-      --signal-list-rail: CanvasText;
       background: Canvas;
+      border: 1px solid CanvasText;
+      box-shadow: none;
       clip-path: none;
     }
 
+    li + li {
+      border-color: CanvasText;
+    }
+
+    [data-slot="signal-list-marker"],
     [data-slot="signal-list-marker"]::after {
+      background: CanvasText;
       box-shadow: none;
     }
   }
