@@ -408,15 +408,15 @@ test("renders and validates every reusable Action request field", async ({ page 
   await page.getByRole("checkbox", { name: "One" }).check();
   await expect(output).toContainText('Valid · ["one"]');
 
-  for (const authKind of ["approval", "auth:phishing-resistant"]) {
+  for (const authKind of ["approval", "auth:passkey"]) {
     await kind.selectOption(authKind);
     await expect(output).toContainText("Valid · true");
   }
-  await kind.selectOption("auth:reauth");
+  await kind.selectOption("auth:password");
   await expect(page.locator('label[for="human-request-auth"]')).toHaveClass(/visually-hidden/);
   await page.getByRole("textbox", { name: "Current password" }).fill("secret");
   await expect(output).toContainText('Valid · "secret"');
-  await kind.selectOption("auth:second-factor");
+  await kind.selectOption("auth:totp");
   await page.getByRole("textbox", { name: "Authentication code" }).fill("123456");
   await expect(output).toContainText('Valid · "123456"');
 

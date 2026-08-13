@@ -8,9 +8,9 @@
   type Labels = {
     chooseOption: string;
     selectionHint: string;
-    reauthLabel: string;
-    secondFactorLabel: string;
-    secondFactorPlaceholder: string;
+    passwordLabel: string;
+    totpLabel: string;
+    totpPlaceholder: string;
   };
 
   type Props = {
@@ -36,13 +36,13 @@
 
   const kind = $derived(request.kind ?? "");
   const responseValue = $derived.by(() => {
-    if (kind === "approval" || kind === "auth:phishing-resistant") return true;
+    if (kind === "approval" || kind === "auth:passkey") return true;
     if (kind === "input:select" || kind === "input:choice") return singleValue;
     if (kind === "input:choices") return selectedValues;
     return textValue;
   });
   const responseValid = $derived.by(() => {
-    if (kind === "approval" || kind === "auth:phishing-resistant") return true;
+    if (kind === "approval" || kind === "auth:passkey") return true;
     if (kind === "input:select" || kind === "input:choice") {
       return singleValue !== "" || request.required === false;
     }
@@ -50,7 +50,7 @@
       return selectedValues.length >= request.min_selections &&
         selectedValues.length <= request.max_selections;
     }
-    if (kind === "auth:reauth" || kind === "auth:second-factor") return textValue.length > 0;
+    if (kind === "auth:password" || kind === "auth:totp") return textValue.length > 0;
     return textValue.length >= request.min_length &&
       textValue.length <= request.max_length &&
       (request.required === false || textValue.length > 0);
@@ -142,10 +142,10 @@
         />
       {/each}
     </fieldset>
-  {:else if kind === "auth:reauth"}
+  {:else if kind === "auth:password"}
     <TextField
       id="human-request-auth"
-      label={labels.reauthLabel}
+      label={labels.passwordLabel}
       visuallyHiddenLabel
       type="password"
       autocomplete="current-password"
@@ -153,15 +153,15 @@
       maxlength={4096}
       bind:value={textValue}
     />
-  {:else if kind === "auth:second-factor"}
+  {:else if kind === "auth:totp"}
     <TextField
       id="human-request-auth"
-      label={labels.secondFactorLabel}
+      label={labels.totpLabel}
       visuallyHiddenLabel
       type="text"
       inputmode="numeric"
       autocomplete="one-time-code"
-      placeholder={labels.secondFactorPlaceholder}
+      placeholder={labels.totpPlaceholder}
       required
       maxlength={16}
       bind:value={textValue}

@@ -10,9 +10,9 @@
     { value: "input:choice", label: "Choice" },
     { value: "input:choices", label: "Choices" },
     { value: "approval", label: "Approval" },
-    { value: "auth:reauth", label: "Reauthentication" },
-    { value: "auth:second-factor", label: "Second factor" },
-    { value: "auth:phishing-resistant", label: "Passkey" },
+    { value: "auth:password", label: "Password" },
+    { value: "auth:totp", label: "Authenticator code" },
+    { value: "auth:passkey", label: "Passkey" },
   ];
   const choiceOptions = [
     { value: "one", label: "One", description: "First reviewed option" },
@@ -21,9 +21,9 @@
   const labels = {
     chooseOption: "Choose an option",
     selectionHint: "Choose 1–2 options",
-    reauthLabel: "Current password",
-    secondFactorLabel: "Authentication code",
-    secondFactorPlaceholder: "123456",
+    passwordLabel: "Current password",
+    totpLabel: "Authentication code",
+    totpPlaceholder: "123456",
   };
 
   let kind = $state("input:text");

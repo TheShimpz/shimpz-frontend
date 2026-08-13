@@ -114,7 +114,7 @@ mount(App, { target: document.getElementById("app") });
   <ActionRequestFields
     request={{ kind: "input:text", label: "Value", required: true, placeholder: null, min_length: 1, max_length: 80 }}
     resetKey="consumer"
-    labels={{ required: "Required", optional: "Optional", chooseOption: "Choose", selectionHint: "Choose one", reauthLabel: "Password", secondFactorLabel: "Code", secondFactorPlaceholder: "123456" }}
+    labels={{ required: "Required", optional: "Optional", chooseOption: "Choose", selectionHint: "Choose one", passwordLabel: "Password", totpLabel: "Code", totpPlaceholder: "123456" }}
     bind:value={actionValue}
     bind:valid={actionValid}
   />
