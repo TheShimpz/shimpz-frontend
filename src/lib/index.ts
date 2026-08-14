@@ -40,4 +40,4 @@ export { default as Toolbar } from "./Toolbar.svelte";
 export { default as Toast } from "./Toast.svelte";
 export { default as WorkspaceShell } from "./WorkspaceShell.svelte";
 
-export const themeClass = "shimpz-theme";
+export { themeClass } from "./theme.ts";

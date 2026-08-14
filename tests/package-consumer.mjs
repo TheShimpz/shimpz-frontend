@@ -132,6 +132,53 @@ import { defineConfig } from "vite";
 export default defineConfig({ plugins: [svelte()] });
 `,
   );
+  writeFileSync(
+    join(consumerDirectory, "lean.html"),
+    '<!doctype html><html lang="en"><body><div id="app"></div><script type="module" src="/lean.js"></script></body></html>\n',
+  );
+  writeFileSync(
+    join(consumerDirectory, "lean.js"),
+    `import { mount } from "svelte";
+import Lean from "./Lean.svelte";
+import "@shimpz/frontend/tokens.css";
+
+mount(Lean, { target: document.getElementById("app") });
+`,
+  );
+  writeFileSync(
+    join(consumerDirectory, "Lean.svelte"),
+    `<script>
+  import ActionRequestFields from "@shimpz/frontend/components/ActionRequestFields";
+  import Button from "@shimpz/frontend/components/Button";
+  import DialogFrame from "@shimpz/frontend/components/DialogFrame";
+  import SelectField from "@shimpz/frontend/components/SelectField";
+  import { themeClass } from "@shimpz/frontend/theme";
+
+  let selected = "approval";
+  let value;
+  let valid = false;
+</script>
+
+<main class={themeClass}>
+  <SelectField id="kind" label="Kind" options={[{ value: "approval", label: "Approval" }]} bind:value={selected} />
+  <DialogFrame title="Approve" titleId="approve-title" titleLevel={2}>
+    <ActionRequestFields request={{ kind: "approval" }} resetKey="lean" bind:value bind:valid />
+    {#snippet footer()}<Button disabled>Approve</Button>{/snippet}
+  </DialogFrame>
+</main>
+`,
+  );
+  writeFileSync(
+    join(consumerDirectory, "lean.vite.config.js"),
+    `import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [svelte()],
+  build: { outDir: "lean-dist", rollupOptions: { input: "lean.html" } },
+});
+`,
+  );
 
   runPnpm(
     ["install", "--ignore-scripts", "--no-frozen-lockfile", "--prefer-offline"],
@@ -147,6 +194,12 @@ export default defineConfig({ plugins: [svelte()] });
     !assets.some((name) => name.endsWith(".woff2"))
   ) {
     throw new Error("The consumer build did not emit the expected HTML, brand asset, and local fonts.");
+  }
+
+  runPnpm(["exec", "vite", "build", "--config", "lean.vite.config.js"], consumerDirectory);
+  const leanFiles = readdirSync(join(consumerDirectory, "lean-dist"), { recursive: true });
+  if (leanFiles.some((name) => name.toString().includes("shimpz-thinking"))) {
+    throw new Error("Component subpath imports emitted the unused Shimpz thinking asset.");
   }
 } finally {
   rmSync(workspace, { force: true, recursive: true });

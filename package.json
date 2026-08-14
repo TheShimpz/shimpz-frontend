@@ -24,6 +24,30 @@
       "svelte": "./src/lib/index.ts",
       "default": "./src/lib/index.ts"
     },
+    "./components/ActionRequestFields": {
+      "types": "./src/lib/ActionRequestFields.svelte",
+      "svelte": "./src/lib/ActionRequestFields.svelte",
+      "default": "./src/lib/ActionRequestFields.svelte"
+    },
+    "./components/Button": {
+      "types": "./src/lib/Button.svelte",
+      "svelte": "./src/lib/Button.svelte",
+      "default": "./src/lib/Button.svelte"
+    },
+    "./components/DialogFrame": {
+      "types": "./src/lib/DialogFrame.svelte",
+      "svelte": "./src/lib/DialogFrame.svelte",
+      "default": "./src/lib/DialogFrame.svelte"
+    },
+    "./components/SelectField": {
+      "types": "./src/lib/SelectField.svelte",
+      "svelte": "./src/lib/SelectField.svelte",
+      "default": "./src/lib/SelectField.svelte"
+    },
+    "./theme": {
+      "types": "./src/lib/theme.ts",
+      "default": "./src/lib/theme.ts"
+    },
     "./tokens.css": "./src/lib/tokens.css",
     "./theme.css": "./src/lib/theme.css",
     "./assets/shimpz-thinking.svg": "./src/lib/assets/shimpz-thinking.svg",
