@@ -78,6 +78,7 @@
     background: var(--shimpz-color-surface-raised);
     border: 1px solid var(--shimpz-color-border);
     border-radius: 0;
+    clip-path: var(--shimpz-control-shape);
     transition:
       border-color var(--shimpz-duration-fast) var(--shimpz-ease),
       box-shadow var(--shimpz-duration-fast) var(--shimpz-ease);

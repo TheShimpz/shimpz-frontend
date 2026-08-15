@@ -102,6 +102,25 @@ test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   expect(outline).toBe("solid");
 });
 
+test("uses one canonical silhouette for interactive controls", async ({ page }) => {
+  const expectControlShape = async (locator: ReturnType<typeof page.locator>) => {
+    const clipPath = await locator.evaluate((element) => getComputedStyle(element).clipPath);
+    expect(clipPath).toMatch(/^polygon\(/);
+    expect(clipPath.slice("polygon(".length, -1).split(",")).toHaveLength(6);
+  };
+
+  await expectControlShape(page.getByRole("button", { name: "Transmit signal" }));
+  await expectControlShape(page.getByRole("textbox", { name: "Assistant ID" }));
+
+  await page.goto("/site-kit/");
+  await expectControlShape(page.getByRole("button", { name: "Language: English" }));
+
+  await page.goto("/admin-kit/");
+  await expectControlShape(page.getByRole("link", { name: "Go to Chat" }));
+  await expectControlShape(page.getByRole("textbox", { name: "Message" }));
+  await expectControlShape(page.getByRole("combobox", { name: "Destination" }));
+});
+
 test("renders the public site shell with crawlable language links", async ({ page }) => {
   await page.goto("/site-kit/");
   await expect(page).toHaveTitle("Public site kit — Shimpz Frontend");

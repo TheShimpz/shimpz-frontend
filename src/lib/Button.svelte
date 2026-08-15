@@ -48,13 +48,7 @@
     background: var(--button-bg);
     border: 1px solid var(--button-border);
     border-radius: 0;
-    clip-path: polygon(
-      0 0,
-      calc(100% - var(--shimpz-cut)) 0,
-      100% var(--shimpz-cut),
-      100% 100%,
-      0 100%
-    );
+    clip-path: var(--shimpz-control-shape);
     cursor: pointer;
     transition:
       color var(--shimpz-duration-fast) var(--shimpz-ease),

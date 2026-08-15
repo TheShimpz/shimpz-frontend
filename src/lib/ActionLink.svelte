@@ -36,7 +36,7 @@
     text-transform: uppercase;
     background: var(--link-bg);
     border: 1px solid var(--link-border);
-    clip-path: polygon(0 0, calc(100% - var(--shimpz-cut)) 0, 100% var(--shimpz-cut), 100% 100%, 0 100%);
+    clip-path: var(--shimpz-control-shape);
   }
   .shimpz-action-link--primary { --link-color: var(--shimpz-color-bg); --link-bg: var(--shimpz-color-cyan); }
   .shimpz-action-link--ghost { --link-color: var(--shimpz-color-text-muted); --link-bg: transparent; --link-border: var(--shimpz-color-border); }

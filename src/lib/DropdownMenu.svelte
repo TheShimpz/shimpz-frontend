@@ -149,7 +149,7 @@
 <style>
   .shimpz-dropdown { position: relative; width: fit-content; }
   .is-wide { width: 100%; }
-  .shimpz-dropdown > :global(.trigger) { width: 100%; justify-content: flex-start; gap: var(--shimpz-space-2); background: var(--shimpz-color-surface); clip-path: none; }
+  .shimpz-dropdown > :global(.trigger) { width: 100%; justify-content: flex-start; gap: var(--shimpz-space-2); background: var(--shimpz-color-surface); }
   .shimpz-dropdown > :global(.trigger > span) { width: 100%; justify-content: flex-start; gap: var(--shimpz-space-2); }
   .trigger-icon { display: inline-grid; flex: 0 0 auto; place-items: center; }
   .trigger-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

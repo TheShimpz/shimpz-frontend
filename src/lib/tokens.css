@@ -20,6 +20,15 @@
   --shimpz-cut-sm: 3px;
   --shimpz-cut: 6px;
   --shimpz-cut-lg: 10px;
+  --shimpz-control-cut: var(--shimpz-cut);
+  --shimpz-control-shape: polygon(
+    0 0,
+    calc(100% - var(--shimpz-control-cut)) 0,
+    100% var(--shimpz-control-cut),
+    100% 100%,
+    var(--shimpz-control-cut) 100%,
+    0 calc(100% - var(--shimpz-control-cut))
+  );
   --shimpz-space-1: 0.25rem;
   --shimpz-space-2: 0.5rem;
   --shimpz-space-3: 0.75rem;
