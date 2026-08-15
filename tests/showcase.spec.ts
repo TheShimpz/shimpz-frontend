@@ -121,6 +121,61 @@ test("uses one canonical silhouette for interactive controls", async ({ page }) 
   await expectControlShape(page.getByRole("combobox", { name: "Destination" }));
 });
 
+test("keeps the control glitch opt-in and motion-safe", async ({ page }) => {
+  const active = page.getByRole("button", { name: "Transmit signal" });
+  const inactive = page.getByRole("button", { name: "Read protocol" });
+  const disabled = page.getByRole("button", { name: "Unavailable" });
+
+  await expect(active).toHaveAttribute("data-shimpz-glitch", "true");
+  await expect(inactive).not.toHaveAttribute("data-shimpz-glitch");
+  await expect(disabled).toHaveAttribute("data-shimpz-glitch", "true");
+  expect(await active.evaluate((element) => ({
+    content: getComputedStyle(element.querySelector(":scope > span")!).animationName,
+    cyan: getComputedStyle(element, "::before").animationName,
+    magenta: getComputedStyle(element, "::after").animationName,
+  }))).toEqual({
+    content: "shimpz-control-glitch-content",
+    cyan: "shimpz-control-glitch-cyan",
+    magenta: "shimpz-control-glitch-magenta",
+  });
+  expect(await disabled.evaluate((element) => ({
+    content: getComputedStyle(element.querySelector(":scope > span")!).animationName,
+    cyan: getComputedStyle(element, "::before").animationName,
+  }))).toEqual({ content: "none", cyan: "none" });
+
+  await page.goto("/site-kit/");
+  await expect(page.getByRole("button", { name: "Language: English" })).toHaveAttribute(
+    "data-shimpz-glitch",
+    "true",
+  );
+});
+
+test("disables control glitch animation for reduced motion", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/");
+  const active = page.getByRole("button", { name: "Transmit signal" });
+  expect(await active.evaluate((element) => ({
+    content: getComputedStyle(element.querySelector(":scope > span")!).animationName,
+    cyan: getComputedStyle(element, "::before").animationName,
+    magenta: getComputedStyle(element, "::after").animationName,
+  }))).toEqual({ content: "none", cyan: "none", magenta: "none" });
+  await context.close();
+});
+
+test("removes decorative control glitch layers in forced colors", async ({ browser }) => {
+  const context = await browser.newContext({ forcedColors: "active" });
+  const page = await context.newPage();
+  await page.goto("/");
+  const active = page.getByRole("button", { name: "Transmit signal" });
+  expect(await active.evaluate((element) => ({
+    content: getComputedStyle(element.querySelector(":scope > span")!).animationName,
+    cyan: getComputedStyle(element, "::before").display,
+    magenta: getComputedStyle(element, "::after").display,
+  }))).toEqual({ content: "none", cyan: "none", magenta: "none" });
+  await context.close();
+});
+
 test("renders the public site shell with crawlable language links", async ({ page }) => {
   await page.goto("/site-kit/");
   await expect(page).toHaveTitle("Public site kit — Shimpz Frontend");

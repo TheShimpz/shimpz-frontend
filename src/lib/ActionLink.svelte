@@ -1,21 +1,24 @@
 <script lang="ts">
   import type { HTMLAnchorAttributes } from "svelte/elements";
+  import "./control-glitch.css";
 
   type Props = HTMLAnchorAttributes & {
     variant?: "primary" | "secondary" | "ghost";
     size?: "default" | "compact";
+    glitch?: boolean;
   };
 
   let {
     children,
     variant = "secondary",
     size = "default",
+    glitch = false,
     class: className,
     ...attributes
   }: Props = $props();
 </script>
 
-<a class={["shimpz-action-link", `shimpz-action-link--${variant}`, `shimpz-action-link--${size}`, className]} {...attributes}>
+<a data-shimpz-glitch={glitch || undefined} class={["shimpz-action-link", `shimpz-action-link--${variant}`, `shimpz-action-link--${size}`, className]} {...attributes}>
   <span>{@render children?.()}</span>
 </a>
 

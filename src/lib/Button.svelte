@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { HTMLButtonAttributes } from "svelte/elements";
+  import "./control-glitch.css";
 
   type Props = HTMLButtonAttributes & {
     variant?: "primary" | "secondary" | "ghost" | "danger";
     size?: "default" | "compact" | "icon";
+    glitch?: boolean;
     element?: HTMLButtonElement;
   };
 
@@ -11,6 +13,7 @@
     children,
     variant = "primary",
     size = "default",
+    glitch = false,
     type = "button",
     element = $bindable(),
     class: className,
@@ -21,6 +24,7 @@
 <button
   bind:this={element}
   {type}
+  data-shimpz-glitch={glitch || undefined}
   class={["shimpz-button", `shimpz-button--${variant}`, `shimpz-button--${size}`, className]}
   {...attributes}
 >

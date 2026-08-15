@@ -54,6 +54,7 @@
     "./package.json": "./package.json"
   },
   "sideEffects": [
+    "./src/lib/control-glitch.css",
     "./src/lib/tokens.css",
     "./src/lib/theme.css"
   ],

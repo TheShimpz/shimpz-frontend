@@ -27,7 +27,7 @@
 {/snippet}
 
 {#snippet heroActions()}
-  <Button onclick={() => (clicks += 1)}>Transmit signal</Button>
+  <Button glitch onclick={() => (clicks += 1)}>Transmit signal</Button>
   <Button variant="secondary">Read protocol</Button>
 {/snippet}
 
@@ -114,7 +114,7 @@
             <Button variant="secondary">Secondary action</Button>
             <Button variant="danger">Danger action</Button>
             <Button size="compact">Compact action</Button>
-            <Button disabled>Unavailable</Button>
+            <Button glitch disabled>Unavailable</Button>
           </div>
         </Card>
         <Card title="Inputs">

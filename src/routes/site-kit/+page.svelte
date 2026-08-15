@@ -40,6 +40,7 @@
     menuLabel="Language"
     triggerLabel="English"
     compact
+    glitch
   />
 {/snippet}
 

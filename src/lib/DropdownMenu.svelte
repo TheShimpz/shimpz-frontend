@@ -13,11 +13,12 @@
     triggerIcon?: Snippet;
     compact?: boolean;
     wide?: boolean;
+    glitch?: boolean;
     onSelect?: (value: string) => void;
     class?: string;
   };
 
-  let { items, value, ariaLabel, menuLabel, triggerLabel, triggerIcon, compact = false, wide = false, onSelect, class: className }: Props = $props();
+  let { items, value, ariaLabel, menuLabel, triggerLabel, triggerIcon, compact = false, wide = false, glitch = false, onSelect, class: className }: Props = $props();
   let open = $state(false);
   let root = $state<HTMLDivElement>();
   let trigger = $state<HTMLButtonElement>();
@@ -107,7 +108,7 @@
 <svelte:document onpointerdown={outsidePointerdown} />
 
 <div bind:this={root} class={["shimpz-dropdown", wide && "is-wide", className]}>
-  <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" onclick={triggerClick} popovertarget={menuId} popovertargetaction="toggle" aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
+  <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" {glitch} onclick={triggerClick} popovertarget={menuId} popovertargetaction="toggle" aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
     {#if triggerIcon}<span class="trigger-icon">{@render triggerIcon()}</span>{/if}
     {#if !compact}<span class="trigger-label">{triggerLabel}</span>{/if}
     <span class="chevron" aria-hidden="true">⌄</span>
