@@ -159,7 +159,7 @@
   .content:not(:popover-open) { display: none; }
   .content :global(.shimpz-button) { width: 100%; justify-content: flex-start; color: var(--shimpz-color-text-muted); background: transparent; border: 0; clip-path: none; text-align: start; }
   .content :global(.shimpz-button > span) { width: 100%; justify-content: space-between; gap: var(--shimpz-space-3); }
-  .item-link { display: flex; width: 100%; min-height: var(--shimpz-control-height-compact); align-items: center; justify-content: space-between; gap: var(--shimpz-space-3); padding: 0.45rem 0.65rem; color: var(--shimpz-color-text-muted); font: 600 0.72rem/1.2 var(--shimpz-font-mono); text-decoration: none; }
+  .item-link { display: flex; width: 100%; min-height: var(--shimpz-control-height-sm); align-items: center; justify-content: space-between; gap: var(--shimpz-space-3); padding: 0.45rem 0.65rem; color: var(--shimpz-color-text-muted); font: 600 0.72rem/1.2 var(--shimpz-font-mono); text-decoration: none; }
   .item-link.is-disabled { cursor: not-allowed; opacity: 0.48; }
   .item-link:focus-visible { outline: 2px solid var(--shimpz-color-yellow); outline-offset: -2px; }
   .content :global(.shimpz-button:hover), .content :global(.item-selected), .item-link:not(.is-disabled):hover { color: var(--shimpz-color-cyan); background: var(--shimpz-color-surface-high); }

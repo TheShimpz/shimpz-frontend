@@ -47,8 +47,6 @@
   --shimpz-control-height-lg: 2.75rem;
   --shimpz-control-height-xl: 3.25rem;
   --shimpz-control-height: var(--shimpz-control-height-md);
-  --shimpz-control-height-compact: var(--shimpz-control-height-sm);
-  --shimpz-control-height-large: var(--shimpz-control-height-lg);
   --shimpz-dialog-sm: 24rem;
   --shimpz-dialog-md: 32rem;
   --shimpz-dialog-lg: 44rem;

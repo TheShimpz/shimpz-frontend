@@ -27,7 +27,7 @@
 <style>
   button {
     display: inline-flex;
-    min-height: var(--shimpz-control-height-compact);
+    min-height: var(--shimpz-control-height-sm);
     align-items: center;
     gap: var(--shimpz-space-2);
     padding: 0.4rem 0.25rem;
