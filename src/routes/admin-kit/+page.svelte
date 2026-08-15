@@ -60,7 +60,7 @@
     </div>
   {/snippet}
   {#snippet header()}
-    <div class="topbar"><StatusBadge tone="success">System online</StatusBadge><Button size="compact" variant="ghost" onclick={() => (drawerOpen = true)}>Open drawer</Button></div>
+    <div class="topbar"><StatusBadge tone="success">System online</StatusBadge><Button size="sm" variant="ghost" onclick={() => (drawerOpen = true)}>Open drawer</Button></div>
   {/snippet}
 
   <div class="content">

@@ -24,7 +24,7 @@
 >
   <span data-slot="toast-progress" class="progress" aria-hidden="true"></span>
   <div data-slot="toast-content" class="copy">{#if label}<span>{label}</span>{/if}<strong>{@render children?.()}</strong></div>
-  <Button class="toast-close" variant="ghost" size="icon" onclick={onClose} aria-label={closeLabel}>×</Button>
+  <Button class="toast-close" variant="ghost" iconOnly onclick={onClose} aria-label={closeLabel}>×</Button>
 </section>
 <style>
   section { --toast-color: var(--shimpz-color-cyan); position: relative; z-index: 1; display: grid; box-sizing: border-box; width: 100%; min-height: 3.25rem; place-items: center; overflow: hidden; margin-block-end: var(--shimpz-space-4); padding: var(--shimpz-space-2) 3.25rem; background: color-mix(in srgb, var(--toast-color) 5%, var(--shimpz-color-bg)); border: 1px solid var(--shimpz-color-border); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 35%); clip-path: polygon(0 0, calc(100% - var(--shimpz-cut-sm)) 0, 100% var(--shimpz-cut-sm), 100% 100%, 0 100%); isolation: isolate; }

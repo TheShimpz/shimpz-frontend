@@ -52,6 +52,26 @@ test("renders and operates the built design-system showcase", async ({ page }) =
   }
 });
 
+test("renders the canonical button scale with component-owned icon spacing", async ({ page }) => {
+  const sizes = ["XS", "SM", "MD", "LG", "XL"] as const;
+  const expectedHeights = [28, 34, 40, 44, 52];
+  const renderedHeights: number[] = [];
+
+  for (const [index, size] of sizes.entries()) {
+    const button = page.getByRole("button", { name: `${size} action` });
+    await expect(button).toHaveClass(new RegExp(`shimpz-button--${size.toLowerCase()}`));
+    const box = await button.boundingBox();
+    if (!box) throw new Error(`${size} button has no rendered bounds`);
+    renderedHeights.push(box.height);
+    expect(box.height).toBeCloseTo(expectedHeights[index], 0);
+    expect(await button.locator(":scope > span").evaluate(
+      (element) => Number.parseFloat(getComputedStyle(element).columnGap),
+    )).toBeGreaterThan(0);
+  }
+
+  expect(renderedHeights).toEqual([...renderedHeights].sort((a, b) => a - b));
+});
+
 test("renders SignalList as a responsive semantic signal rail", async ({ page }) => {
   const list = page.locator("#showcase-signal-list");
   const emptyList = page.locator("#empty-signal-list");

@@ -39,5 +39,6 @@ export { default as TextLink } from "./TextLink.svelte";
 export { default as Toolbar } from "./Toolbar.svelte";
 export { default as Toast } from "./Toast.svelte";
 export { default as WorkspaceShell } from "./WorkspaceShell.svelte";
+export type { ControlSize } from "./control";
 
 export { themeClass } from "./theme.ts";

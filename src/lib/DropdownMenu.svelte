@@ -108,7 +108,7 @@
 <svelte:document onpointerdown={outsidePointerdown} />
 
 <div bind:this={root} class={["shimpz-dropdown", wide && "is-wide", className]}>
-  <Button bind:element={trigger} class="trigger" variant="ghost" size="compact" {glitch} onclick={triggerClick} popovertarget={menuId} popovertargetaction="toggle" aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
+  <Button bind:element={trigger} class="trigger" variant="ghost" size="sm" {glitch} onclick={triggerClick} popovertarget={menuId} popovertargetaction="toggle" aria-haspopup="menu" aria-expanded={open} aria-label={ariaLabel}>
     {#if triggerIcon}<span class="trigger-icon">{@render triggerIcon()}</span>{/if}
     {#if !compact}<span class="trigger-label">{triggerLabel}</span>{/if}
     <span class="chevron" aria-hidden="true">⌄</span>
@@ -132,7 +132,7 @@
           <Button
             bind:element={buttonItems[index]}
             variant="ghost"
-            size="compact"
+            size="sm"
             role="menuitemradio"
             tabindex={focusedIndex === index ? 0 : -1}
             aria-checked={item.value === value}
@@ -150,7 +150,7 @@
 <style>
   .shimpz-dropdown { position: relative; width: fit-content; }
   .is-wide { width: 100%; }
-  .shimpz-dropdown > :global(.trigger) { width: 100%; justify-content: flex-start; gap: var(--shimpz-space-2); background: var(--shimpz-color-surface); }
+  .shimpz-dropdown > :global(.trigger) { width: 100%; justify-content: flex-start; background: var(--shimpz-color-surface); }
   .shimpz-dropdown > :global(.trigger > span) { width: 100%; justify-content: flex-start; gap: var(--shimpz-space-2); }
   .trigger-icon { display: inline-grid; flex: 0 0 auto; place-items: center; }
   .trigger-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

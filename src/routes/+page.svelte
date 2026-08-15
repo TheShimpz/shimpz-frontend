@@ -14,6 +14,7 @@
 
   let clicks = $state(0);
   let assistantId = $state("hello-world");
+  const controlSizes = ["xs", "sm", "md", "lg", "xl"] as const;
   const showcaseSignals = [
     { id: "resolve-zone", channel: "cloudflare", assurance: "approval" },
     { id: "inspect-records", channel: "dns.read", assurance: "none" },
@@ -29,6 +30,10 @@
 {#snippet heroActions()}
   <Button glitch onclick={() => (clicks += 1)}>Transmit signal</Button>
   <Button variant="secondary">Read protocol</Button>
+{/snippet}
+
+{#snippet actionIcon()}
+  <span>▶</span>
 {/snippet}
 
 {#snippet heroMedia()}
@@ -113,7 +118,9 @@
             <Button>Primary action</Button>
             <Button variant="secondary">Secondary action</Button>
             <Button variant="danger">Danger action</Button>
-            <Button size="compact">Compact action</Button>
+            {#each controlSizes as size}
+              <Button {size} icon={actionIcon}>{size.toUpperCase()} action</Button>
+            {/each}
             <Button glitch disabled>Unavailable</Button>
           </div>
         </Card>
