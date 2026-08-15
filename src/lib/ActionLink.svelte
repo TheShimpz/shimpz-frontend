@@ -44,6 +44,7 @@
   .shimpz-action-link--primary { --link-color: var(--shimpz-color-bg); --link-bg: var(--shimpz-color-cyan); }
   .shimpz-action-link--ghost { --link-color: var(--shimpz-color-text-muted); --link-bg: transparent; --link-border: var(--shimpz-color-border); }
   .shimpz-action-link--compact { min-height: var(--shimpz-control-height-compact); padding: 0.45rem 0.65rem; font-size: 0.66rem; }
+  span { display: inline-flex; align-items: center; justify-content: center; }
   a:hover { color: var(--shimpz-color-bg); background: var(--shimpz-color-text); border-color: var(--shimpz-color-text); box-shadow: var(--shimpz-glow-cyan); }
   a:focus-visible { outline: 2px solid var(--shimpz-color-yellow); outline-offset: 3px; box-shadow: var(--shimpz-focus-ring); }
   @media (forced-colors: active) { a { color: LinkText; background: Canvas; border-color: LinkText; clip-path: none; } }

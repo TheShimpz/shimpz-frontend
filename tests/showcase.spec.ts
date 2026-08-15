@@ -116,7 +116,11 @@ test("uses one canonical silhouette for interactive controls", async ({ page }) 
   await expectControlShape(page.getByRole("button", { name: "Language: English" }));
 
   await page.goto("/admin-kit/");
-  await expectControlShape(page.getByRole("link", { name: "Go to Chat" }));
+  const actionLink = page.getByRole("link", { name: "Go to Chat" });
+  await expectControlShape(actionLink);
+  expect(await actionLink.locator(":scope > span").evaluate(
+    (element) => getComputedStyle(element).display,
+  )).toBe("flex");
   await expectControlShape(page.getByRole("textbox", { name: "Message" }));
   await expectControlShape(page.getByRole("combobox", { name: "Destination" }));
 });
