@@ -42,4 +42,4 @@ export { default as Toast } from "./Toast.svelte";
 export { default as WorkspaceShell } from "./WorkspaceShell.svelte";
 export type { ControlSize } from "./control";
 
-export { themeClass } from "./theme.ts";
+export { themeClass } from "./theme.js";
