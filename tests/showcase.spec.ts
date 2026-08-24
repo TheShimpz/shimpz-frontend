@@ -107,6 +107,25 @@ test("renders SignalList as a responsive semantic signal rail", async ({ page })
   expect(results.violations).toEqual([]);
 });
 
+test("renders ChatTask as a bounded live conversational status", async ({ page }) => {
+  const task = page.locator('[data-slot="chat-task"]');
+  await expect(task).toHaveAttribute("data-state", "working");
+  await expect(task).toHaveAttribute("aria-label", "Cloud control");
+  await expect(task.locator('[data-slot="chat-task-status"]')).toHaveText("Preparing");
+  const desktopBox = await task.boundingBox();
+  if (!desktopBox) throw new Error("ChatTask has no rendered bounds");
+  expect(desktopBox.width).toBeLessThanOrEqual(608);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const mobileBox = await task.boundingBox();
+  if (!mobileBox) throw new Error("Mobile ChatTask has no rendered bounds");
+  expect(mobileBox.width).toBeLessThanOrEqual(358);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+
+  const results = await new AxeBuilder({ page }).include('[data-slot="chat-task"]').analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   const fonts = await page.evaluate(() => ({
     sans: document.fonts.check('16px "Inter Variable"'),

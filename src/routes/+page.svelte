@@ -2,6 +2,7 @@
   import {
     Button,
     Card,
+    ChatTask,
     EditorialHero,
     EditorialSection,
     EditorialVisual,
@@ -175,6 +176,15 @@
             <Notice variant="warning" title="Review pending">Manual approval is still required.</Notice>
             <Notice variant="error" title="Access denied">The session no longer matches.</Notice>
           </div>
+        </Card>
+        <Card class="chat-task-card" title="Chat task">
+          <ChatTask
+            label="Capability"
+            title="Cloud control"
+            description="A bounded task can stay inside the conversation without becoming a chat message or a dialog."
+            state="working"
+            status="Preparing"
+          />
         </Card>
       </div>
     </section>
