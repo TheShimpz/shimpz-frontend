@@ -2,6 +2,7 @@
   import {
     Button,
     Card,
+    ChatTask,
     EditorialHero,
     EditorialSection,
     EditorialVisual,
@@ -65,6 +66,10 @@
     <div><dt>Channel</dt><dd>{item.channel}</dd></div>
     <div><dt>Assurance</dt><dd>{item.assurance}</dd></div>
   </dl>
+{/snippet}
+
+{#snippet taskMedia()}
+  <span class="task-media" aria-hidden="true">CF</span>
 {/snippet}
 
 <svelte:head>
@@ -169,6 +174,16 @@
             <Notice variant="error" title="Access denied">The session no longer matches.</Notice>
           </div>
         </Card>
+        <Card class="chat-task-card" title="Chat task">
+          <ChatTask
+            label="Capability"
+            title="Cloud control"
+            description="A bounded task stays visible inside the conversation."
+            state="working"
+            status="Preparing"
+            media={taskMedia}
+          />
+        </Card>
       </div>
     </section>
 
@@ -223,6 +238,16 @@
     height: 0.5rem;
     background: var(--shimpz-color-green);
     box-shadow: 0 0 12px var(--shimpz-color-green);
+  }
+
+  .task-media {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    color: var(--shimpz-color-surface);
+    background: var(--shimpz-color-cyan);
+    font: 700 0.65rem/1 var(--shimpz-font-mono);
   }
 
   main {

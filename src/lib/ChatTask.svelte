@@ -9,6 +9,7 @@
     description?: string;
     state?: State;
     status: string;
+    media?: Snippet;
     details?: Snippet;
   };
 
@@ -18,6 +19,7 @@
     description,
     state = "pending",
     status,
+    media,
     details,
     class: className,
     ...attributes
@@ -36,9 +38,13 @@
     <span data-slot="chat-task-status" class="status" aria-live="polite">{status}</span>
   </header>
   <div data-slot="chat-task-body" class="body">
-    <span class="signal" aria-hidden="true"></span>
+    {#if media}
+      <div data-slot="chat-task-media" class="media">{@render media()}</div>
+    {:else}
+      <span class="signal" aria-hidden="true"></span>
+    {/if}
     <div>
-      <strong>{title}</strong>
+      <strong data-slot="chat-task-title">{title}</strong>
       {#if description}<p>{description}</p>{/if}
     </div>
   </div>
@@ -125,6 +131,11 @@
     margin-top: 0.32rem;
     background: var(--task-color);
     box-shadow: 0 0 16px color-mix(in srgb, var(--task-color) 65%, transparent);
+  }
+
+  .media {
+    min-width: 0;
+    line-height: 0;
   }
 
   strong {

@@ -87,6 +87,29 @@ test("renders SignalList as a responsive semantic signal rail", async ({ page })
   expect(results.violations).toEqual([]);
 });
 
+test("keeps optional ChatTask media beside its title at every viewport", async ({ page }) => {
+  const task = page.locator('[data-slot="chat-task"]');
+  const media = task.locator('[data-slot="chat-task-media"]');
+  const title = task.locator('[data-slot="chat-task-title"]');
+  await expect(task).toHaveAttribute("data-state", "working");
+  await expect(task.locator('[data-slot="chat-task-status"]')).toHaveText("Preparing");
+  await expect(task.locator(".signal")).toHaveCount(0);
+
+  for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+    await page.setViewportSize(viewport);
+    const [mediaBox, titleBox] = await Promise.all([media.boundingBox(), title.boundingBox()]);
+    if (!mediaBox || !titleBox) throw new Error("ChatTask media or title has no rendered bounds");
+    expect(titleBox.x).toBeGreaterThan(mediaBox.x + mediaBox.width);
+    expect(titleBox.y).toBeLessThan(mediaBox.y + mediaBox.height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      viewport.width,
+    );
+  }
+
+  const results = await new AxeBuilder({ page }).include('[data-slot="chat-task"]').analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   const fonts = await page.evaluate(() => ({
     sans: document.fonts.check('16px "Inter Variable"'),
