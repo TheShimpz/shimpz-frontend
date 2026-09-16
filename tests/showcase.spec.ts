@@ -112,6 +112,8 @@ test("renders ChatTask as a bounded live conversational status", async ({ page }
   await expect(task).toHaveAttribute("data-state", "working");
   await expect(task).toHaveAttribute("aria-label", "Cloud control");
   await expect(task.locator('[data-slot="chat-task-status"]')).toHaveText("Preparing");
+  await expect(task.locator('[data-slot="chat-task-media"]')).toContainText("S");
+  await expect(task.locator('[data-slot="chat-task-title"]')).toHaveText("Cloud control");
   const desktopBox = await task.boundingBox();
   if (!desktopBox) throw new Error("ChatTask has no rendered bounds");
   expect(desktopBox.width).toBeLessThanOrEqual(608);

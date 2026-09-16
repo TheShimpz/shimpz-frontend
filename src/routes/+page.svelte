@@ -38,6 +38,10 @@
   <span>▶</span>
 {/snippet}
 
+{#snippet chatTaskMedia()}
+  <span class="chat-task-media" aria-hidden="true">S</span>
+{/snippet}
+
 {#snippet heroMedia()}
   <EditorialVisual
     class="showcase-visual"
@@ -185,6 +189,7 @@
             description="A bounded task can stay inside the conversation without becoming a chat message or a dialog."
             state="working"
             status="Preparing"
+            media={chatTaskMedia}
           />
         </Card>
       </div>
@@ -409,6 +414,16 @@
     display: grid;
     align-items: start;
     gap: 1rem;
+  }
+
+  .chat-task-media {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    color: var(--shimpz-color-surface);
+    font: 800 1rem/1 var(--shimpz-font-mono);
+    background: var(--shimpz-color-cyan);
   }
 
   :global(.brand-strip > [data-slot="card-content"]) {
