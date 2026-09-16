@@ -1,6 +1,6 @@
 {
   "name": "@shimpz/frontend",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Public Shimpz design tokens and Svelte presentation primitives",
   "license": "Apache-2.0",
   "private": false,
@@ -28,6 +28,11 @@
       "types": "./src/lib/ActionRequestFields.svelte",
       "svelte": "./src/lib/ActionRequestFields.svelte",
       "default": "./src/lib/ActionRequestFields.svelte"
+    },
+    "./components/AssistantCard": {
+      "types": "./src/lib/AssistantCard.svelte",
+      "svelte": "./src/lib/AssistantCard.svelte",
+      "default": "./src/lib/AssistantCard.svelte"
     },
     "./components/Button": {
       "types": "./src/lib/Button.svelte",

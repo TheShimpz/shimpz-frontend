@@ -1,4 +1,5 @@
 export { default as ActionLink } from "./ActionLink.svelte";
+export { default as AssistantCard } from "./AssistantCard.svelte";
 export { default as AssistantIcon } from "./AssistantIcon.svelte";
 export { default as Button } from "./Button.svelte";
 export { default as Card } from "./Card.svelte";

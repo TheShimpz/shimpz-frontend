@@ -126,6 +126,21 @@ test("renders ChatTask as a bounded live conversational status", async ({ page }
   expect(results.violations).toEqual([]);
 });
 
+test("renders one responsive Assistant card contract for Store and Local", async ({ page }) => {
+  const publicCard = page.getByRole("article", { name: "Shimpz Cloudflare — Free" });
+  const localCard = page.getByRole("article", { name: "WhatsApp — Local" });
+  await expect(publicCard).toHaveAttribute("data-slot", "assistant-card");
+  await expect(localCard).toHaveAttribute("data-slot", "assistant-card");
+  await expect(publicCard.getByText("Shimpz Cloudflare", { exact: true })).toBeVisible();
+  await expect(localCard.getByText("WhatsApp", { exact: true })).toBeVisible();
+  await expect(publicCard.getByRole("button", { name: "Install in Local" })).toBeVisible();
+  await expect(localCard.getByRole("button", { name: "Install or replace" })).toBeVisible();
+  expect((await new AxeBuilder({ page }).include('[data-slot="assistant-card"]').analyze()).violations).toEqual([]);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});
+
 test("loads local fonts and exposes keyboard focus", async ({ page }) => {
   const fonts = await page.evaluate(() => ({
     sans: document.fonts.check('16px "Inter Variable"'),

@@ -1,6 +1,18 @@
 <script lang="ts">
-  type Props = { assistant?: string; src?: string; size?: number; class?: string };
-  let { assistant = "assistant", src, size = 36, class: className }: Props = $props();
+  type Props = {
+    assistant?: string;
+    src?: string;
+    size?: number;
+    loading?: "eager" | "lazy";
+    class?: string;
+  };
+  let {
+    assistant = "assistant",
+    src,
+    size = 36,
+    loading = "eager",
+    class: className,
+  }: Props = $props();
   let imageFailed = $state(false);
 
   $effect(() => {
@@ -10,7 +22,7 @@
 </script>
 <span class={["shimpz-assistant-icon", src && !imageFailed && "has-image", className]} style={`width:${size}px;height:${size}px`} aria-hidden="true">
   {#if src && !imageFailed}
-    <img {src} alt="" decoding="async" onerror={() => (imageFailed = true)} />
+    <img {src} alt="" decoding="async" {loading} onerror={() => (imageFailed = true)} />
   {:else}
     <svg viewBox="0 0 48 48" fill="none" role="presentation" data-assistant={assistant}>
       <path class="frame" d="M8 8h32v32H8z" /><circle cx="24" cy="24" r="7" class="core" /><path class="nodes" d="M24 4v13M24 31v13M4 24h13M31 24h13" />

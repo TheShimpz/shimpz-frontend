@@ -3,6 +3,7 @@
     Button,
     Card,
     ChatTask,
+    AssistantCard,
     EditorialHero,
     EditorialSection,
     EditorialVisual,
@@ -200,6 +201,33 @@
         <ShimpzBrand product="Docs" />
       </div>
     </Card>
+
+    <section aria-labelledby="assistant-card-title">
+      <div class="section-heading">
+        <p class="shimpz-kicker">04 // Assistants</p>
+        <h2 id="assistant-card-title">One catalog card.</h2>
+      </div>
+      <div class="assistant-card-grid">
+        <AssistantCard
+          name="Shimpz Cloudflare"
+          meta="@shimpz"
+          summary="Inspect Cloudflare zones and safely manage common DNS records through OAuth."
+          badge="Free"
+          actionLabel="Install in Local"
+          aria-label="Shimpz Cloudflare — Free"
+        />
+        <AssistantCard
+          name="WhatsApp"
+          meta="@shimpz"
+          summary="Automate bounded WhatsApp messaging from a Local Space."
+          badge="Local"
+          badgeTone="local"
+          actionLabel="Install or replace"
+          iconLoading="lazy"
+          aria-label="WhatsApp — Local"
+        />
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -214,6 +242,12 @@
   footer {
     width: min(calc(100% - 2rem), var(--shimpz-content-width));
     margin-inline: auto;
+  }
+
+  .assistant-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 23rem));
+    gap: var(--shimpz-space-4);
   }
 
   header {
