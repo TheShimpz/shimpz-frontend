@@ -226,7 +226,6 @@
     padding: 2.5rem 1rem 1rem;
     background: linear-gradient(180deg, transparent, rgb(0 0 0 / 96%) 42%);
     opacity: 0;
-    pointer-events: none;
     transform: translateY(0.4rem);
     transition: opacity 0.16s ease, transform 0.16s var(--shimpz-ease);
   }

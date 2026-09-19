@@ -135,8 +135,12 @@ test("renders one responsive Assistant card contract for Store and Local", async
   await expect(localCard).toHaveAttribute("data-slot", "assistant-card");
   await expect(publicCard.getByText("Shimpz Cloudflare", { exact: true })).toBeVisible();
   await expect(localCard.getByText("WhatsApp", { exact: true })).toBeVisible();
-  await expect(publicCard.getByRole("button", { name: "Install in Local" })).toBeVisible();
-  await expect(localCard.getByRole("button", { name: "Install or replace" })).toBeVisible();
+  const publicAction = publicCard.getByRole("button", { name: "Install in Local" });
+  const localAction = localCard.getByRole("button", { name: "Install or replace" });
+  await expect(publicAction).toBeVisible();
+  await expect(localAction).toBeVisible();
+  await publicAction.click();
+  await localAction.click();
   expect((await new AxeBuilder({ page }).include('[data-slot="assistant-card"]').analyze()).violations).toEqual([]);
 
   await page.setViewportSize({ width: 390, height: 844 });
