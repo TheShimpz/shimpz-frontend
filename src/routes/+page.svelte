@@ -23,6 +23,9 @@
     { id: "publish-record", channel: "dns.write", assurance: "reauth" },
   ] as const;
   const emptySignals: (typeof showcaseSignals)[number][] = [];
+  // Every Assistant carries its own icon; these stand-ins keep the cards on their loaded state.
+  const cloudflareIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='16' fill='%23f48120'/%3E%3C/svg%3E";
+  const whatsappIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='16' fill='%2325d366'/%3E%3C/svg%3E";
 </script>
 
 {#snippet heroMeta()}
@@ -217,6 +220,7 @@
           name="Shimpz Cloudflare"
           meta="@shimpz"
           summary="Inspect Cloudflare zones and safely manage common DNS records through OAuth."
+          iconSrc={cloudflareIcon}
           badge="Free"
           actionLabel="Install in Local"
           aria-label="Shimpz Cloudflare — Free"
@@ -225,6 +229,7 @@
           name="WhatsApp"
           meta="@shimpz"
           summary="Automate bounded WhatsApp messaging from a Local Space."
+          iconSrc={whatsappIcon}
           badge="Local"
           badgeTone="local"
           actionLabel="Install or replace"

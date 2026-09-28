@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const visualContract = {
   animations: "disabled",
@@ -665,4 +665,100 @@ test("matches the mobile Admin kit visual contract without horizontal overflow",
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
   ).toBe(true);
   await expect(page).toHaveScreenshot("admin-kit-mobile.png", visualContract);
+});
+
+const PNG = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+  "base64",
+);
+
+test.describe("Assistant icon states", () => {
+  const icon = (page: Page, name: string) => page.locator(`[data-icon-case="${name}"] .shimpz-assistant-icon`);
+
+  test("shows loading and failure without ever inventing a substitute mark", async ({ page }) => {
+    await page.goto("/admin-kit/");
+    await expect(icon(page, "pending")).toHaveAttribute("data-state", "loading");
+    await expect(icon(page, "pending").locator("img")).toHaveCount(0);
+    expect(await icon(page, "pending").evaluate((element) => getComputedStyle(element, "::after").animationName)).toMatch(
+      /shimpz-assistant-icon-shimmer$/,
+    );
+    await expect(icon(page, "failed")).toHaveAttribute("data-state", "failed");
+    await expect(icon(page, "broken")).toHaveAttribute("data-state", "failed");
+    await expect(icon(page, "broken").locator("img")).toBeHidden();
+    await expect(icon(page, "loaded")).toHaveAttribute("data-state", "loaded");
+    await expect(icon(page, "loaded")).toHaveClass(/has-image/);
+    await expect(page.locator(".shimpz-assistant-icon svg")).toHaveCount(0);
+    const sizes = await page.locator("[data-icon-case] .shimpz-assistant-icon").evaluateAll((elements) =>
+      elements.map((element) => [element.getBoundingClientRect().width, element.getBoundingClientRect().height]),
+    );
+    expect(sizes).toEqual(Array(5).fill([40, 40]));
+  });
+
+  test("keeps shimmering until the requested image loads and ignores a replaced source", async ({ page }) => {
+    let releaseSlow = () => {};
+    const slowHeld = new Promise<void>((resolve) => { releaseSlow = resolve; });
+    await page.route("https://assistant-icons.invalid/slow.png", async (route) => {
+      await slowHeld;
+      await route.fulfill({ contentType: "image/png", body: PNG });
+    });
+    let releaseSwapped = () => {};
+    const swappedHeld = new Promise<void>((resolve) => { releaseSwapped = resolve; });
+    await page.route("https://assistant-icons.invalid/swapped.png", async (route) => {
+      await swappedHeld;
+      await route.fulfill({ contentType: "image/png", body: PNG });
+    });
+    // The held images keep the load event pending, so wait only for the document.
+    await page.goto("/admin-kit/", { waitUntil: "domcontentloaded" });
+    const swap = icon(page, "swap");
+    await expect(swap).toHaveAttribute("data-state", "loading");
+    await expect(swap.locator("img")).toBeHidden();
+
+    await page.getByRole("button", { name: "Swap icon source" }).click();
+    releaseSlow();
+    await expect(swap.locator("img")).toHaveAttribute("src", "https://assistant-icons.invalid/swapped.png");
+    await expect(swap).toHaveAttribute("data-state", "loading");
+    releaseSwapped();
+    await expect(swap).toHaveAttribute("data-state", "loaded");
+    await expect(swap.locator("img")).toBeVisible();
+  });
+
+  test("holds visible, distinct still frames when motion is reduced", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/admin-kit/");
+    await expect(icon(page, "failed")).toHaveAttribute("data-state", "failed");
+    expect(await icon(page, "pending").evaluate((element) => getComputedStyle(element, "::after").animationName)).toBe(
+      "none",
+    );
+    const frame = async (name: string) => {
+      const target = icon(page, name);
+      await target.scrollIntoViewIfNeeded();
+      const clip = (await target.boundingBox())!;
+      const shown = await page.screenshot({ clip });
+      await target.evaluate((element: HTMLElement) => { element.style.visibility = "hidden"; });
+      const blank = await page.screenshot({ clip });
+      await target.evaluate((element: HTMLElement) => { element.style.visibility = ""; });
+      return { shown, blank };
+    };
+    const pending = await frame("pending");
+    const failed = await frame("failed");
+    // Each still frame is visible against its card and distinguishable from the other.
+    expect(pending.shown.equals(pending.blank)).toBe(false);
+    expect(failed.shown.equals(failed.blank)).toBe(false);
+    expect(pending.shown.equals(failed.shown)).toBe(false);
+    await expect(page.locator(".icon-states")).toHaveScreenshot("assistant-icon-states-reduced-motion.png");
+  });
+});
+
+test.describe("Assistant icons without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("a prerendered icon source is shown as an image", async ({ page }) => {
+    await page.goto("/admin-kit/");
+    const loaded = page.locator('[data-icon-case="loaded"] .shimpz-assistant-icon');
+    await expect(loaded).toHaveAttribute("data-state", "loaded");
+    await expect(loaded.locator("img")).toBeVisible();
+    expect(await loaded.locator("img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(
+      true,
+    );
+  });
 });

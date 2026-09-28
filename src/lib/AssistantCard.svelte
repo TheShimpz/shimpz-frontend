@@ -7,6 +7,7 @@
     meta: string;
     summary: string;
     iconSrc?: string;
+    iconStatus?: "loading" | "failed";
     iconLoading?: "eager" | "lazy";
     badge: string;
     badgeTone?: "free" | "local";
@@ -28,6 +29,7 @@
     meta,
     summary,
     iconSrc,
+    iconStatus = "loading",
     iconLoading = "eager",
     badge,
     badgeTone = "free",
@@ -55,7 +57,7 @@
 >
   <div class="assistant-details">
     <div class="assistant-heading">
-      <AssistantIcon assistant={name} size={64} src={iconSrc} loading={iconLoading} />
+      <AssistantIcon assistant={name} size={64} src={iconSrc} status={iconStatus} loading={iconLoading} />
       <div class="assistant-identity">
         <h2 title={name}>
           {#if href}

@@ -42,6 +42,10 @@
   let destination = $state("");
   let executionMode = $state("safe");
   let toastVisible = $state(false);
+  // External sources keep the prerenderer from crawling them; the showcase tests route them.
+  const slowIcon = "https://assistant-icons.invalid/slow.png";
+  const swappedIcon = "https://assistant-icons.invalid/swapped.png";
+  let swapSource = $state(slowIcon);
   const assistantPreviewIcon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='16' fill='%23f48120'/%3E%3C/svg%3E";
 </script>
 
@@ -108,6 +112,16 @@
           {#snippet summary()}Execution stages <span class="count">3</span>{/snippet}
           <ol><li>Admin prepares the request</li><li>Team gathers context</li><li>Assistant executes the Action</li></ol>
         </Disclosure>
+      </Card>
+      <Card title="Assistant icon states" description="Loading, failed, and loaded icons; no substitute mark.">
+        <div class="icon-states">
+          <span data-icon-case="pending"><AssistantIcon assistant="pending" size={40} /></span>
+          <span data-icon-case="failed"><AssistantIcon assistant="failed" status="failed" size={40} /></span>
+          <span data-icon-case="broken"><AssistantIcon assistant="broken" src="data:image/png;base64,AAAA" size={40} /></span>
+          <span data-icon-case="loaded"><AssistantIcon assistant="loaded" src={assistantPreviewIcon} size={40} /></span>
+          <span data-icon-case="swap"><AssistantIcon assistant="swap" src={swapSource} size={40} /></span>
+        </div>
+        <Toolbar><Button variant="secondary" onclick={() => (swapSource = swappedIcon)}>Swap icon source</Button></Toolbar>
       </Card>
       <Card title="Assistant selection" description="Pressed rows expose selection without a duplicate checkbox.">
         <div class="bulk-actions">
@@ -206,6 +220,7 @@
   .grid :global(.shimpz-card [data-slot="card-content"]) { display: grid; align-content: start; gap: 0.75rem; }
   h2 { margin: 0; font: 700 0.9rem/1.2 var(--shimpz-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
   .assistant { display: flex; align-items: center; gap: 0.75rem; }
+  .icon-states { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .assistant > div { display: grid; gap: 0.5rem; }
   .bulk-actions { display: flex; flex-wrap: wrap; gap: var(--shimpz-space-4); }
   .messages { display: grid; gap: 0.75rem; }
