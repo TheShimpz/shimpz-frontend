@@ -4,7 +4,6 @@
     sidebar?: Snippet;
     header?: Snippet;
     children: Snippet;
-    skipLabel?: string;
     mainId?: string;
     content?: "contained" | "full";
     padding?: "default" | "none";
@@ -16,7 +15,6 @@
     sidebar,
     header,
     children,
-    skipLabel = "Skip to content",
     mainId = "shimpz-main",
     content = "contained",
     padding = "default",
@@ -25,7 +23,6 @@
     class: className,
   }: Props = $props();
 </script>
-<a class="skip" href={`#${mainId}`}>{skipLabel}</a>
 <div data-slot="workspace-shell" class={["shimpz-workspace-shell", !sidebar && "without-sidebar", fixed && "is-fixed", className]}>
   {#if sidebar}<aside data-slot="workspace-sidebar">{@render sidebar()}</aside>{/if}
   <div data-slot="workspace-stage" class={["stage", !header && "without-header"]}>
@@ -34,8 +31,6 @@
   </div>
 </div>
 <style>
-  .skip { position: fixed; z-index: 100; inset-block-start: 0.75rem; inset-inline-start: 0.75rem; padding: 0.65rem 0.8rem; color: var(--shimpz-color-bg); background: var(--shimpz-color-yellow); font: 700 0.75rem/1 var(--shimpz-font-mono); transform: translateY(-200%); }
-  .skip:focus { transform: none; }
   .shimpz-workspace-shell { display: grid; width: 100%; min-width: 0; min-height: 100vh; min-height: 100dvh; grid-template-columns: minmax(14.5rem, var(--shimpz-sidebar-width)) minmax(0, 1fr); background: var(--shimpz-color-bg); }
   .without-sidebar { grid-template-columns: minmax(0, 1fr); }
   .is-fixed { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }

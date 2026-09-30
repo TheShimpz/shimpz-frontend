@@ -53,7 +53,7 @@
 
 {#if toastVisible}<Toast label="System" closeLabel="Dismiss notification" onClose={() => (toastVisible = false)}>Presentation contract synchronized.</Toast>{/if}
 
-<WorkspaceShell skipLabel="Skip to Admin kit">
+<WorkspaceShell>
   {#snippet sidebar()}
     <div class="sidebar-content">
       <ShimpzBrand product="Admin" />
