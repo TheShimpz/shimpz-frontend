@@ -34,7 +34,13 @@
   let singleValue = $state("");
   let selectedValues = $state<string[]>([]);
 
+  // Producers bound text in Unicode code points (Python len(), JSON Schema maxLength), not UTF-16 code
+  // units, so the bounds are enforced here rather than by native minlength/maxlength, which count UTF-16.
+  const MAX_AUTH_SECRET_CHARS = 4096;
+  const MAX_TOTP_CHARS = 16;
+
   const kind = $derived(request.kind ?? "");
+  const textLength = $derived([...textValue].length);
   const responseValue = $derived.by(() => {
     if (kind === "approval" || kind === "auth:passkey") return true;
     if (kind === "input:select" || kind === "input:choice") return singleValue;
@@ -50,10 +56,11 @@
       return selectedValues.length >= request.min_selections &&
         selectedValues.length <= request.max_selections;
     }
-    if (kind === "auth:password" || kind === "auth:totp") return textValue.length > 0;
-    return textValue.length >= request.min_length &&
-      textValue.length <= request.max_length &&
-      (request.required === false || textValue.length > 0);
+    if (kind === "auth:password") return textLength > 0 && textLength <= MAX_AUTH_SECRET_CHARS;
+    if (kind === "auth:totp") return textLength > 0 && textLength <= MAX_TOTP_CHARS;
+    return textLength >= request.min_length &&
+      textLength <= request.max_length &&
+      (request.required === false || textLength > 0);
   });
 
   $effect(() => {
@@ -87,8 +94,6 @@
       autocomplete={kind === "input:phone" ? "tel" : "off"}
       spellcheck={kind === "input:password" ? "false" : undefined}
       placeholder={request.placeholder ?? undefined}
-      minlength={request.min_length}
-      maxlength={request.max_length}
       required={request.required}
       bind:value={textValue}
     />
@@ -98,8 +103,6 @@
       label={request.label}
       visuallyHiddenLabel
       placeholder={request.placeholder ?? undefined}
-      minlength={request.min_length}
-      maxlength={request.max_length}
       required={request.required}
       rows={6}
       bind:value={textValue}
@@ -150,7 +153,6 @@
       type="password"
       autocomplete="current-password"
       required
-      maxlength={4096}
       bind:value={textValue}
     />
   {:else if kind === "auth:totp"}
@@ -163,7 +165,6 @@
       autocomplete="one-time-code"
       placeholder={labels.totpPlaceholder}
       required
-      maxlength={16}
       bind:value={textValue}
     />
   {/if}

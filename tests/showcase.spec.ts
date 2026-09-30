@@ -145,6 +145,29 @@ test("renders and validates every reusable Action request field", async ({ page 
   expect(results.violations).toEqual([]);
 });
 
+test("bounds Action request text by Unicode code points, not UTF-16 code units", async ({ page }) => {
+  await page.goto("/action-requests/");
+  const kind = page.getByRole("combobox", { name: "Request kind" });
+  const output = page.locator("output");
+  const cases = [
+    { kind: "input:text", name: /Reviewed value/, limit: 128 },
+    { kind: "input:textarea", name: /Reviewed value/, limit: 16_000 },
+    { kind: "auth:password", name: "Current password", limit: 4096 },
+    { kind: "auth:totp", name: "Authentication code", limit: 16 },
+  ];
+
+  for (const { kind: requestKind, name, limit } of cases) {
+    await kind.selectOption(requestKind);
+    const field = page.getByRole("textbox", { name });
+    const atLimit = "😀".repeat(limit);
+    await field.fill(atLimit);
+    await expect(field).toHaveValue(atLimit);
+    await expect(output).toHaveText(/^Valid · /);
+    await field.fill(`${atLimit}😀`);
+    await expect(output).toHaveText(/^Waiting · /);
+  }
+});
+
 const PNG = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
   "base64",
