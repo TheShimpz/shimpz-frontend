@@ -11,8 +11,8 @@
     ShimpzBrand,
     SignalList,
     TextField,
-  } from "$lib";
-  import shimpzThinking from "$lib/assets/shimpz-thinking.svg";
+  } from "#lib";
+  import shimpzThinking from "#lib/assets/shimpz-thinking.svg";
 
   let clicks = $state(0);
   let assistantId = $state("hello-world");

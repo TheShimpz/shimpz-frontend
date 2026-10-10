@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
-  import { page } from "$app/stores";
+  import { browser } from "$app/env";
+  import { page } from "$app/state";
   import {
     DropdownMenu,
     PageIntro,
@@ -8,9 +8,9 @@
     SiteFooter,
     SiteHeader,
     SiteNavLink,
-  } from "$lib";
+  } from "#lib";
 
-  const short = $derived(browser && $page.url.searchParams.has("short"));
+  const short = $derived(browser && page.url.searchParams.has("short"));
   const languages = [
     { value: "en", label: "English", href: "/site-kit/" },
     { value: "pt", label: "Português", href: "/site-kit/?language=pt" },

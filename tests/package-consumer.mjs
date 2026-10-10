@@ -14,16 +14,22 @@ import { fileURLToPath } from "node:url";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const manifest = JSON.parse(readFileSync(join(repositoryRoot, "package.json"), "utf8"));
-const pnpmEntry = process.env.npm_execpath;
-
-if (!pnpmEntry) {
-  throw new Error("Run this contract through pnpm so the pinned package manager is used.");
-}
+const pnpmEntry = (() => {
+  const entry = process.env.npm_execpath;
+  if (!entry) {
+    throw new Error("Run this contract through pnpm so the pinned package manager is used.");
+  }
+  return entry;
+})();
 
 const workspace = mkdtempSync(join(tmpdir(), "shimpz-frontend-consumer-"));
 const packageDirectory = join(workspace, "package");
 const consumerDirectory = join(workspace, "consumer");
 
+/**
+ * @param {string[]} arguments_
+ * @param {string} cwd
+ */
 function runPnpm(arguments_, cwd) {
   execFileSync(process.execPath, [pnpmEntry, ...arguments_], {
     cwd,

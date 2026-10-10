@@ -29,7 +29,7 @@
     Toast,
     Toolbar,
     WorkspaceShell,
-  } from "$lib";
+  } from "#lib";
 
   let dialogOpen = $state(false);
   let tallDialogOpen = $state(false);

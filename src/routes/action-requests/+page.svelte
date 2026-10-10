@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ActionRequestFields, SelectField } from "$lib";
+  import { ActionRequestFields, SelectField } from "#lib";
 
   const options = [
     { value: "input:text", label: "Text" },
