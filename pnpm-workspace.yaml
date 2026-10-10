@@ -7,3 +7,6 @@ pmOnFail: error
 
 overrides:
   cookie: 0.7.2
+  devalue: 5.9.3
+  source-map-js: 1.2.2
+  nanoid: 3.3.18
