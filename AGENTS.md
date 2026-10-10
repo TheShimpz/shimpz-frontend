@@ -11,7 +11,8 @@ These rules apply to every contributor and coding agent in this repository.
 
 ## Validation
 
-- Use Node.js 24 and frozen pnpm installs for every workload.
+- Use Node.js 26 and frozen pnpm installs for every Node.js workload this repository runs. Run the exact pnpm
+  `packageManager` names, installed by `bootstrap-pnpm.sh` from its sha256-pinned registry tarball; never Corepack.
 - Use exactly half of the processors reported by the machine when a test runner supports workers.
 - Exercise user-visible behavior through Playwright against the built showcase.
 - Do not claim rendered layout, interaction, accessibility, or responsive behavior from source-text assertions.
