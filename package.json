@@ -75,7 +75,7 @@
     "test:package": "node tests/package-consumer.mjs"
   },
   "engines": {
-    "node": "24.x"
+    "node": "26.x"
   },
   "packageManager": "pnpm@11.9.0",
   "peerDependencies": {

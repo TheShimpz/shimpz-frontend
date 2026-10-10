@@ -1,5 +1,9 @@
 packages:
   - .
 
+# pnpm runs only at the release packageManager names, as bootstrap-pnpm.sh installs it: a mismatch fails instead of
+# downloading another release.
+pmOnFail: error
+
 overrides:
   cookie: 0.7.2

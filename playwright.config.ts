@@ -7,7 +7,7 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:4173",
   },
   webServer: {
-    command: "corepack pnpm preview --host 127.0.0.1",
+    command: "pnpm preview --host 127.0.0.1",
     port: 4173,
     reuseExistingServer: false,
   },
