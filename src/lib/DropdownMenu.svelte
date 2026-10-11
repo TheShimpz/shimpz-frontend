@@ -26,6 +26,8 @@
   let linkItems = $state<HTMLAnchorElement[]>([]);
   let buttonItems = $state<HTMLButtonElement[]>([]);
   let focusedIndex = $state(0);
+  // With a value the items choose one of themselves (a selection menu); without one each item is an action.
+  let choice = $derived(value !== undefined);
   const menuId = $props.id();
 
   function close(restore = false) {
@@ -118,10 +120,10 @@
         {#if item.href}
           <a
             bind:this={linkItems[index]}
-            class={["item-link", item.value === value && "item-selected", item.disabled && "is-disabled"]}
-            role="menuitemradio"
+            class={["item-link", choice && item.value === value && "item-selected", item.disabled && "is-disabled"]}
+            role={choice ? "menuitemradio" : "menuitem"}
             tabindex={focusedIndex === index ? 0 : -1}
-            aria-checked={item.value === value}
+            aria-checked={choice ? item.value === value : undefined}
             aria-disabled={item.disabled || undefined}
             href={item.disabled ? undefined : item.href}
             onclick={() => close()}
@@ -133,11 +135,11 @@
             bind:element={buttonItems[index]}
             variant="ghost"
             size="sm"
-            role="menuitemradio"
+            role={choice ? "menuitemradio" : "menuitem"}
             tabindex={focusedIndex === index ? 0 : -1}
-            aria-checked={item.value === value}
+            aria-checked={choice ? item.value === value : undefined}
             disabled={itemDisabled(item)}
-            class={item.value === value ? "item-selected" : undefined}
+            class={choice && item.value === value ? "item-selected" : undefined}
             onclick={() => choose(item)}
           >
             <span>{item.label}</span>{#if item.value === value}<span class="selected" aria-hidden="true">●</span>{/if}

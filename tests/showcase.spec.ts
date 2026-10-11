@@ -86,6 +86,12 @@ test("operates the reusable Admin component kit", async ({ page }) => {
   await expect(page.getByRole("menu")).toBeVisible();
   await page.getByRole("heading", { name: "One sealed interface" }).click();
   await expect(page.getByRole("menu")).toBeHidden();
+  // Without a value the same menu lists actions: plain menu items, none of them checked.
+  await page.getByRole("button", { name: "Account" }).click();
+  await expect(page.getByRole("menuitem", { name: "Security" })).not.toHaveAttribute("aria-checked");
+  await expect(page.getByRole("menu", { name: "Account" }).getByRole("menuitemradio")).toHaveCount(0);
+  await page.getByRole("menuitem", { name: "Security" }).click();
+  await expect(page.getByText("Last account action: security")).toBeVisible();
   await page.getByRole("button", { name: "Show toast" }).click();
   const toast = page.getByRole("status");
   await expect(toast).toContainText("Presentation contract synchronized.");

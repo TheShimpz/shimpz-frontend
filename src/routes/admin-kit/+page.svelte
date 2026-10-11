@@ -33,6 +33,7 @@
 
   let dialogOpen = $state(false);
   let tallDialogOpen = $state(false);
+  let lastAction = $state("none");
   let fileInput = $state<HTMLInputElement>();
   let drawerOpen = $state(false);
   let enabled = $state(false);
@@ -149,6 +150,14 @@
           triggerLabel={locale === "en" ? "English" : "Português"}
           onSelect={(value) => (locale = value)}
         />
+        <DropdownMenu
+          items={[{ value: "security", label: "Security" }]}
+          ariaLabel="Account"
+          menuLabel="Account"
+          triggerLabel="Account"
+          onSelect={(value) => (lastAction = value)}
+        />
+        <p>Last account action: {lastAction}</p>
       </Card>
       <Card title="Conversation" description="Role-specific message hierarchy.">
         <ScrollArea maxHeight="10rem">
