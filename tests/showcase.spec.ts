@@ -14,6 +14,10 @@ test("operates the design-system showcase controls", async ({ page }) => {
   await assistantId.fill("release-agent");
   await expect(assistantId).toHaveValue("release-agent");
   await expect(page.getByRole("textbox", { name: "Invalid example" })).toHaveAttribute("aria-invalid", "true");
+  // A chat task's meta reads beside its title, inside the task it describes.
+  await expect(page.getByRole("region", { name: "Cloud control" }).locator('[data-slot="chat-task-meta"]')).toHaveText(
+    "@shimpz · v0.3.0",
+  );
 });
 
 test("has no detectable accessibility violations", async ({ page }) => {

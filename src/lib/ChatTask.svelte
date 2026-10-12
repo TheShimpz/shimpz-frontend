@@ -6,6 +6,7 @@
   type Props = HTMLAttributes<HTMLElement> & {
     label: string;
     title: string;
+    meta?: Snippet;
     description?: string;
     state?: State;
     status: string;
@@ -16,6 +17,7 @@
   let {
     label,
     title,
+    meta,
     description,
     state = "pending",
     status,
@@ -44,7 +46,10 @@
       <span class="signal" aria-hidden="true"></span>
     {/if}
     <div>
-      <strong data-slot="chat-task-title">{title}</strong>
+      <div class="title-line">
+        <strong data-slot="chat-task-title">{title}</strong>
+        {#if meta}<span data-slot="chat-task-meta" class="meta">{@render meta()}</span>{/if}
+      </div>
       {#if description}<p>{description}</p>{/if}
     </div>
   </div>
@@ -141,6 +146,19 @@
   strong {
     display: block;
     font: 650 0.92rem/1.4 var(--shimpz-font-sans);
+  }
+
+  .title-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--shimpz-space-2);
+  }
+
+  .meta {
+    color: var(--shimpz-color-text-dim);
+    font: 500 0.72rem/1.4 var(--shimpz-font-mono);
+    letter-spacing: 0.02em;
   }
 
   p {

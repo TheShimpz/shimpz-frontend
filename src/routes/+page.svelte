@@ -45,6 +45,8 @@
   <span class="chat-task-media" aria-hidden="true">S</span>
 {/snippet}
 
+{#snippet chatTaskMeta()}@shimpz · v0.3.0{/snippet}
+
 {#snippet heroMedia()}
   <EditorialVisual
     class="showcase-visual"
@@ -189,6 +191,7 @@
           <ChatTask
             label="Capability"
             title="Cloud control"
+            meta={chatTaskMeta}
             description="A bounded task can stay inside the conversation without becoming a chat message or a dialog."
             state="working"
             status="Preparing"
